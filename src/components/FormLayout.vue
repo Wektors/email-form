@@ -1,78 +1,93 @@
 <template>
 	<div class="first-step" v-show="firstStepShow">
-		<FormEntry label="Imię" v-model="firstName" />
-		<FormEntry label="Drugie imię" v-model="secondName" />
-		<FormEntry label="Nazwisko" v-model="surName" />
+		<FormEntry
+			label="Imię"
+			v-model="userData.firstName"
+			:class="{
+				unvalidated: !validation(userData.firstName, valType.nonEmptyString),
+			}"
+		/>
+		<FormEntry
+			label="Drugie imię"
+			v-model="userData.secondName"
+			:class="{ unvalidated: !validation(userData.secondName, valType.empty) }"
+		/>
+		<FormEntry
+			label="Nazwisko"
+			v-model="userData.surName"
+			:class="{
+				unvalidated: !validation(userData.surName, valType.nonEmptyString),
+			}"
+		/>
+	</div>
+	<br />
 
-  </div>
-  <br />
-
-	<button @click="triggerNextStep(firstStepShow)" v-show="firstStepShow">
+	<button @click="triggerFirstStepValidation" v-show="firstStepShow">
 		Przejdź dalej
 	</button>
 
-
 	<div class="second-step" v-show="secondStepShow">
-		<FormEntry label="email" v-model="email" type="email" />
-		<FormEntry label="numer telefonu" v-model="phone" type="phone" />
-		<FormEntry label="ulica" v-model="street" />
-		<FormEntry label="numer domu" v-model="houseNumber" />
-		<FormEntry label="numer lokalu" v-model="apartmentNumber" />
-		<FormEntry label="kod pocztowy" v-model="postalCode" />
-		<FormEntry label="miasto" v-model="city" />
+		<FormEntry label="e-mail" v-model="userData.email" type="e-mail" />
+		<FormEntry
+			label="numer telefonu"
+			v-model="userData.phone"
+			type="userData.phone"
+		/>
+		<FormEntry label="ulica" v-model="userData.street" />
+		<FormEntry label="numer domu" v-model="userData.houseNumber" />
+		<FormEntry label="numer lokalu" v-model="userData.apartmentNumber" />
+		<FormEntry label="kod pocztowy" v-model="userData.postalCode" />
+		<FormEntry label="miasto" v-model="userData.city" />
 
 		<br />
 
-    <br />
-    <button @click="triggerNextStep(firstStepShow)" v-show="secondStepShow">
-		Cofnij
-	</button>
+		<br />
+		<button @click="triggerNextStep(firstStepShow)" v-show="secondStepShow">
+			Cofnij
+		</button>
 		<button @click="triggerSummary()" v-show="secondStepShow">
 			Przejdź do podsumowania
 		</button>
 	</div>
 
-
 	<div class="summary" v-show="summaryShow">
-
-    <h2>Podsumowanie: </h2>
+		<h2>Podsumowanie:</h2>
 		<br />
-		imie: {{ firstName }}
-		<br />
-
-		drugie imie: {{ secondName }}
+		imie: {{ userData.firstName }}
 		<br />
 
-		nazwisko: {{ surName }}
+		drugie imie: {{ userData.secondName }}
+		<br />
 
-    <br />
+		nazwisko: {{ userData.surName }}
 
-		email: {{ email }}
+		<br />
 
-    <br />
+		e-mail: {{ userData.email }}
 
-		telefon: {{ phone }}
+		<br />
 
-    <br />
+		telefon: {{ userData.phone }}
 
-		ulica: {{ street }}
+		<br />
 
-    <br />
+		ulica: {{ userData.street }}
 
-		numer domu: {{ houseNumber }}
+		<br />
 
-    <br />
+		numer domu: {{ userData.houseNumber }}
 
-		numer mieszkania: {{ apartmentNumber }}
+		<br />
 
-    <br />
+		numer mieszkania: {{ userData.apartmentNumber }}
 
-		kod pocztowy: {{ postalCode }}
+		<br />
 
-    <br />
+		kod pocztowy: {{ userData.postalCode }}
 
-		miasto: {{ city }}
+		<br />
 
+		miasto: {{ userData.city }}
 	</div>
 </template>
 
@@ -90,15 +105,26 @@ export default {
 			firstStepShow: true,
 			secondStepShow: false,
 			summaryShow: false,
-			firstName: "",
-			secondName: "",
-			email: "",
-			phone: "",
-			street: "",
-			houseNumber: "",
-			apartmentNumber: "",
-			postalCode: "",
-			city: "",
+			userData: {
+				firstName: "",
+				secondName: "",
+				surName: "",
+				email: "",
+				phone: "",
+				street: "",
+				houseNumber: "",
+				apartmentNumber: "",
+				postalCode: "",
+				city: "",
+			},
+			checkValidity: false,
+			valType: {
+				// validation type
+				nonEmptyString: /[a-z]+/i,
+				empty: /[a-z]*/i,
+			},
+			showWarning: false,
+			allValidated: undefined,
 		};
 	},
 	methods: {
@@ -111,10 +137,35 @@ export default {
 			this.secondStepShow = false;
 			this.summaryShow = !this.summaryShow;
 		},
+		validation(data, criteria) {
+			if (!criteria.test(data) && this.checkValidity) {
+				return false;
+			} else {
+				return true;
+			}
+		},
+		triggerFirstStepValidation() {
+			this.checkValidity = true;
+			let firstNameValid = this.validation(
+				this.userData.firstName,
+				this.valType.nonEmptyString
+			);
+			let secondNameValid = this.validation(
+				this.userData.secondName,
+				this.valType.empty
+			);
+			let surNameValid = this.validation(
+				this.userData.surName,
+				this.valType.nonEmptyString
+			);
+			if (firstNameValid && secondNameValid && surNameValid) {
+				this.triggerNextStep();
+			} else {
+				this.showWarning = true;
+			}
+		},
 	},
 };
 </script>
 
-<style scoped>
-   
-</style>
+<style></style>

@@ -2,7 +2,8 @@
 	<div class="label">
 		{{ label }}
     </div>
-		<input
+		<input 
+			:class="$attrs.class"
 			type="text"
 			v-bind:placeholder="`Wpisz ${label}`"
             :value="modelValue"
@@ -28,5 +29,10 @@ export default {
 	font-size: 18px;
 	color: rgb(79, 75, 75);
 	padding: 20px;
+} 
+.unvalidated {
+	color: red;
+	border: 1px solid red;
 }
+
 </style>
