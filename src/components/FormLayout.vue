@@ -10,7 +10,7 @@
 		<FormEntry
 			label="Drugie imię"
 			v-model="userData.secondName"
-			:class="{ unvalidated: !validation(userData.secondName, valType.empty) }"
+			:class="{ unvalidated: !validation(userData.secondName, valType.nonEmptyString) }"
 		/>
 		<FormEntry
 			label="Nazwisko"
@@ -150,10 +150,15 @@ export default {
 				this.userData.firstName,
 				this.valType.nonEmptyString
 			);
-			let secondNameValid = this.validation(
-				this.userData.secondName,
-				this.valType.empty
-			);
+
+			let secondNameValid = true;
+
+			if (this.userData.secondName !== "") {
+				secondNameValid = this.validation(
+					this.userData.secondName,
+					this.valType.nonEmptyString
+				);
+			}
 			let surNameValid = this.validation(
 				this.userData.surName,
 				this.valType.nonEmptyString
