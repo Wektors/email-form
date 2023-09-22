@@ -10,9 +10,12 @@
 		<FormEntry
 			label="Drugie imię"
 			v-model="userData.secondName"
-			:class="{ 
-					unvalidated: !validationOptional(userData.secondName, valType.nonEmptyString),
-				}"
+			:class="{
+				unvalidated: !validationOptional(
+					userData.secondName,
+					valType.nonEmptyString
+				),
+			}"
 		/>
 		<FormEntry
 			label="Nazwisko"
@@ -29,17 +32,56 @@
 	</button>
 
 	<div class="second-step" v-show="secondStepShow">
-		<FormEntry label="e-mail" v-model="userData.email" type="e-mail" />
+		<FormEntry
+			label="e-mail"
+			v-model="userData.email"
+			type="e-mail"
+			:class="{
+				unvalidated: !validation(userData.email, valType.email),
+			}"
+		/>
 		<FormEntry
 			label="numer telefonu"
 			v-model="userData.phone"
 			type="phone"
+			:class="{
+				unvalidated: !validation(userData.phone, valType.phoneNumber),
+			}"
 		/>
-		<FormEntry label="ulica" v-model="userData.street" />
-		<FormEntry label="numer domu" v-model="userData.houseNumber" />
-		<FormEntry label="numer lokalu" v-model="userData.apartmentNumber" />
-		<FormEntry label="kod pocztowy" v-model="userData.postalCode" />
-		<FormEntry label="miasto" v-model="userData.city" />
+		<FormEntry
+			label="ulica"
+			v-model="userData.street"
+			:class="{
+				unvalidated: !validation(userData.street, valType.nonEmptyString),
+			}"
+		/>
+		<FormEntry
+			label="numer domu"
+			v-model="userData.houseNumber"
+			:class="{
+				unvalidated: !validation(userData.houseNumber, valType.number),
+			}"
+		/>
+		<FormEntry 
+		label="numer lokalu" 
+		v-model="userData.apartmentNumber"  
+		:class="{
+				unvalidated: !validationOptional(userData.apartmentNumber, valType.number),
+			}"
+		/>
+		<FormEntry 
+		label="kod pocztowy" 
+		v-model="userData.postalCode" 
+		:class="{
+				unvalidated: !validation(userData.postalCode, valType.postalCode),
+			}"/>
+		<FormEntry 
+		label="miasto" 
+		v-model="userData.city" 
+		:class="{
+				unvalidated: !validation(userData.city, valType.nonEmptyString),
+			}"
+			/>
 
 		<br />
 
@@ -47,7 +89,7 @@
 		<button @click="triggerNextStep(firstStepShow)" v-show="secondStepShow">
 			Cofnij
 		</button>
-		<button @click="triggerSummary()" v-show="secondStepShow">
+		<button @click="triggerSecondStepValidation()" v-show="secondStepShow">
 			Przejdź do podsumowania
 		</button>
 	</div>
@@ -123,20 +165,25 @@ export default {
 			valType: {
 				// validation type
 				nonEmptyString: /[a-z]+/i,
+				phoneNumber: /\d{9}/i,
+				email: /^\w+@{1}\w+\.+\w+/i,
+				number: /\d+/i,
+				postalCode: /\d{2}-{1}\d{3}/i,
 			},
 			showWarning: false,
-			allValidated: undefined,
 		};
 	},
 	methods: {
 		triggerNextStep() {
 			this.firstStepShow = !this.firstStepShow;
 			this.secondStepShow = !this.secondStepShow;
+			this.checkValidity = false;
 		},
 		triggerSummary() {
 			this.firstStepShow = false;
 			this.secondStepShow = false;
 			this.summaryShow = !this.summaryShow;
+			this.checkValidity = false;
 		},
 		validation(data, criteria) {
 			if (!criteria.test(data) && this.checkValidity) {
@@ -160,16 +207,58 @@ export default {
 			);
 
 			let secondNameValid = this.validationOptional(
-					this.userData.secondName,
-					this.valType.nonEmptyString
-				);
-			
+				this.userData.secondName,
+				this.valType.nonEmptyString
+			);
+
 			let surNameValid = this.validation(
 				this.userData.surName,
 				this.valType.nonEmptyString
 			);
 			if (firstNameValid && secondNameValid && surNameValid) {
 				this.triggerNextStep();
+			} else {
+				this.showWarning = true;
+			}
+		},
+
+		triggerSecondStepValidation() {
+
+			this.checkValidity = true;
+
+			let emailValid = this.validation(this.userData.email, this.valType.email);
+
+			let phoneValid = this.validationOptional(
+				this.userData.phone,
+				this.valType.phoneNumber
+			);
+			let streetValid = this.validation(
+				this.userData.streetAddress,
+				this.valType.nonEmptyString
+			);
+
+			let houseNumberValid = this.validation(
+				this.userData.houseNumber,
+				this.valType.number
+			);
+
+			let apartmentNumberValid = this.validationOptional(
+				this.userData.apartmentNumber,
+				this.valType.number
+			);
+
+			let postalCodeValid = this.validation(
+				this.userData.postalCode,
+				this.valType.postalCode
+			);
+
+			let cityValid = this.validation(
+				this.userData.city,
+				this.valType.nonEmptyString
+			);
+
+			if (emailValid && phoneValid && streetValid && houseNumberValid && apartmentNumberValid && postalCodeValid && cityValid) { 
+				this.triggerSummary();
 			} else {
 				this.showWarning = true;
 			}
