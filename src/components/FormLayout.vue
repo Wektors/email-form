@@ -10,7 +10,9 @@
 		<FormEntry
 			label="Drugie imię"
 			v-model="userData.secondName"
-			:class="{ unvalidated: !validation(userData.secondName, valType.nonEmptyString) }"
+			:class="{ 
+					unvalidated: !validationOptional(userData.secondName, valType.nonEmptyString),
+				}"
 		/>
 		<FormEntry
 			label="Nazwisko"
@@ -31,7 +33,7 @@
 		<FormEntry
 			label="numer telefonu"
 			v-model="userData.phone"
-			type="userData.phone"
+			type="phone"
 		/>
 		<FormEntry label="ulica" v-model="userData.street" />
 		<FormEntry label="numer domu" v-model="userData.houseNumber" />
@@ -121,7 +123,6 @@ export default {
 			valType: {
 				// validation type
 				nonEmptyString: /[a-z]+/i,
-				empty: /[a-z]*/i,
 			},
 			showWarning: false,
 			allValidated: undefined,
@@ -144,6 +145,13 @@ export default {
 				return true;
 			}
 		},
+		validationOptional(data, criteria) {
+			if (!criteria.test(data) && this.checkValidity && data !== "") {
+				return false;
+			} else {
+				return true;
+			}
+		},
 		triggerFirstStepValidation() {
 			this.checkValidity = true;
 			let firstNameValid = this.validation(
@@ -151,14 +159,11 @@ export default {
 				this.valType.nonEmptyString
 			);
 
-			let secondNameValid = true;
-
-			if (this.userData.secondName !== "") {
-				secondNameValid = this.validation(
+			let secondNameValid = this.validationOptional(
 					this.userData.secondName,
 					this.valType.nonEmptyString
 				);
-			}
+			
 			let surNameValid = this.validation(
 				this.userData.surName,
 				this.valType.nonEmptyString
