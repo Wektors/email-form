@@ -62,26 +62,30 @@
 				unvalidated: !validation(userData.houseNumber, valType.number),
 			}"
 		/>
-		<FormEntry 
-		label="numer lokalu" 
-		v-model="userData.apartmentNumber"  
-		:class="{
-				unvalidated: !validationOptional(userData.apartmentNumber, valType.number),
+		<FormEntry
+			label="numer lokalu"
+			v-model="userData.apartmentNumber"
+			:class="{
+				unvalidated: !validationOptional(
+					userData.apartmentNumber,
+					valType.number
+				),
 			}"
 		/>
-		<FormEntry 
-		label="kod pocztowy" 
-		v-model="userData.postalCode" 
-		:class="{
+		<FormEntry
+			label="kod pocztowy"
+			v-model="userData.postalCode"
+			:class="{
 				unvalidated: !validation(userData.postalCode, valType.postalCode),
-			}"/>
-		<FormEntry 
-		label="miasto" 
-		v-model="userData.city" 
-		:class="{
+			}"
+		/>
+		<FormEntry
+			label="miasto"
+			v-model="userData.city"
+			:class="{
 				unvalidated: !validation(userData.city, valType.nonEmptyString),
 			}"
-			/>
+		/>
 
 		<br />
 
@@ -97,41 +101,40 @@
 	<div class="summary" v-show="summaryShow">
 		<h2>Podsumowanie:</h2>
 		<br />
+		<h3>Dane klienta:</h3>
+		<br />
 		imie: {{ userData.firstName }}
 		<br />
-
-		drugie imie: {{ userData.secondName }}
+		drugie imie: {{ addHyphen(userData.secondName) }}
 		<br />
-
 		nazwisko: {{ userData.surName }}
-
 		<br />
-
+		<h3> Dane kontaktowe oraz adresowe:</h3>
+		<br />
 		e-mail: {{ userData.email }}
-
 		<br />
-
 		telefon: {{ userData.phone }}
-
 		<br />
-
 		ulica: {{ userData.street }}
-
 		<br />
-
 		numer domu: {{ userData.houseNumber }}
-
 		<br />
-
-		numer mieszkania: {{ userData.apartmentNumber }}
-
+		numer mieszkania: {{ addHyphen(userData.apartmentNumber) }}
 		<br />
-
 		kod pocztowy: {{ userData.postalCode }}
-
 		<br />
-
 		miasto: {{ userData.city }}
+		<br />
+		<br />
+		<button>
+			<a
+				v-bind:href="
+					'mailto:' + 'email do wysyłki' + '?body=' + dataToSend(userData)
+				"
+			>
+				Wyślij na maila
+			</a>
+		</button>
 	</div>
 </template>
 
@@ -167,10 +170,9 @@ export default {
 				nonEmptyString: /[a-z]+/i,
 				phoneNumber: /\d{9}/i,
 				email: /^\w+@{1}\w+\.+\w+/i,
-				number: /\d+/i,
+				number: /[1-9]+\d*/i,
 				postalCode: /\d{2}-{1}\d{3}/i,
 			},
-			showWarning: false,
 		};
 	},
 	methods: {
@@ -223,7 +225,6 @@ export default {
 		},
 
 		triggerSecondStepValidation() {
-
 			this.checkValidity = true;
 
 			let emailValid = this.validation(this.userData.email, this.valType.email);
@@ -257,11 +258,43 @@ export default {
 				this.valType.nonEmptyString
 			);
 
-			if (emailValid && phoneValid && streetValid && houseNumberValid && apartmentNumberValid && postalCodeValid && cityValid) { 
+			if (
+				emailValid &&
+				phoneValid &&
+				streetValid &&
+				houseNumberValid &&
+				apartmentNumberValid &&
+				postalCodeValid &&
+				cityValid
+			) {
 				this.triggerSummary();
+			} 
+		},
+
+		addHyphen(data) {
+			if (data == "") {
+				return "-";
 			} else {
-				this.showWarning = true;
+				return data;
 			}
+		},
+		dataToSend(data) {
+			let readyData = `Dane klienta%3A%0D%0A
+				%0D%0A
+				imie%3A%20${data.firstName}%0D%0A
+				drugie%20imie%3A%20${this.addHyphen(data.secondName)}%0D%0A
+				nazwisko%3A%20${data.surName}%0D%0A
+				%0D%0A
+				Dane%20kontaktowe%20oraz%20adresowe%3A%0D%0A
+				e-mail%3A%20${data.email}%0D%0A
+				telefon%3A%20${data.phone}%0D%0A
+				ulica%3A%20${data.street}%0D%0A
+				numer%20domu%3A%20${data.houseNumber}%0D%0A
+				numer%20mieszkania%3A%20${this.addHyphen(data.apartmentNumber)}%0D%0A
+				kod%20pocztowy%3A%20${data.postalCode}%0D%0A
+				miasto%3A%20${data.city}%0D%0A
+			`;
+			return readyData;
 		},
 	},
 };
