@@ -164,7 +164,7 @@ export default {
 				postalCode: "",
 				city: "",
 			},
-			checkValidity: false,
+			checkValidity: false, // determines whether errors are shown or not
 			valType: {
 				// validation type
 				nonEmptyString: /[a-z]+/i,
@@ -181,12 +181,7 @@ export default {
 			this.secondStepShow = !this.secondStepShow;
 			this.checkValidity = false;
 		},
-		triggerSummary() {
-			this.firstStepShow = false;
-			this.secondStepShow = false;
-			this.summaryShow = !this.summaryShow;
-			this.checkValidity = false;
-		},
+
 		validation(data, criteria) {
 			if (!criteria.test(data) && this.checkValidity) {
 				return false;
@@ -219,9 +214,7 @@ export default {
 			);
 			if (firstNameValid && secondNameValid && surNameValid) {
 				this.triggerNextStep();
-			} else {
-				this.showWarning = true;
-			}
+			} 
 		},
 
 		triggerSecondStepValidation() {
@@ -269,6 +262,13 @@ export default {
 			) {
 				this.triggerSummary();
 			} 
+		},
+
+		triggerSummary() {
+			this.firstStepShow = false;
+			this.secondStepShow = false;
+			this.summaryShow = !this.summaryShow;
+			this.checkValidity = false;
 		},
 
 		addHyphen(data) {
