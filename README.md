@@ -1,25 +1,31 @@
 # form
 
 ## Project setup
+
 ```
 npm install
 ```
 
 ### Compiles and hot-reloads for development
+
 ```
 npm run serve
 ```
 
+### Runs tests
+
+```
+npm run test:unit
+```
+
 ### Compiles and minifies for production
+
 ```
 npm run build
 ```
 
-### Lints and fixes files
-```
-npm run lint
-```
+### What it does
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+It's a simple form that validates input and upon submiting creates a ready email message with mailto
+
 # email-form
