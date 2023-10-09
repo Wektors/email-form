@@ -1,37 +1,13 @@
 <template>
-	<div class="first-step" v-show="firstStepShow">
-		<FormEntry
-			label="Imię"
-			v-model="userData.firstName"
-			:class="{
-				unvalidated: !validation(userData.firstName, valType.nonEmptyString),
-			}"
-		/>
-		<FormEntry
-			label="Drugie imię"
-			v-model="userData.secondName"
-			:class="{
-				unvalidated: !validationOptional(
-					userData.secondName,
-					valType.nonEmptyString
-				),
-			}"
-		/>
-		<FormEntry
-			label="Nazwisko"
-			v-model="userData.surName"
-			:class="{
-				unvalidated: !validation(userData.surName, valType.nonEmptyString),
-			}"
-		/>
-	</div>
-	<br />
-
-	<button @click="triggerFirstStepValidation" v-show="firstStepShow">
+	
+	<FormStep v-show="currentStep === steps.clientData"/>
+	{{ steps }}
+	<br/>
+	<button @click="triggerFirstStepValidation">
 		Przejdź dalej
 	</button>
 
-	<div class="second-step" v-show="secondStepShow">
+	<!-- <div class="second-step" v-show="secondStepShow">
 		<FormEntry
 			label="e-mail"
 			v-model="userData.email"
@@ -96,9 +72,9 @@
 		<button @click="triggerSecondStepValidation()" v-show="secondStepShow">
 			Przejdź do podsumowania
 		</button>
-	</div>
+	</div> -->
 
-	<div class="summary" v-show="summaryShow">
+	<!-- <div class="summary" v-show="summaryShow">
 		<h2>Podsumowanie:</h2>
 		<br />
 		<h3>Dane klienta:</h3>
@@ -135,35 +111,23 @@
 				Wyślij na maila
 			</a>
 		</button>
-	</div>
+	</div> -->
 </template>
 
 <script>
-import FormEntry from "./FormEntry.vue";
 
+import FormStep from "./FormStep.vue";
+import steps from "@/js/steps.js";
 export default {
 	name: "FormLayout",
-	props: {},
 	components: {
-		FormEntry,
+		FormStep,
+	},
+	props: {
+		steps: steps,
 	},
 	data() {
 		return {
-			firstStepShow: true,
-			secondStepShow: false,
-			summaryShow: false,
-			userData: {
-				firstName: "",
-				secondName: "",
-				surName: "",
-				email: "",
-				phone: "",
-				street: "",
-				houseNumber: "",
-				apartmentNumber: "",
-				postalCode: "",
-				city: "",
-			},
 			checkValidity: false, // determines whether errors are shown or not
 			valType: {
 				// validation type
