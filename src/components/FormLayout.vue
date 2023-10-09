@@ -1,11 +1,29 @@
 <template>
-	
-	<FormStep v-show="currentStep === steps.clientData"/>
-	{{ steps }}
-	<br/>
-	<button @click="triggerFirstStepValidation">
-		Przejdź dalej
-	</button>
+    <div>
+        <FormStep v-show="currentStep === Steps.ClientData"/>
+        <br/>
+        <button @click="triggerFirstStepValidation">
+            Przejdź dalej
+        </button>
+
+        <div
+            v-show="currentStep === Steps.ClientData"
+        >
+Krok 1
+        </div>
+        <div
+            v-show="currentStep === Steps.AddressData"
+        >
+Krok 2
+        </div>
+        <div
+            v-show="currentStep === Steps.Summary"
+        >
+Krok 3
+        </div>
+        <button @click="currentStep--"> wstecz</button>
+        <button @click="currentStep++"> dalej</button>
+    </div>
 
 	<!-- <div class="second-step" v-show="secondStepShow">
 		<FormEntry
@@ -117,14 +135,13 @@
 <script>
 
 import FormStep from "./FormStep.vue";
-import steps from "@/js/steps.js";
+import Steps from "@/js/Steps.js";
 export default {
 	name: "FormLayout",
 	components: {
 		FormStep,
 	},
 	props: {
-		steps: steps,
 	},
 	data() {
 		return {
@@ -137,7 +154,9 @@ export default {
 				number: /[1-9]+\d*/i,
 				postalCode: /\d{2}-{1}\d{3}/i,
 			},
-		};
+            Steps: Steps,
+            currentStep:Steps.ClientData,
+        };
 	},
 	methods: {
 		triggerNextStep() {
