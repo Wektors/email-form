@@ -1,16 +1,11 @@
 <template>
     <div>
-        <FormStep v-show="currentStep === Steps.ClientData"/>
-        <br/>
-        <button @click="triggerFirstStepValidation">
-            Przejdź dalej
-        </button>
+        
 
-        <div
+        <FormStep :user="user.client_data"
             v-show="currentStep === Steps.ClientData"
-        >
-Krok 1
-        </div>
+        />
+		
         <div
             v-show="currentStep === Steps.AddressData"
         >
@@ -21,7 +16,7 @@ Krok 2
         >
 Krok 3
         </div>
-        <button @click="currentStep--"> wstecz</button>
+        <button @click="currentStep--" v-show="currentStep !== Steps.ClientData"> wstecz</button>
         <button @click="currentStep++"> dalej</button>
     </div>
 
@@ -134,6 +129,8 @@ Krok 3
 
 <script>
 
+import user1 from "@/js/userData.js"
+
 import FormStep from "./FormStep.vue";
 import Steps from "@/js/Steps.js";
 export default {
@@ -156,6 +153,7 @@ export default {
 			},
             Steps: Steps,
             currentStep:Steps.ClientData,
+			user: user1,
         };
 	},
 	methods: {
