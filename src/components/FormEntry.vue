@@ -18,8 +18,7 @@ export default {
         modelValue: String,
 	},
 	data() {
-		return {
-		};
+		return {};
 	},
 };
 </script>

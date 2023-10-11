@@ -7,86 +7,24 @@
 			:client_data = "userData.client_data"
         />
 		
-        <div
+        <FormStep
             v-show="currentStep === Steps.AddressData"
-        >
-Krok 2
-        </div>
+			:client_data = "userData.address_data"
+        />
+
         <div
             v-show="currentStep === Steps.Summary"
         >
-Krok 3
+Podsumowanie
         </div>
-        <button @click="currentStep--" v-show="currentStep !== Steps.ClientData"> wstecz</button>
-        <button @click="currentStep++"> dalej</button>
+		<Footer>
+				<br />
+			<button @click="currentStep--" v-show="currentStep !== Steps.ClientData"> wstecz</button>
+			<button @click="currentStep++">{{ nextStepButton }}</button>
+		</Footer>
     </div>
 
-	<!-- <div class="second-step" v-show="secondStepShow">
-		<FormEntry
-			label="e-mail"
-			v-model="userData.email"
-			type="e-mail"
-			:class="{
-				unvalidated: !validation(userData.email, valType.email),
-			}"
-		/>
-		<FormEntry
-			label="numer telefonu"
-			v-model="userData.phone"
-			type="phone"
-			:class="{
-				unvalidated: !validation(userData.phone, valType.phoneNumber),
-			}"
-		/>
-		<FormEntry
-			label="ulica"
-			v-model="userData.street"
-			:class="{
-				unvalidated: !validation(userData.street, valType.nonEmptyString),
-			}"
-		/>
-		<FormEntry
-			label="numer domu"
-			v-model="userData.houseNumber"
-			:class="{
-				unvalidated: !validation(userData.houseNumber, valType.number),
-			}"
-		/>
-		<FormEntry
-			label="numer lokalu"
-			v-model="userData.apartmentNumber"
-			:class="{
-				unvalidated: !validationOptional(
-					userData.apartmentNumber,
-					valType.number
-				),
-			}"
-		/>
-		<FormEntry
-			label="kod pocztowy"
-			v-model="userData.postalCode"
-			:class="{
-				unvalidated: !validation(userData.postalCode, valType.postalCode),
-			}"
-		/>
-		<FormEntry
-			label="miasto"
-			v-model="userData.city"
-			:class="{
-				unvalidated: !validation(userData.city, valType.nonEmptyString),
-			}"
-		/>
-
-		<br />
-
-		<br />
-		<button @click="triggerNextStep(firstStepShow)" v-show="secondStepShow">
-			Cofnij
-		</button>
-		<button @click="triggerSecondStepValidation()" v-show="secondStepShow">
-			Przejdź do podsumowania
-		</button>
-	</div> -->
+	
 
 	<!-- <div class="summary" v-show="summaryShow">
 		<h2>Podsumowanie:</h2>
@@ -152,9 +90,19 @@ export default {
 				postalCode: /\d{2}-{1}\d{3}/i,
 			},
             Steps: Steps,
-            currentStep:Steps.ClientData,
+            currentStep: Steps.ClientData,
 			userData: new UserData()
         };
+		
+	},
+	computed: {
+		nextStepButton: function () {
+			if (this.currentStep === Steps.AddressData) {
+				return "Przejdź do podsumowania"
+			} else {
+				return "Przejdź do kolejnego kroku"
+			}
+		}
 	},
 	methods: {
 		triggerNextStep() {
