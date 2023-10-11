@@ -130,7 +130,7 @@ Krok 3
 
 <script>
 
-import userData from "@/js/userData.js";
+import UserData from "@/js/UserData.js";
 import FormStep from "./FormStep.vue";
 import Steps from "@/js/Steps.js";
 export default {
@@ -153,7 +153,7 @@ export default {
 			},
             Steps: Steps,
             currentStep:Steps.ClientData,
-			userData: new userData("", "", "", "", "", "", "", "", "", "")
+			userData: new UserData()
         };
 	},
 	methods: {
