@@ -2,8 +2,9 @@
     <div>
         
 
-        <FormStep :user="user.client_data"
+        <FormStep
             v-show="currentStep === Steps.ClientData"
+			:client_data = "userData.client_data"
         />
 		
         <div
@@ -129,8 +130,7 @@ Krok 3
 
 <script>
 
-import user1 from "@/js/userData.js"
-
+import userData from "@/js/userData.js";
 import FormStep from "./FormStep.vue";
 import Steps from "@/js/Steps.js";
 export default {
@@ -153,7 +153,7 @@ export default {
 			},
             Steps: Steps,
             currentStep:Steps.ClientData,
-			user: user1,
+			userData: new userData("", "", "", "", "", "", "", "", "", "")
         };
 	},
 	methods: {

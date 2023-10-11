@@ -11,22 +11,54 @@ export default class userData {
 		postalCode,
 		city
 	) {
-		this.client_data = {
-			firstName: firstName,
-			secondName: secondName,
-			surName: surName,
-		},
-			this.adress_data = {
-				email: email,
-				phone: phone,
-				street: street,
-				houseNumber: houseNumber,
-				apartmentNumber: apartmentNumber,
-				postalCode: postalCode,
-				city: city,
-			};
+		class ClientData {
+			constructor(firstName, secondName, surName) {
+				{
+					this.firstName = firstName;
+					this.id = 0;
+				}
+				{
+					this.secondName = secondName;
+					this.id = 1;
+				}
+
+				{
+					this.surName = surName;
+					this.id = 2;
+				}
+			}
+		}
+
+		class AddressData {
+			constructor(
+				email,
+				phone,
+				street,
+				houseNumber,
+				apartmentNumber,
+				postalCode,
+				city
+			) {
+				this.email = email;
+				this.phone = phone;
+				this.street = street;
+				this.houseNumber = houseNumber;
+				this.apartmentNumber = apartmentNumber;
+				this.postalCode = postalCode;
+				this.city = city;
+			}
+		}
+
+		this.client_data = new ClientData(firstName, secondName, surName);
+
+		this.address_data = new AddressData(
+			email,
+			phone,
+			street,
+			houseNumber,
+			apartmentNumber,
+			postalCode,
+			city
+		);
 	}
 }
-
-export const user1 = new userData("fdsaf", "gdfsgfd", "", "", "", "", "", "", "",)
-console.log(user1)

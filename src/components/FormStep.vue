@@ -1,12 +1,18 @@
 <template>
 	<div class="first-step">
             
-		<FormEntry label="Imię"/>
+		<FormEntry label="Imię" v-model="client_data.firstName"/>
+
+		{{  client_data.firstName }}
 		
-		<FormEntry label="Drugie imię" />
+		<FormEntry label="Drugie imię" 
+			v-for="(field) in client_data"
+			:key="field.id"
+			:value="field"
+
+		/>
 		<FormEntry label="Nazwisko"  />
 
-		{{  user }}
 
 	</div>
 </template>
@@ -17,13 +23,14 @@ import FormEntry from "./FormEntry.vue";
 export default {
 	name: "FormStep",
 	props: {
-		user: Object,
 	},
 	components: {
 		FormEntry,
 	},
 	data() {
 		return {
+		client_data: Object // musi być w data bo wyswietla sie no mutating props
+
 		};
 	},
 	methods: {},
