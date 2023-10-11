@@ -1,37 +1,27 @@
 <template>
-	<div class="first-step" v-show="firstStepShow">
-		<FormEntry
-			label="Imię"
-			v-model="userData.firstName"
-			:class="{
-				unvalidated: !validation(userData.firstName, valType.nonEmptyString),
-			}"
-		/>
-		<FormEntry
-			label="Drugie imię"
-			v-model="userData.secondName"
-			:class="{
-				unvalidated: !validationOptional(
-					userData.secondName,
-					valType.nonEmptyString
-				),
-			}"
-		/>
-		<FormEntry
-			label="Nazwisko"
-			v-model="userData.surName"
-			:class="{
-				unvalidated: !validation(userData.surName, valType.nonEmptyString),
-			}"
-		/>
-	</div>
-	<br />
+    <div>
+        
 
-	<button @click="triggerFirstStepValidation" v-show="firstStepShow">
-		Przejdź dalej
-	</button>
+        <FormStep
+            v-show="currentStep === Steps.ClientData"
+			:client_data = "userData.client_data"
+        />
+		
+        <div
+            v-show="currentStep === Steps.AddressData"
+        >
+Krok 2
+        </div>
+        <div
+            v-show="currentStep === Steps.Summary"
+        >
+Krok 3
+        </div>
+        <button @click="currentStep--" v-show="currentStep !== Steps.ClientData"> wstecz</button>
+        <button @click="currentStep++"> dalej</button>
+    </div>
 
-	<div class="second-step" v-show="secondStepShow">
+	<!-- <div class="second-step" v-show="secondStepShow">
 		<FormEntry
 			label="e-mail"
 			v-model="userData.email"
@@ -96,9 +86,9 @@
 		<button @click="triggerSecondStepValidation()" v-show="secondStepShow">
 			Przejdź do podsumowania
 		</button>
-	</div>
+	</div> -->
 
-	<div class="summary" v-show="summaryShow">
+	<!-- <div class="summary" v-show="summaryShow">
 		<h2>Podsumowanie:</h2>
 		<br />
 		<h3>Dane klienta:</h3>
@@ -135,35 +125,23 @@
 				Wyślij na maila
 			</a>
 		</button>
-	</div>
+	</div> -->
 </template>
 
 <script>
-import FormEntry from "./FormEntry.vue";
 
+import UserData from "@/js/UserData.js";
+import FormStep from "./FormStep.vue";
+import Steps from "@/js/Steps.js";
 export default {
 	name: "FormLayout",
-	props: {},
 	components: {
-		FormEntry,
+		FormStep,
+	},
+	props: {
 	},
 	data() {
 		return {
-			firstStepShow: true,
-			secondStepShow: false,
-			summaryShow: false,
-			userData: {
-				firstName: "",
-				secondName: "",
-				surName: "",
-				email: "",
-				phone: "",
-				street: "",
-				houseNumber: "",
-				apartmentNumber: "",
-				postalCode: "",
-				city: "",
-			},
 			checkValidity: false, // determines whether errors are shown or not
 			valType: {
 				// validation type
@@ -173,7 +151,10 @@ export default {
 				number: /[1-9]+\d*/i,
 				postalCode: /\d{2}-{1}\d{3}/i,
 			},
-		};
+            Steps: Steps,
+            currentStep:Steps.ClientData,
+			userData: new UserData()
+        };
 	},
 	methods: {
 		triggerNextStep() {
