@@ -17,11 +17,11 @@
         >
 Podsumowanie
         </div>
-		<Footer>
+		<div class="footer">
 				<br />
 			<button @click="currentStep--" v-show="currentStep !== Steps.ClientData"> wstecz</button>
 			<button @click="currentStep++">{{ nextStepButton }}</button>
-		</Footer>
+		</div>
     </div>
 
 	
