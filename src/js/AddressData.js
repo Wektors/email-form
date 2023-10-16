@@ -36,4 +36,24 @@ export default class AddressData {
             this.postalCode.isValid() &&
             this.city.isValid();
     }
+
+    printSummary(){
+        return `
+        <h3> Dane kontaktowe oraz adresowe:</h3>
+        <br />
+        ${this.email.label}:  ${this.email.printForSummary()}
+        <br />
+        ${this.phone.label}:  ${this.phone.printForSummary()}
+        <br />
+        ${this.street.label}:  ${this.street.printForSummary()}
+        <br />
+        ${this.houseNumber.label}:  ${this.houseNumber.printForSummary()}  
+        <br />
+        ${this.apartmentNumber.label}:  ${this.apartmentNumber.printForSummary()}       
+        <br />
+        ${this.postalCode.label}:  ${this.postalCode.printForSummary()}      
+        <br />
+        ${this.city.label}:  ${this.city.printForSummary()}
+        `;
+    }
 }

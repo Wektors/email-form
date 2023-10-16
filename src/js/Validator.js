@@ -15,6 +15,10 @@ export default class Validator {
      * @returns {boolean}
      */
     isValid(value){
+        console.log(this._required)
+        console.log(value)
+        console.log(this._regex.test(value))
+        console.log(this._regex)
         if (this._required === false){
             if (value.length === 0){
                 return true;

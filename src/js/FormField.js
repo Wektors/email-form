@@ -26,4 +26,11 @@ export class FormField {
     isValid(){
         return this.validator.isValid(this.value);
     }
+
+    printForSummary(){
+        if(this.value.length===0){
+            return "-"
+        }
+        return this.value
+    }
 }

@@ -11,14 +11,12 @@
             v-show="currentStep === Steps.AddressData"
             v-model="userData.address_data"
         />
-
-        <div
+        <FormSummary
             v-show="currentStep === Steps.Summary"
-        >
-            Podsumowanie
-        </div>
+            :userData="userData"
+        />
         <div class="footer">
-            <button @click="handleBack" v-show="currentStep !== Steps.ClientData"> wstecz</button>
+            <button @click="handleBack" v-show="currentStep !== Steps.ClientData"> Wstecz</button>
             <button @click="handleNext">{{ nextStepButton }}</button>
         </div>
     </div>
@@ -29,10 +27,12 @@
 import UserData from '@/js/UserData.js';
 import FormStep from './FormStep.vue';
 import Steps from '@/js/Steps.js';
+import FormSummary from '@/components/FormSummary';
 
 export default {
     name: 'FormLayout',
     components: {
+        FormSummary,
         FormStep,
     },
     data(){
@@ -47,9 +47,11 @@ export default {
         nextStepButton: function (){
             if (this.currentStep === Steps.AddressData){
                 return 'Przejdź do podsumowania';
-            } else {
-                return 'Przejdź do kolejnego kroku';
+            } else if(this.currentStep===Steps.Summary) {
+                return "Wyślij"
             }
+            return 'Dalej';
+
         },
     },
     methods: {
@@ -61,6 +63,9 @@ export default {
         handleNext: function (){
             if (this.isValidStep()){
                 this.currentStep++;
+            }
+            if(this.currentStep===Steps.Summary){
+
             }
         },
         isValidStep: function (){

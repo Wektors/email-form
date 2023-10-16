@@ -27,4 +27,16 @@ export default class ClientData {
     isValid(){
         return this.firstName.isValid() && this.secondName.isValid() && this.surName.isValid();
     }
+
+    printSummary(){
+        return `
+        <h3>Dane klienta:</h3>
+        <br />
+        ${this.firstName.label}:  ${this.firstName.printForSummary()}
+        <br />
+        ${this.secondName.label}:  ${this.secondName.printForSummary()}
+        <br />
+        ${this.surName.label}:  ${this.surName.printForSummary()}
+        `
+    }
 }
