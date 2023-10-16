@@ -8,12 +8,15 @@ export default class ClientData {
      * @param {string|undefined}options.surName,
      */
     constructor(options){
-        this.firstName = options.firstName;
+        this.firstName = "sss";
         this.secondName = options.secondName;
         this.surName = options.surName;
     }
 
     getFields(){
         return Object.keys(this);
+    }
+    setField(field, id) {
+        this[id] = field;
     }
 }

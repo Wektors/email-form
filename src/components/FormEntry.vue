@@ -3,9 +3,10 @@
 		{{ label }}
 	</div>
 	<input
+		name="label"
 		:class="checkValidity"
 		type="text"
-		v-bind:placeholder="`Wpisz ${label}`"
+		:placeholder="`Wpisz ${label}`"
 		:value="modelValue"
 		@input="$emit('update:modelValue', $event.target.value)"
 	/>
@@ -14,9 +15,10 @@
 export default {
 	name: "FormEntry",
 	props: {
+		value: String,
 		label: String,
-		modelValue: String,
 	},
+
 	computed: {
 		checkValidity: function () {
 			if (this.validated) {

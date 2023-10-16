@@ -4,12 +4,12 @@
 
         <FormStep
             v-show="currentStep === Steps.ClientData"
-			:client_data = "userData.client_data"
+			v-model="userData.client_data"
         />
 		
         <FormStep
             v-show="currentStep === Steps.AddressData"
-			:client_data = "userData.address_data"
+			v-model = "userData.address_data"
         />
 
         <div
@@ -24,7 +24,6 @@ Podsumowanie
 		</div>
     </div>
 
-	
 
 	<!-- <div class="summary" v-show="summaryShow">
 		<h2>Podsumowanie:</h2>

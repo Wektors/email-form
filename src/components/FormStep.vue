@@ -1,21 +1,29 @@
 <template>
 	<div class="first-step">
+		
+		<!-- eslint-disable -->
 		<FormEntry
-			v-for="(field, id) in client_data.getFields()"
+			v-for="(field, id) in modelValue.getFields()"
 			:label="field"
 			:key="id"
-			:value="field"
+			
+			
+			v-model="modelValue[field]" 
 		/>
+		
+		{{ modelValue.firstName }}
 	</div>
 </template>
+	<!-- v-model="modelValue.firstName" -->
 
-<script>
+<script >
+	/* eslint-disable */
+
 import FormEntry from "./FormEntry.vue";
-import ClientData from "@/js/ClientData";
 export default {
 	name: "FormStep",
 	props: {
-		client_data: ClientData,
+		modelValue: Object,
 	},
 	components: {
 		FormEntry,
