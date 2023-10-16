@@ -1,3 +1,6 @@
+import { FormField } from '@/js/FormField';
+import Validators from '@/js/Validators';
+
 export default class ClientData {
 
     /**
@@ -8,15 +11,16 @@ export default class ClientData {
      * @param {string|undefined}options.surName,
      */
     constructor(options){
-        this.firstName = "sss";
-        this.secondName = options.secondName;
-        this.surName = options.surName;
+        this.firstName = new FormField('Imię', Validators.nonEmptyString, options.firstName);
+        this.secondName = new FormField('Drugie Imię', Validators.nonEmptyString, options.secondName);
+        this.surName = new FormField('Nazwisko', Validators.nonEmptyString, options.surName);
     }
 
     getFields(){
         return Object.keys(this);
     }
-    setField(field, id) {
+
+    setField(field, id){
         this[id] = field;
     }
 }

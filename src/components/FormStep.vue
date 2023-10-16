@@ -1,37 +1,35 @@
 <template>
-	<div class="first-step">
-		
-		<!-- eslint-disable -->
-		<FormEntry
-			v-for="(field, id) in modelValue.getFields()"
-			:label="field"
-			:key="id"
-			
-			
-			v-model="modelValue[field]" 
-		/>
-		
-		{{ modelValue.firstName }}
-	</div>
+    <div class="first-step">
+
+        <div
+            v-for="(field, id) in modelValue.getFields()"
+            :key="id"
+        >
+            <FormEntry
+                :form-field="modelValue[field]"
+            />
+        </div>
+    </div>
 </template>
-	<!-- v-model="modelValue.firstName" -->
+<!-- v-model="modelValue.firstName" -->
 
-<script >
-	/* eslint-disable */
+<script>
+/* eslint-disable */
 
-import FormEntry from "./FormEntry.vue";
+import FormEntry from './FormEntry.vue';
+
 export default {
-	name: "FormStep",
-	props: {
-		modelValue: Object,
-	},
-	components: {
-		FormEntry,
-	},
-	data() {
-		return {};
-	},
-	methods: {},
+    name: 'FormStep',
+    props: {
+        modelValue: Object,
+    },
+    components: {
+        FormEntry,
+    },
+    data(){
+        return {};
+    },
+    methods: {},
 };
 </script>
 
