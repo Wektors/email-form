@@ -2,7 +2,7 @@ export class FormField {
     /**
      *
      * @param {string}label
-     * @param {Validators}validator
+     * @param {Validator}validator
      * @param {string|undefined}value
      */
     constructor(label, validator, value = ''){
@@ -11,12 +11,19 @@ export class FormField {
         this.validator = validator;
     }
 
+    /**
+     *
+     * @param {string}value
+     */
     setValue(value){
-        console.log(value);
         this.value = value;
     }
 
-    get validated(){
-        return true;
+    /**
+     *
+     * @returns {boolean}
+     */
+    isValid(){
+        return this.validator.isValid(this.value);
     }
 }

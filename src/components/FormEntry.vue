@@ -20,12 +20,12 @@ export default {
 	},
     methods: {
         handleInput: function(){
-            this.formField.setValue(this.currentValue)
+            this.formField.setValue(this.currentValue);
         },
     },
 	computed: {
 		checkValidity: function () {
-			if (this.formField.validated) {
+			if (this.formField.isValid()) {
 				return "validated";
 			} else {
 				return "unvalidated";

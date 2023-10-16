@@ -11,9 +11,9 @@ export default class ClientData {
      * @param {string|undefined}options.surName,
      */
     constructor(options){
-        this.firstName = new FormField('Imię', Validators.nonEmptyString, options.firstName);
-        this.secondName = new FormField('Drugie Imię', Validators.nonEmptyString, options.secondName);
-        this.surName = new FormField('Nazwisko', Validators.nonEmptyString, options.surName);
+        this.firstName = new FormField('Imię', Validators.NOT_EMPTY_STRING, options.firstName);
+        this.secondName = new FormField('Drugie Imię', Validators.NOT_EMPTY_STRING_NOT_REQUIRED, options.secondName);
+        this.surName = new FormField('Nazwisko', Validators.NOT_EMPTY_STRING, options.surName);
     }
 
     getFields(){
