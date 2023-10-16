@@ -20,4 +20,12 @@ export default class UserData {
         this.client_data = new ClientData(options);
         this.address_data = new AddressData(options);
     }
+
+    hasValidClientData(){
+        return this.client_data.isValid();
+    }
+
+    hasValidAddressData(){
+        return this.address_data.isValid();
+    }
 }

@@ -23,4 +23,8 @@ export default class ClientData {
     setField(field, id){
         this[id] = field;
     }
+
+    isValid(){
+        return this.firstName.isValid() && this.secondName.isValid() && this.surName.isValid();
+    }
 }

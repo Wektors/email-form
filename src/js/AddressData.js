@@ -26,4 +26,14 @@ export default class AddressData {
     getFields(){
         return Object.keys(this);
     }
+
+    isValid(){
+        return this.email.isValid() &&
+            this.phone.isValid() &&
+            this.street.isValid() &&
+            this.houseNumber.isValid() &&
+            this.apartmentNumber.isValid() &&
+            this.postalCode.isValid() &&
+            this.city.isValid();
+    }
 }
