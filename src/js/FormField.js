@@ -28,9 +28,14 @@ export class FormField {
     }
 
     printForSummary(){
-        if(this.value.length===0){
-            return "-"
+        return this.label + ': ' + this.printValue();
+
+    }
+
+    printValue(){
+        if (this.value.length === 0){
+            return '-';
         }
-        return this.value
+        return this.value;
     }
 }

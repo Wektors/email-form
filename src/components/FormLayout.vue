@@ -64,8 +64,8 @@ export default {
             if (this.isValidStep()){
                 this.currentStep++;
             }
-            if(this.currentStep===Steps.Summary){
-
+            if (this.currentStep === Steps.Summary){
+                this.sendMail();
             }
         },
         isValidStep: function (){
@@ -76,6 +76,9 @@ export default {
             }
             return true;
         },
+        sendMail:function (){
+            window.location =this.userData.getMailtoData()
+        }
     },
 };
 </script>

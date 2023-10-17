@@ -28,4 +28,25 @@ export default class UserData {
     hasValidAddressData(){
         return this.address_data.isValid();
     }
+
+    getSendData(){
+        return window.encodeURIComponent(this.printForMail());
+    }
+
+    printSummary(){
+        return `<h1>Podsumowanie</h1>
+        <p>${this.client_data.printSummary()}</p>
+        <p>${this.address_data.printSummary()}</p>
+        `;
+    }
+    printForMail(){
+        return `
+            ${this.client_data.printForMail()}\n
+            ${this.address_data.printForMail()}\n
+        `;
+    }
+
+    getMailtoData(){
+        return `mailto:email@example.com?subject=${encodeURIComponent("Dane z formularza")}&body=${this.getSendData()}`;
+    }
 }

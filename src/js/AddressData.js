@@ -38,22 +38,18 @@ export default class AddressData {
     }
 
     printSummary(){
-        return `
-        <h3> Dane kontaktowe oraz adresowe:</h3>
-        <br />
-        ${this.email.label}:  ${this.email.printForSummary()}
-        <br />
-        ${this.phone.label}:  ${this.phone.printForSummary()}
-        <br />
-        ${this.street.label}:  ${this.street.printForSummary()}
-        <br />
-        ${this.houseNumber.label}:  ${this.houseNumber.printForSummary()}  
-        <br />
-        ${this.apartmentNumber.label}:  ${this.apartmentNumber.printForSummary()}       
-        <br />
-        ${this.postalCode.label}:  ${this.postalCode.printForSummary()}      
-        <br />
-        ${this.city.label}:  ${this.city.printForSummary()}
-        `;
+        let summary = `<h3> Dane kontaktowe oraz adresowe:</h3><br/>`;
+        this.getFields().forEach((field) => {
+            summary += `${this[field].printForSummary()}<br/>`;
+        });
+        return summary;
+    }
+
+    printForMail(){
+        let summary = `Dane kontaktowe oraz adresowe:\n\n`;
+        this.getFields().forEach((field) => {
+            summary += `${this[field].printForSummary()}\n`;
+        });
+        return summary;
     }
 }

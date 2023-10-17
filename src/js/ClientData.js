@@ -29,14 +29,18 @@ export default class ClientData {
     }
 
     printSummary(){
-        return `
-        <h3>Dane klienta:</h3>
-        <br />
-        ${this.firstName.label}:  ${this.firstName.printForSummary()}
-        <br />
-        ${this.secondName.label}:  ${this.secondName.printForSummary()}
-        <br />
-        ${this.surName.label}:  ${this.surName.printForSummary()}
-        `
+        let summary = `<h3>Dane klienta:</h3><br/>`;
+        this.getFields().forEach((field) => {
+            summary += `${this[field].printForSummary()}<br/>`;
+        });
+        return summary;
+    }
+
+    printForMail(){
+        let summary = `Dane klienta:\n\n`;
+        this.getFields().forEach((field) => {
+            summary += `${this[field].printForSummary()}\n`;
+        });
+        return summary;
     }
 }
