@@ -11,11 +11,8 @@
         </div>
     </div>
 </template>
-<!-- v-model="modelValue.firstName" -->
 
 <script>
-/* eslint-disable */
-
 import FormEntry from './FormEntry.vue';
 
 export default {
@@ -26,10 +23,6 @@ export default {
     components: {
         FormEntry,
     },
-    data(){
-        return {};
-    },
-    methods: {},
 };
 </script>
 

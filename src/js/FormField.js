@@ -26,7 +26,6 @@ export class FormField {
      * @returns {boolean}
      */
     showNotValidError(){
-        console.log(this._touched);
         return this._touched === false || this.validator.isValid(this.value);
     }
 

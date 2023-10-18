@@ -12,11 +12,6 @@ export default {
     props: {
         userData: UserData,
     },
-    methods: {},
-    computed: {},
-    data(){
-        return {};
-    },
 };
 </script>
 
