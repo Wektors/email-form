@@ -3,7 +3,7 @@
 		{{ formField.label }}
 	</div>
 	<input
-		:class="checkValidity"
+		:class="validityClass"
 		type="text"
 		:placeholder="`Wpisz ${formField.label}`"
 		v-model="currentValue"
@@ -24,16 +24,16 @@ export default {
         },
     },
 	computed: {
-		checkValidity: function () {
-			if (this.formField.isValid()) {
-				return "validated";
-			} else {
-				return "unvalidated";
-			}
-		},
-	},
+        validityClass: function (){
+            if (this.formField.showNotValidError()){
+                return 'validated';
+            }
+            return 'unvalidated';
+        },
+    },
 	data() {
 		return {
+            touched: false,
             currentValue: this.formField.value,
             validated: true,
         };

@@ -9,6 +9,7 @@ export class FormField {
         this.label = label;
         this.value = value;
         this.validator = validator;
+        this._touched = false;
     }
 
     /**
@@ -17,6 +18,16 @@ export class FormField {
      */
     setValue(value){
         this.value = value;
+        this._touched = true;
+    }
+
+    /**
+     *
+     * @returns {boolean}
+     */
+    showNotValidError(){
+        console.log(this._touched);
+        return this._touched === false || this.validator.isValid(this.value);
     }
 
     /**
@@ -24,14 +35,23 @@ export class FormField {
      * @returns {boolean}
      */
     isValid(){
+        this._touched = true;
         return this.validator.isValid(this.value);
     }
 
+    /**
+     *
+     * @returns {string}
+     */
     printForSummary(){
         return this.label + ': ' + this.printValue();
 
     }
 
+    /**
+     *
+     * @returns {string}
+     */
     printValue(){
         if (this.value.length === 0){
             return '-';

@@ -23,20 +23,32 @@ export default class AddressData {
         this.city = new FormField('Miasto', Validators.NOT_EMPTY_STRING, options.city);
     }
 
+    /**
+     *
+     * @returns {string[]}
+     */
     getFields(){
         return Object.keys(this);
     }
 
+    /**
+     *
+     * @returns {boolean}
+     */
     isValid(){
-        return this.email.isValid() &&
-            this.phone.isValid() &&
-            this.street.isValid() &&
-            this.houseNumber.isValid() &&
-            this.apartmentNumber.isValid() &&
-            this.postalCode.isValid() &&
-            this.city.isValid();
+        let valid = true;
+        this.getFields().forEach((field) => {
+            if (this[field].isValid() === false){
+                valid = false;
+            }
+        })
+        return valid;
     }
 
+    /**
+     *
+     * @returns {string}
+     */
     printSummary(){
         let summary = `<h3> Dane kontaktowe oraz adresowe:</h3><br/>`;
         this.getFields().forEach((field) => {
@@ -45,6 +57,10 @@ export default class AddressData {
         return summary;
     }
 
+    /**
+     *
+     * @returns {string}
+     */
     printForMail(){
         let summary = `Dane kontaktowe oraz adresowe:\n\n`;
         this.getFields().forEach((field) => {

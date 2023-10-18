@@ -6,7 +6,6 @@
             v-show="currentStep === Steps.ClientData"
             v-model="userData.client_data"
         />
-
         <FormStep
             v-show="currentStep === Steps.AddressData"
             v-model="userData.address_data"
@@ -47,8 +46,8 @@ export default {
         nextStepButton: function (){
             if (this.currentStep === Steps.AddressData){
                 return 'Przejdź do podsumowania';
-            } else if(this.currentStep===Steps.Summary) {
-                return "Wyślij"
+            } else if (this.currentStep === Steps.Summary){
+                return 'Wyślij';
             }
             return 'Dalej';
 
@@ -61,11 +60,10 @@ export default {
             }
         },
         handleNext: function (){
-            if (this.isValidStep()){
-                this.currentStep++;
-            }
             if (this.currentStep === Steps.Summary){
                 this.sendMail();
+            } else if (this.isValidStep()){
+                this.currentStep++;
             }
         },
         isValidStep: function (){
@@ -76,11 +74,16 @@ export default {
             }
             return true;
         },
-        sendMail:function (){
-            window.location =this.userData.getMailtoData()
-        }
+        sendMail: function (){
+            window.location = this.userData.getMailtoData();
+        },
     },
 };
 </script>
 
-<style></style>
+<style scoped>
+.footer {
+    margin-top: 2rem;
+}
+
+</style>

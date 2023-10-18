@@ -16,18 +16,31 @@ export default class ClientData {
         this.surName = new FormField('Nazwisko', Validators.NOT_EMPTY_STRING, options.surName);
     }
 
+    /**
+     *
+     * @returns {string[]}
+     */
     getFields(){
         return Object.keys(this);
     }
 
-    setField(field, id){
-        this[id] = field;
-    }
-
+    /**
+     *
+     * @returns {boolean}
+     */
     isValid(){
-        return this.firstName.isValid() && this.secondName.isValid() && this.surName.isValid();
-    }
+        let valid = true;
+        this.getFields().forEach((field) => {
+            if (this[field].isValid() === false){
+                valid = false;
+            }
+        })
+        return valid;    }
 
+    /**
+     *
+     * @returns {string}
+     */
     printSummary(){
         let summary = `<h3>Dane klienta:</h3><br/>`;
         this.getFields().forEach((field) => {
@@ -36,6 +49,10 @@ export default class ClientData {
         return summary;
     }
 
+    /**
+     *
+     * @returns {string}
+     */
     printForMail(){
         let summary = `Dane klienta:\n\n`;
         this.getFields().forEach((field) => {
