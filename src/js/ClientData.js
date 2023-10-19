@@ -1,3 +1,6 @@
+import { FormField } from '@/js/FormField';
+import Validators from '@/js/Validators';
+
 export default class ClientData {
 
     /**
@@ -8,15 +11,53 @@ export default class ClientData {
      * @param {string|undefined}options.surName,
      */
     constructor(options){
-        this.firstName = "sss";
-        this.secondName = options.secondName;
-        this.surName = options.surName;
+        this.firstName = new FormField('Imię', Validators.NOT_EMPTY_STRING, options.firstName);
+        this.secondName = new FormField('Drugie Imię', Validators.NOT_EMPTY_STRING_NOT_REQUIRED, options.secondName);
+        this.surName = new FormField('Nazwisko', Validators.NOT_EMPTY_STRING, options.surName);
     }
 
+    /**
+     *
+     * @returns {string[]}
+     */
     getFields(){
         return Object.keys(this);
     }
-    setField(field, id) {
-        this[id] = field;
+
+    /**
+     *
+     * @returns {boolean}
+     */
+    isValid(){
+        let valid = true;
+        this.getFields().forEach((field) => {
+            if (this[field].isValid() === false){
+                valid = false;
+            }
+        })
+        return valid;    }
+
+    /**
+     *
+     * @returns {string}
+     */
+    printSummary(){
+        let summary = `<h3>Dane klienta:</h3><br/>`;
+        this.getFields().forEach((field) => {
+            summary += `${this[field].printForSummary()}<br/>`;
+        });
+        return summary;
+    }
+
+    /**
+     *
+     * @returns {string}
+     */
+    printForMail(){
+        let summary = `Dane klienta:\n\n`;
+        this.getFields().forEach((field) => {
+            summary += `${this[field].printForSummary()}\n`;
+        });
+        return summary;
     }
 }

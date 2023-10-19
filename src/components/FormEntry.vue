@@ -1,37 +1,42 @@
 <template>
 	<div class="label">
-		{{ label }}
+		{{ formField.label }}
 	</div>
 	<input
-		name="label"
-		:class="checkValidity"
+		:class="validityClass"
 		type="text"
-		:placeholder="`Wpisz ${label}`"
-		:value="modelValue"
-		@input="$emit('update:modelValue', $event.target.value)"
+		:placeholder="`Wpisz ${formField.label}`"
+		v-model="currentValue"
+        @input="handleInput"
 	/>
 </template>
 <script>
+import { FormField } from '@/js/FormField';
+
 export default {
 	name: "FormEntry",
 	props: {
-		value: String,
-		label: String,
+		formField: FormField,
 	},
-
+    methods: {
+        handleInput: function(){
+            this.formField.setValue(this.currentValue);
+        },
+    },
 	computed: {
-		checkValidity: function () {
-			if (this.validated) {
-				return "validated";
-			} else {
-				return "unvalidated";
-			}
-		},
-	},
+        validityClass: function (){
+            if (this.formField.showNotValidError()){
+                return 'validated';
+            }
+            return 'unvalidated';
+        },
+    },
 	data() {
 		return {
-			validated: true,
-		};
+            touched: false,
+            currentValue: this.formField.value,
+            validated: true,
+        };
 	},
 };
 </script>
