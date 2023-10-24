@@ -6,7 +6,8 @@
                 <button>Wyczyść</button>
             </div>
             <div class='inner-item'>
-                <button>Zapisz</button>
+                <button @click="handleSave">Zapisz</button>
+                <button>Odczytaj</button>
                 <button>Usuń</button>
             </div>
            
@@ -37,6 +38,7 @@ import UserData from '@/js/UserData.js';
 import FormStep from './FormStep.vue';
 import Steps from '@/js/Steps.js';
 import FormSummary from '@/components/FormSummary';
+// import Storage from '@/js/Storage.js';
 
 export default {
     name: 'FormLayout',
@@ -87,8 +89,21 @@ export default {
         sendMail: function (){
             window.location = this.userData.getMailtoData();
         },
+        handleSave: function (){
+            let data = this.userData.client_data.serialize()
+            let keys = Object.keys(data)
+            keys.forEach((key) => {
+                let value = data[key];
+                localStorage.setItem(key, value);
+            });
+            
+        },
+        handleLoad: function (){
+            
+        }
     },
 };
+
 </script>
 
 <style scoped>
