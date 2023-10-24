@@ -1,6 +1,16 @@
 <template>
     <div>
+        <div class="top-container">
 
+            <div class='inner-item'>
+                <button>Wyczyść</button>
+            </div>
+            <div class='inner-item'>
+                <button>Zapisz</button>
+                <button>Usuń</button>
+            </div>
+           
+        </div>
 
         <FormStep
             v-show="currentStep === Steps.ClientData"
@@ -82,6 +92,18 @@ export default {
 </script>
 
 <style scoped>
+.top-container {
+    margin: 2rem;
+    display: flex;
+    justify-content: space-between;
+}
+.inner-item {
+    display: flex;
+    flex-direction: column;
+    align-content: space-around;
+}
+
+
 .footer {
     margin-top: 2rem;
 }
