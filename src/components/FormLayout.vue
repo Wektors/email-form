@@ -7,7 +7,7 @@
             </div>
             <div class='inner-item'>
                 <button @click="handleSave">Zapisz</button>
-                <button @click="handleLoad">Odczytaj</button>
+                <button v-if="storageEmpty == false" @click="handleLoad">Odczytaj</button>
                 <button>Usuń</button>
             </div>
            
@@ -38,7 +38,7 @@ import UserData from '@/js/UserData.js';
 import FormStep from './FormStep.vue';
 import Steps from '@/js/Steps.js';
 import FormSummary from '@/components/FormSummary';
-// import Storage from '@/js/Storage.js';
+import Storage from '@/js/Storage.js';
 
 export default {
     name: 'FormLayout',
@@ -51,6 +51,7 @@ export default {
             Steps: Steps,
             currentStep: Steps.ClientData,
             userData: new UserData(),
+            Storage: Storage,
         };
 
     },
@@ -64,6 +65,13 @@ export default {
             return 'Dalej';
 
         },
+        storageEmpty() {
+            if (localStorage.length > 0) {
+                return false
+            } else {
+                return true
+            }
+        }
     },
     methods: {
         handleBack: function (){
@@ -101,7 +109,6 @@ export default {
                 let value = data[key];
                 localStorage.setItem(key, value);
             });
-            
         },
         handleLoad: function (){
             let data 
@@ -120,7 +127,8 @@ export default {
             } else if (this.currentStep === Steps.AddressData) {
                 this.userData.address_data.deserialize(fromStorage)
             }
-        }
+        },
+        
     },
 };
 
