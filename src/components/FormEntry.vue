@@ -9,6 +9,7 @@
 		v-model="currentValue"
         @input="handleInput"
 	/>
+	{{ this.formField.value }}
 </template>
 <script>
 import { FormField } from '@/js/FormField';

@@ -102,4 +102,18 @@ export default class AddressData {
 		});
 		return serializeMap;
 	}
+	// deserialize(storageMap) {
+	//     let deserializedMap = {};
+	// 			storageMap.forEach((field) => {
+	// 				this.formField[field].setValue(storageMap[field]);
+	// 			});
+	// 			return deserializedMap;
+	// }
+	deserialize(storageMap) {
+		let fields = this.getFields();
+		fields.forEach((field) => {
+			this[field]._touched = true;
+			this[field].value = storageMap[field];
+		});
+	}
 }

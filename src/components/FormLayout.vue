@@ -7,7 +7,7 @@
             </div>
             <div class='inner-item'>
                 <button @click="handleSave">Zapisz</button>
-                <button>Odczytaj</button>
+                <button @click="handleLoad">Odczytaj</button>
                 <button>Usuń</button>
             </div>
            
@@ -104,7 +104,22 @@ export default {
             
         },
         handleLoad: function (){
+            let data 
+            if (this.currentStep === Steps.ClientData) {
+                data = this.userData.client_data.getFields()
+            } else if (this.currentStep === Steps.AddressData) {
+                data = this.userData.address_data.getFields()
+            }
+            const fromStorage = {}
+            data.forEach((key) => {
+                fromStorage[key] = localStorage.getItem(key);
+            });
             
+            if (this.currentStep === Steps.ClientData) {
+                this.userData.client_data.deserialize(fromStorage)
+            } else if (this.currentStep === Steps.AddressData) {
+                this.userData.address_data.deserialize(fromStorage)
+            }
         }
     },
 };

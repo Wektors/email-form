@@ -82,4 +82,11 @@ export default class ClientData {
 		});
 		return serializeMap;
 	}
+	deserialize(storageMap) {
+		let fields = this.getFields();
+		fields.forEach((field) => {
+			this[field]._touched = true;
+			this[field].value = storageMap[field];
+		});
+	}
 }
