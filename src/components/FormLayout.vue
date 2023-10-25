@@ -90,7 +90,12 @@ export default {
             window.location = this.userData.getMailtoData();
         },
         handleSave: function (){
-            let data = this.userData.client_data.serialize()
+            let data 
+            if (this.currentStep === Steps.ClientData) {
+                data = this.userData.client_data.serialize()
+            } else if (this.currentStep === Steps.AddressData) {
+                data = this.userData.address_data.serialize()
+            }
             let keys = Object.keys(data)
             keys.forEach((key) => {
                 let value = data[key];
