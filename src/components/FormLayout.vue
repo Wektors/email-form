@@ -3,12 +3,12 @@
         <div class="top-container">
 
             <div class='inner-item'>
-                <button>Wyczyść</button>
+                <button>Wyczyść krok</button>
             </div>
             <div class='inner-item'>
                 <button @click="handleSave">Zapisz</button>
                 <button v-if="storageEmpty == false" @click="handleLoad">Odczytaj</button>
-                <button>Usuń</button>
+                <button v-if="storageEmpty == false" @click="handleDelete">Usuń dane</button>
             </div>
            
         </div>
@@ -66,7 +66,7 @@ export default {
 
         },
         storageEmpty() {
-            if (localStorage.length > 0) {
+            if (localStorage.getItem("userData")) {
                 return false
             } else {
                 return true
@@ -144,6 +144,9 @@ export default {
                 this.userData.address_data.deserialize(storageSubObject)
             }
         },
+        handleDelete: function() {
+            localStorage.removeItem("userData")
+        }
         
     },
 };
