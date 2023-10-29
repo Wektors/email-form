@@ -99,33 +99,45 @@ export default {
         },
         handleSave: function (){
             let data 
+            let keyToStorage = "userData"
+            let innerKeyToStorage;
             if (this.currentStep === Steps.ClientData) {
                 data = this.userData.client_data.serialize()
+                innerKeyToStorage = "clientData"
             } else if (this.currentStep === Steps.AddressData) {
+                innerKeyToStorage = "addressData"
                 data = this.userData.address_data.serialize()
             }
             let keys = Object.keys(data)
+            let valueToStorage = {}
             keys.forEach((key) => {
-                let value = data[key];
-                localStorage.setItem(key, value);
-            });
-        },
-        handleLoad: function (){
-            let data 
-            if (this.currentStep === Steps.ClientData) {
-                data = this.userData.client_data.getFields()
-            } else if (this.currentStep === Steps.AddressData) {
-                data = this.userData.address_data.getFields()
-            }
-            const fromStorage = {}
-            data.forEach((key) => {
-                fromStorage[key] = localStorage.getItem(key);
+                valueToStorage[key] = data[key];
             });
             
+            let toStorage = JSON.parse(localStorage.getItem("userData"))
+
+            toStorage[innerKeyToStorage] = valueToStorage
+
+            localStorage.setItem(keyToStorage, JSON.stringify(toStorage));
+            // console.log(toStorage.innerKeyToStorage)
+            console.log(localStorage.getItem("userData"));
+
+        },
+        handleLoad: function (){
+
+            let dataKey
             if (this.currentStep === Steps.ClientData) {
-                this.userData.client_data.deserialize(fromStorage)
+                dataKey = "clientData"
             } else if (this.currentStep === Steps.AddressData) {
-                this.userData.address_data.deserialize(fromStorage)
+                dataKey = "addressData"
+            }
+                let storageObject = JSON.parse(localStorage.getItem("userData"));
+                let storageSubObject = storageObject[dataKey]
+            console.log(storageSubObject)
+            if (this.currentStep === Steps.ClientData) {
+                this.userData.client_data.deserialize(storageSubObject)
+            } else if (this.currentStep === Steps.AddressData) {
+                this.userData.address_data.deserialize(storageSubObject)
             }
         },
         
