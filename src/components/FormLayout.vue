@@ -114,7 +114,11 @@ export default {
                 valueToStorage[key] = data[key];
             });
             
-            let toStorage = JSON.parse(localStorage.getItem("userData"))
+            let toStorage = {}
+            
+            if (localStorage.getItem("userData")) {
+                toStorage = JSON.parse(localStorage.getItem("userData"))
+            }
 
             toStorage[innerKeyToStorage] = valueToStorage
 
