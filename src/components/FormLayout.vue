@@ -6,7 +6,10 @@
 			</div>
 			<div class="inner-item">
 				<button @click="handleSave">Zapisz</button>
-				<button v-if="storageEmpty == false" @click="handleLoad">
+				<button
+					v-if="storageEmpty == false"
+					@click="handleLoad(), handleNextIfNeeded()"
+				>
 					Odczytaj
 				</button>
 				<button v-if="storageEmpty == false" @click="handleDelete">
@@ -96,56 +99,45 @@ export default {
 			window.location = this.userData.getMailtoData();
 		},
 		handleSave: function () {
-			let data;
-			let keyToStorage = "userData";
-			let innerKeyToStorage;
-			if (this.currentStep === Steps.ClientData) {
-				data = this.userData.client_data.serialize();
-				innerKeyToStorage = "clientData";
-			} else if (this.currentStep === Steps.AddressData) {
-				innerKeyToStorage = "addressData";
-				data = this.userData.address_data.serialize();
-			}
-			let keys = Object.keys(data);
-			let valueToStorage = {};
-			keys.forEach((key) => {
-				valueToStorage[key] = data[key];
-			});
+			let clientDataSerialized = this.userData.client_data.serialize();
+
+			let addressDataSerialized = this.userData.address_data.serialize();
 
 			let toStorage = {};
 
-			if (localStorage.getItem("userData")) {
-				toStorage = JSON.parse(localStorage.getItem("userData"));
-			}
+			toStorage["clientData"] = clientDataSerialized;
+			toStorage["addressData"] = addressDataSerialized;
 
-			toStorage[innerKeyToStorage] = valueToStorage;
+			localStorage.setItem("userData", JSON.stringify(toStorage));
 
-			localStorage.setItem(keyToStorage, JSON.stringify(toStorage));
-			// console.log(toStorage.innerKeyToStorage)
-			console.log(localStorage.getItem("userData"));
+			localStorage.setItem("currentStep", this.currentStep);
 		},
 		handleLoad: function () {
 			if (localStorage.getItem("userData") !== null) {
-				let dataKey;
-				if (this.currentStep === Steps.ClientData) {
-					dataKey = "clientData";
-				} else if (this.currentStep === Steps.AddressData) {
-					dataKey = "addressData";
+				let clientDataFromStorage;
+				let addressDataFromStorage;
+				if (localStorage.getItem("userData") !== null) {
+					let fullObject = JSON.parse(localStorage.getItem("userData"));
+					if (fullObject["clientData"] !== null) {
+						clientDataFromStorage = fullObject["clientData"];
+					}
+					if (fullObject["addressData"] !== null) {
+						addressDataFromStorage = fullObject["addressData"];
+					}
 				}
-				let storageObject 
-                
-                if (localStorage.getItem("userData") !== null) {
-                    let fullObject= JSON.parse(localStorage.getItem("userData"));
-                    storageObject = fullObject[dataKey]
-                }
-                console.log(storageObject);
-				
 
-				if (this.currentStep === Steps.ClientData) {
-					this.userData.client_data.deserialize(storageObject);
-				} else if (this.currentStep === Steps.AddressData) {
-					this.userData.address_data.deserialize(storageObject);
-				}
+				this.userData.client_data.deserialize(clientDataFromStorage);
+
+				this.userData.address_data.deserialize(addressDataFromStorage);
+			}
+		},
+		handleNextIfNeeded: function () {
+			const stepLoaded = localStorage.getItem("currentStep");
+			console.log(stepLoaded);
+			if (stepLoaded == Steps.AddressData) {
+				this.currentStep = Steps.AddressData;
+			} else if (stepLoaded == Steps.Summary) {
+				this.currentStep = Steps.Summary;
 			}
 		},
 		handleDelete: function () {
