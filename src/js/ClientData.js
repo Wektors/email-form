@@ -85,8 +85,10 @@ export default class ClientData {
 	deserialize(storageMap) {
 		let fields = this.getFields();
 		fields.forEach((field) => {
-			this[field]._touched = true;
-			this[field].value = storageMap[field];
+			if (storageMap[field] !== undefined) {
+				this[field]._touched = true;
+				this[field].setValue(storageMap[field]);
+			}
 		});
 	}
 }
