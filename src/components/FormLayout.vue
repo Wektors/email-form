@@ -2,7 +2,7 @@
 	<div>
 		<div class="top-container">
 			<div class="inner-item">
-				<button>Wyczyść krok</button>
+				<button @click="clearInputs">Wyczyść krok</button>
 			</div>
 			<div class="inner-item">
 				<button @click="handleSave">Zapisz</button>
@@ -142,7 +142,11 @@ export default {
 		},
 		handleDelete: function () {
 			localStorage.removeItem("userData");
+			localStorage.removeItem("currentStep");
 		},
+		clearInputs: function () {
+			this.userData = new UserData();
+		}
 	},
 };
 </script>
