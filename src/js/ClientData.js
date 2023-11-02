@@ -86,7 +86,6 @@ export default class ClientData {
 		let fields = this.getFields();
 		fields.forEach((field) => {
 			if (storageMap[field] !== undefined) {
-				this[field]._load = true;
 				this[field].setValue(storageMap[field]);
 			}
 		});

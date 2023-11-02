@@ -22,6 +22,10 @@ export class FormField {
         this._touched = true;
     }
 
+    getValue() {
+        return this.value;
+    }
+
     /**
      *
      * @returns {boolean}

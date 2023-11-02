@@ -6,45 +6,44 @@
 		:class="validityClass"
 		type="text"
 		:placeholder="`Wpisz ${formField.label}`"
-		v-model="currentValue"
-        @input="handleInput"
+		v-model="inputValue"
+		@input="inputValue.set"
 	/>
-	{{ this.formField.value }}
+	<!-- {{ this.formField.value }} -->
 </template>
 <script>
-import { FormField } from '@/js/FormField';
+import { FormField } from "@/js/FormField";
 
 export default {
 	name: "FormEntry",
 	props: {
 		formField: FormField,
 	},
-    methods: {
-        handleInput: function(){
-            this.formField.setValue(this.currentValue);
-        },
-    },
+	methods: {
+		
+	},
 	computed: {
-        validityClass: function (){
-            if (this.formField.showNotValidError()){
-                return 'validated';
-            }
-            return 'unvalidated';
-        },
-    },
-	watch: {
-		load: function () {
-			console.log("updated")
-			this.currentValue = this.formField.value;
-		}
+		validityClass: function () {
+			if (this.formField.showNotValidError()) {
+				return "validated";
+			}
+			return "unvalidated";
+		},
+		inputValue: {
+			get() {
+				return this.formField.value;
+			},
+			set(val) {
+				this.formField.setValue(val);
+			},
+		},
 	},
 	data() {
 		return {
-			load: this.formField._load,
-            touched: false,
-            currentValue: this.formField.value,
-            validated: true,
-        };
+			touched: false,
+			currentValue: this.formField.value,
+			validated: true,
+		};
 	},
 };
 </script>
