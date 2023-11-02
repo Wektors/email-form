@@ -32,8 +32,15 @@ export default {
             return 'unvalidated';
         },
     },
+	watch: {
+		load: function () {
+			console.log("updated")
+			this.currentValue = this.formField.value;
+		}
+	},
 	data() {
 		return {
+			load: this.formField._load,
             touched: false,
             currentValue: this.formField.value,
             validated: true,

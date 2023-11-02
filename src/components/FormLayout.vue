@@ -133,7 +133,6 @@ export default {
 		},
 		handleNextIfNeeded: function () {
 			const stepLoaded = localStorage.getItem("currentStep");
-			console.log(stepLoaded);
 			if (stepLoaded == Steps.AddressData) {
 				this.currentStep = Steps.AddressData;
 			} else if (stepLoaded == Steps.Summary) {
@@ -145,8 +144,12 @@ export default {
 			localStorage.removeItem("currentStep");
 		},
 		clearInputs: function () {
-			this.userData = new UserData();
-		}
+			if (this.currentStep === Steps.ClientData) {
+				this.userData.clearClientData();
+			} else {
+				this.userData.clearAddressData();
+			}
+		},
 	},
 };
 </script>
