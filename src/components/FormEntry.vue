@@ -9,7 +9,6 @@
 		v-model="inputValue"
 		@input="inputValue.set"
 	/>
-	<!-- {{ this.formField.value }} -->
 </template>
 <script>
 import { FormField } from "@/js/FormField";

@@ -10,7 +10,6 @@ export class FormField {
         this.value = value;
         this.validator = validator;
         this._touched = false;
-        this._load = false;
     }
 
     /**
@@ -20,10 +19,6 @@ export class FormField {
     setValue(value){
         this.value = value;
         this._touched = true;
-    }
-
-    getValue() {
-        return this.value;
     }
 
     /**
