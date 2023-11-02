@@ -7,12 +7,12 @@
 			<div class="inner-item">
 				<button @click="handleSave">Zapisz</button>
 				<button
-					v-if="storageEmpty == false"
+					v-if="storageEmpty === false"
 					@click="handleLoad(), handleNextIfNeeded()"
 				>
 					Odczytaj
 				</button>
-				<button v-if="storageEmpty == false" @click="handleDelete">
+				<button v-if="storageEmpty === false" @click="handleDelete">
 					Usuń dane
 				</button>
 			</div>
@@ -55,6 +55,7 @@ export default {
 			currentStep: Steps.ClientData,
 			userData: new UserData(),
 			Storage: Storage,
+			storageEmpty: Storage.isEmpty()
 		};
 	},
 	computed: {
@@ -65,13 +66,6 @@ export default {
 				return "Wyślij";
 			}
 			return "Dalej";
-		},
-		storageEmpty() {
-			if (localStorage.getItem("userData")) {
-				return false;
-			} else {
-				return true;
-			}
 		},
 	},
 	methods: {
@@ -99,40 +93,18 @@ export default {
 			window.location = this.userData.getMailtoData();
 		},
 		handleSave: function () {
-			let clientDataSerialized = this.userData.client_data.serialize();
-
-			let addressDataSerialized = this.userData.address_data.serialize();
-
-			let toStorage = {};
-
-			toStorage["clientData"] = clientDataSerialized;
-			toStorage["addressData"] = addressDataSerialized;
-
-			localStorage.setItem("userData", JSON.stringify(toStorage));
-
-			localStorage.setItem("currentStep", this.currentStep);
+			Storage.save(
+				this.userData.client_data,
+				this.userData.address_data,
+				this.currentStep
+			);
+			this.storageEmpty = false;
 		},
 		handleLoad: function () {
-			if (localStorage.getItem("userData") !== null) {
-				let clientDataFromStorage;
-				let addressDataFromStorage;
-				if (localStorage.getItem("userData") !== null) {
-					let fullObject = JSON.parse(localStorage.getItem("userData"));
-					if (fullObject["clientData"] !== null) {
-						clientDataFromStorage = fullObject["clientData"];
-					}
-					if (fullObject["addressData"] !== null) {
-						addressDataFromStorage = fullObject["addressData"];
-					}
-				}
-
-				this.userData.client_data.deserialize(clientDataFromStorage);
-
-				this.userData.address_data.deserialize(addressDataFromStorage);
-			}
+			Storage.loadData(this.userData.client_data, this.userData.address_data);
 		},
 		handleNextIfNeeded: function () {
-			const stepLoaded = localStorage.getItem("currentStep");
+			const stepLoaded = Storage.loadStep();
 			if (stepLoaded == Steps.AddressData) {
 				this.currentStep = Steps.AddressData;
 			} else if (stepLoaded == Steps.Summary) {
@@ -140,8 +112,8 @@ export default {
 			}
 		},
 		handleDelete: function () {
-			localStorage.removeItem("userData");
-			localStorage.removeItem("currentStep");
+			Storage.delete();
+			this.storageEmpty = true;
 		},
 		clearInputs: function () {
 			if (this.currentStep === Steps.ClientData) {
