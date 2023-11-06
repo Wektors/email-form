@@ -55,7 +55,7 @@ export default {
 			currentStep: Steps.ClientData,
 			userData: new UserData(),
 			Storage: Storage,
-			storageEmpty: Storage.isEmpty()
+			storageEmpty: Storage.isEmpty(),
 		};
 	},
 	computed: {
@@ -93,15 +93,38 @@ export default {
 			window.location = this.userData.getMailtoData();
 		},
 		handleSave: function () {
-			Storage.save(
-				this.userData.client_data,
-				this.userData.address_data,
-				this.currentStep
-			);
+			let clientDataSerialized = this.userData.client_data.serialize();
+
+			let addressDataSerialized = this.userData.address_data.serialize();
+
+			let toStorage = {};
+
+			toStorage["clientData"] = clientDataSerialized;
+			toStorage["addressData"] = addressDataSerialized;
+
+			Storage.save(toStorage, "userData");
+			Storage.save(this.currentStep, "currentStep");
 			this.storageEmpty = false;
 		},
 		handleLoad: function () {
-			Storage.loadData(this.userData.client_data, this.userData.address_data);
+
+			if (Storage.load("userData") !== null) {
+			let clientDataFromStorage;
+			let addressDataFromStorage;
+			if (Storage.load("userData") !== null) {
+				let fullObject = JSON.parse(Storage.load("userData"));
+				if (fullObject["clientData"] !== null) {
+					clientDataFromStorage = fullObject["clientData"];
+				}
+				if (fullObject["addressData"] !== null) {
+					addressDataFromStorage = fullObject["addressData"];
+				}
+			}
+
+			this.userData.client_data.deserialize(clientDataFromStorage);
+
+			this.userData.address_data.deserialize(addressDataFromStorage);
+		}
 		},
 		handleNextIfNeeded: function () {
 			const stepLoaded = Storage.loadStep();
