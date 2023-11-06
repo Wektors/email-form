@@ -8,7 +8,7 @@
 				<button @click="handleSave">Zapisz</button>
 				<button
 					v-if="storageEmpty === false"
-					@click="handleLoad(), handleNextIfNeeded()"
+					@click="handleLoad()"
 				>
 					Odczytaj
 				</button>
@@ -107,6 +107,11 @@ export default {
 			this.storageEmpty = false;
 		},
 		handleLoad: function () {
+			this.loadUserData();
+			this.loadCurrentStep();
+		},
+		
+		loadUserData: function () {
 
 			if (Storage.load("userData") !== null) {
 			let clientDataFromStorage;
@@ -126,7 +131,7 @@ export default {
 			this.userData.address_data.deserialize(addressDataFromStorage);
 		}
 		},
-		handleNextIfNeeded: function () {
+		loadCurrentStep: function () {
 			const stepLoaded = Storage.loadStep();
 			if (stepLoaded == Steps.AddressData) {
 				this.currentStep = Steps.AddressData;
