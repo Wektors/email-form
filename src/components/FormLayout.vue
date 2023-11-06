@@ -132,12 +132,11 @@ export default {
 		}
 		},
 		loadCurrentStep: function () {
-			const stepLoaded = Storage.loadStep();
-			if (stepLoaded == Steps.AddressData) {
-				this.currentStep = Steps.AddressData;
-			} else if (stepLoaded == Steps.Summary) {
-				this.currentStep = Steps.Summary;
-			}
+			const stepLoaded = JSON.parse(Storage.loadStep());
+			if (stepLoaded != this.currentStep) {
+				this.currentStep = stepLoaded;
+				console.log(this.currentStep);
+			} 
 		},
 		handleDelete: function () {
 			Storage.delete();
