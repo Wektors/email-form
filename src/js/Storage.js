@@ -7,19 +7,15 @@ export default {
 	load: function (data) {
 		return localStorage.getItem(data)
 	},
-	loadStep: function () {
-		return localStorage.getItem("currentStep");
-	},
 
-	isEmpty: function () {
-		if (localStorage.getItem("userData") !== null) {
+	isEmpty: function (key) {
+		if (localStorage.getItem(key) !== null) {
 			return false;
 		} else {
 			return true;
 		}
 	},
-	delete: function () {
-		localStorage.removeItem("userData");
-		localStorage.removeItem("currentStep");
+	delete: function (key) {
+		localStorage.removeItem(key);
 	},
 };

@@ -55,7 +55,7 @@ export default {
 			currentStep: Steps.ClientData,
 			userData: new UserData(),
 			Storage: Storage,
-			storageEmpty: Storage.isEmpty(),
+			storageEmpty: Storage.isEmpty("userData"),
 		};
 	},
 	computed: {
@@ -112,7 +112,6 @@ export default {
 		},
 		
 		loadUserData: function () {
-
 			if (Storage.load("userData") !== null) {
 			let clientDataFromStorage;
 			let addressDataFromStorage;
@@ -132,14 +131,15 @@ export default {
 		}
 		},
 		loadCurrentStep: function () {
-			const stepLoaded = JSON.parse(Storage.loadStep());
+			const stepLoaded = JSON.parse(Storage.load("currentStep"));
 			if (stepLoaded != this.currentStep) {
 				this.currentStep = stepLoaded;
 				console.log(this.currentStep);
 			} 
 		},
 		handleDelete: function () {
-			Storage.delete();
+			Storage.delete("userData");
+			Storage.delete("currentStep");
 			this.storageEmpty = true;
 		},
 		clearInputs: function () {
