@@ -93,17 +93,15 @@ export default {
 			window.location = this.userData.getMailtoData();
 		},
 		handleSave: function () {
-			let clientDataSerialized = this.userData.client_data.serialize();
-
-			let addressDataSerialized = this.userData.address_data.serialize();
-
-			let toStorage = {};
-
-			toStorage["clientData"] = clientDataSerialized;
-			toStorage["addressData"] = addressDataSerialized;
+			
+			let toStorage = {
+				"clientData": this.userData.client_data.serialize(),
+				"addressData": this.userData.address_data.serialize(),
+			};
 
 			Storage.save(toStorage, "userData");
 			Storage.save(this.currentStep, "currentStep");
+
 			this.storageEmpty = false;
 		},
 		handleLoad: function () {
@@ -112,23 +110,11 @@ export default {
 		},
 		
 		loadUserData: function () {
-			if (Storage.load("userData") !== null) {
-			let clientDataFromStorage;
-			let addressDataFromStorage;
-			if (Storage.load("userData") !== null) {
-				let fullObject = JSON.parse(Storage.load("userData"));
-				if (fullObject["clientData"] !== null) {
-					clientDataFromStorage = fullObject["clientData"];
-				}
-				if (fullObject["addressData"] !== null) {
-					addressDataFromStorage = fullObject["addressData"];
-				}
-			}
 
-			this.userData.client_data.deserialize(clientDataFromStorage);
+			this.userData.client_data.deserialize();
 
-			this.userData.address_data.deserialize(addressDataFromStorage);
-		}
+			this.userData.address_data.deserialize();
+		
 		},
 		loadCurrentStep: function () {
 			const stepLoaded = JSON.parse(Storage.load("currentStep"));

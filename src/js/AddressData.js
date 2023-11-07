@@ -1,5 +1,6 @@
 import { FormField } from "@/js/FormField";
 import Validators from "@/js/Validators";
+import Storage from "./Storage";
 
 export default class AddressData {
 	/**
@@ -103,13 +104,21 @@ export default class AddressData {
 		return serializeMap;
 	}
 
-	deserialize(storageMap) {
-		let fields = this.getFields();
-		fields.forEach((field) => {
-			if (storageMap[field] !== undefined) {
-				this[field]._touched = true;
-				this[field].setValue(storageMap[field])
+	deserialize() {
+		let classKey = "addressData";
+		if (Storage.load("userData") !== null) {
+			let fullObject = JSON.parse(Storage.load("userData"));
+			let storageMap;
+			if (fullObject[classKey] !== null) {
+				storageMap = fullObject[classKey];
 			}
-		});
+
+			let fields = this.getFields();
+			fields.forEach((field) => {
+				if (storageMap[field] !== undefined) {
+					this[field].setValue(storageMap[field]);
+				}
+			});
+		}
 	}
 }
