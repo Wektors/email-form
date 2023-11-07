@@ -1,5 +1,6 @@
 import ClientData from '@/js/ClientData';
 import AddressData from '@/js/AddressData';
+import CompanyData from '@/js/CompanyData';
 
 export default class UserData {
 	/**
@@ -19,6 +20,7 @@ export default class UserData {
 	constructor(options = {}) {
 		this.client_data = new ClientData(options);
 		this.address_data = new AddressData(options);
+		this.company_data = new CompanyData(options);
 	}
 
 	/**
@@ -31,8 +33,17 @@ export default class UserData {
 
 	/**
 	 *
+	 * @returns {boolean}
+	 */
+	hasValidCompanyData() {
+		return this.company_data.isValid();
+	}
+
+	/**
+	 *
 	 * @returns {*}
 	 */
+
 	hasValidAddressData() {
 		return this.address_data.isValid();
 	}
@@ -49,9 +60,20 @@ export default class UserData {
 	 *
 	 * @returns {string}
 	 */
-	printSummary() {
+	printSummaryWithClient() {
 		return `<h1>Podsumowanie</h1>
         <p>${this.client_data.printSummary()}</p>
+        <p>${this.address_data.printSummary()}</p>
+        `;
+	}
+
+	/**
+	 *
+	 * @returns {string}
+	 */
+	printSummaryWithCompany() {
+		return `<h1>Podsumowanie</h1>
+        <p>${this.company_data.printSummary()}</p>
         <p>${this.address_data.printSummary()}</p>
         `;
 	}

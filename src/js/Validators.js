@@ -9,4 +9,6 @@ export default {
     NUMBER_REQUIRED: new Validator(ValidatorRegex.number, true),
     NUMBER_NOT_REQUIRED: new Validator(ValidatorRegex.number, false),
     PHONE_NUMBER: new Validator(ValidatorRegex.phoneNumber, true),
+    NIP_NUMBER: new Validator(ValidatorRegex.nipNumber, true),
+    DOUBLE_STRING: new Validator(ValidatorRegex.doubleString, true),
 };

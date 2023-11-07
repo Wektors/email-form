@@ -1,6 +1,11 @@
 <template>
     <div>
-        <div v-html="userData.printSummary()"></div>
+        <div v-show="showClient === true">
+            <div v-html="userData.printSummaryWithClient()"></div>
+        </div>
+        <div v-show="showClient === false">
+            <div v-html="userData.printSummaryWithCompany()"></div>
+        </div>
     </div>
 </template>
 <script>
@@ -10,8 +15,18 @@ import UserData from '@/js/UserData';
 export default {
     name: 'FormSummary',
     props: {
+        modelValue: String,
         userData: UserData,
     },
+    computed: {
+        showClient: function () {
+            if (this.modelValue == "clientData") {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
 };
 </script>
 

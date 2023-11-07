@@ -6,10 +6,7 @@
 			</div>
 			<div class="inner-item">
 				<button @click="handleSave">Zapisz</button>
-				<button
-					v-if="storageEmpty === false"
-					@click="handleLoad()"
-				>
+				<button v-if="storageEmpty === false" @click="handleLoad()">
 					Odczytaj
 				</button>
 				<button v-if="storageEmpty === false" @click="handleDelete">
@@ -17,16 +14,40 @@
 				</button>
 			</div>
 		</div>
+		<div v-show="currentStep === Steps.ClientData">
 
-		<FormStep
-			v-show="currentStep === Steps.ClientData"
-			v-model="userData.client_data"
-		/>
+			<input
+			type="radio"
+			id="clientData"
+			value="clientData"
+			v-model="firstStepType"
+			/>
+			<label for="clientData">Osoba prywatna</label>
+			<br />
+			<input
+			type="radio"
+			id="companyData"
+			value="companyData"
+			v-model="firstStepType"
+			/>
+			<label for="companyData">Firma</label>
+		</div>
+			
+		<div v-show="currentStep === Steps.ClientData">
+			<FormStep
+				v-show="firstStepType === 'clientData'"
+				v-model="userData.client_data"
+			/>
+			<FormStep
+				v-show="firstStepType === 'companyData'"
+				v-model="userData.company_data"
+			/>
+		</div>
 		<FormStep
 			v-show="currentStep === Steps.AddressData"
 			v-model="userData.address_data"
 		/>
-		<FormSummary v-show="currentStep === Steps.Summary" :userData="userData" />
+		<FormSummary v-show="currentStep === Steps.Summary" :userData="userData" v-model="firstStepType" />
 		<div class="footer">
 			<button @click="handleBack" v-show="currentStep !== Steps.ClientData">
 				Wstecz
@@ -51,6 +72,7 @@ export default {
 	},
 	data() {
 		return {
+			firstStepType: "clientData",
 			Steps: Steps,
 			currentStep: Steps.ClientData,
 			userData: new UserData(),
@@ -83,7 +105,11 @@ export default {
 		},
 		isValidStep: function () {
 			if (this.currentStep === Steps.ClientData) {
-				return this.userData.hasValidClientData();
+				if (this.firstStepType === "clientData") {
+					return this.userData.hasValidClientData();
+				} else {
+					return this.userData.hasValidCompanyData();
+				}
 			} else if (this.currentStep === Steps.AddressData) {
 				return this.userData.hasValidAddressData();
 			}
@@ -93,35 +119,44 @@ export default {
 			window.location = this.userData.getMailtoData();
 		},
 		handleSave: function () {
+			let toStorage = {};
+
+			toStorage["clientData"] = this.userData.client_data.serialize();
+		
+			toStorage["companyData"] = this.userData.company_data.serialize();
 			
-			let toStorage = {
-				"clientData": this.userData.client_data.serialize(),
-				"addressData": this.userData.address_data.serialize(),
-			};
+			toStorage["addressData"] = this.userData.address_data.serialize();
 
 			Storage.save(toStorage, "userData");
 			Storage.save(this.currentStep, "currentStep");
+			Storage.save(this.firstStepType, "firstStepType");
 
 			this.storageEmpty = false;
 		},
 		handleLoad: function () {
 			this.loadUserData();
 			this.loadCurrentStep();
+			this.loadFirstStepType();
 		},
-		
-		loadUserData: function () {
 
+		loadUserData: function () {
 			this.userData.client_data.deserialize();
 
+			this.userData.company_data.deserialize();
+
 			this.userData.address_data.deserialize();
-		
 		},
 		loadCurrentStep: function () {
 			const stepLoaded = JSON.parse(Storage.load("currentStep"));
 			if (stepLoaded != this.currentStep) {
 				this.currentStep = stepLoaded;
-				console.log(this.currentStep);
-			} 
+			}
+		},
+		loadFirstStepType: function () {
+			const typeLoaded = JSON.parse(Storage.load("firstStepType"));
+			if (typeLoaded != this.firstStepType) {
+				this.firstStepType = typeLoaded;
+			}
 		},
 		handleDelete: function () {
 			Storage.delete("userData");
