@@ -1,6 +1,6 @@
-import ClientData from '@/js/ClientData';
-import AddressData from '@/js/AddressData';
-import CompanyData from '@/js/CompanyData';
+import ClientData from "@/js/ClientData";
+import AddressData from "@/js/AddressData";
+import CompanyData from "@/js/CompanyData";
 
 export default class UserData {
 	/**
@@ -52,8 +52,8 @@ export default class UserData {
 	 *
 	 * @returns {string}
 	 */
-	getSendData() {
-		return window.encodeURIComponent(this.printForMail());
+	getSendData(firstStepType) {
+		return window.encodeURIComponent(this.printForMail(firstStepType));
 	}
 
 	/**
@@ -82,21 +82,28 @@ export default class UserData {
 	 *
 	 * @returns {string}
 	 */
-	printForMail() {
-		return `
+	printForMail(firstStepType) {
+		if (firstStepType === "clientData") {
+			return `
             ${this.client_data.printForMail()}\n
             ${this.address_data.printForMail()}\n
-        `;
+			`;
+		} else {
+			return `
+            ${this.company_data.printForMail()}\n
+            ${this.address_data.printForMail()}\n
+			`;
+		}
 	}
 
 	/**
 	 *
 	 * @returns {string}
 	 */
-	getMailtoData() {
+	getMailtoData(firstStepType) {
 		return `mailto:email@example.com?subject=${encodeURIComponent(
 			"Dane z formularza"
-		)}&body=${this.getSendData()}`;
+		)}&body=${this.getSendData(firstStepType)}&`;
 	}
 
 	clearClientData() {

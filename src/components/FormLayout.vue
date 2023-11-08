@@ -116,7 +116,7 @@ export default {
 			return true;
 		},
 		sendMail: function () {
-			window.location = this.userData.getMailtoData();
+			window.location = this.userData.getMailtoData(this.firstStepType);
 		},
 		handleSave: function () {
 			let toStorage = {};
