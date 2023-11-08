@@ -161,6 +161,7 @@ export default {
 		handleDelete: function () {
 			Storage.delete("userData");
 			Storage.delete("currentStep");
+			Storage.delete("firstStepType");
 			this.storageEmpty = true;
 		},
 		clearInputs: function () {
