@@ -60,5 +60,13 @@ export default {
 .unvalidated {
 	color: red;
 	border: 1px solid red;
+	animation: shake 0.25s; 
+}
+@keyframes shake {
+   0% { transform: translateX(0) }
+ 25% { transform: translateX(5px) }
+ 50% { transform: translateX(-5px) }
+ 75% { transform: translateX(5px) }
+ 100% { transform: translateX(0) }
 }
 </style>

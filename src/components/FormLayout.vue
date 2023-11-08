@@ -2,37 +2,50 @@
 	<div>
 		<div class="top-container">
 			<div class="inner-item">
-				<button @click="clearInputs">Wyczyść krok</button>
+				<button class="button" @click="clearInputs">Wyczyść krok</button>
 			</div>
 			<div class="inner-item">
-				<button @click="handleSave">Zapisz</button>
-				<button v-if="storageEmpty === false" @click="handleLoad()">
-					Odczytaj
-				</button>
-				<button v-if="storageEmpty === false" @click="handleDelete">
-					Usuń dane
-				</button>
+				<button class="button" @click="handleSave">Zapisz</button>
+
+				<Transition>
+					<button
+						class="button"
+						v-if="storageEmpty === false"
+						@click="handleLoad()"
+					>
+						Odczytaj
+					</button>
+				</Transition>
+
+				<Transition>
+					<button
+						class="button"
+						v-if="storageEmpty === false"
+						@click="handleDelete"
+					>
+						Usuń dane
+					</button>
+				</Transition>
 			</div>
 		</div>
 		<div v-show="currentStep === Steps.ClientData">
-
 			<input
-			type="radio"
-			id="clientData"
-			value="clientData"
-			v-model="firstStepType"
+				type="radio"
+				id="clientData"
+				value="clientData"
+				v-model="firstStepType"
 			/>
 			<label for="clientData">Osoba prywatna</label>
 			<br />
 			<input
-			type="radio"
-			id="companyData"
-			value="companyData"
-			v-model="firstStepType"
+				type="radio"
+				id="companyData"
+				value="companyData"
+				v-model="firstStepType"
 			/>
 			<label for="companyData">Firma</label>
 		</div>
-			
+
 		<div v-show="currentStep === Steps.ClientData">
 			<FormStep
 				v-show="firstStepType === 'clientData'"
@@ -43,11 +56,18 @@
 				v-model="userData.company_data"
 			/>
 		</div>
+
 		<FormStep
 			v-show="currentStep === Steps.AddressData"
 			v-model="userData.address_data"
 		/>
-		<FormSummary v-show="currentStep === Steps.Summary" :userData="userData" v-model="firstStepType" />
+
+		<FormSummary
+			v-show="currentStep === Steps.Summary"
+			:userData="userData"
+			v-model="firstStepType"
+		/>
+
 		<div class="footer">
 			<button @click="handleBack" v-show="currentStep !== Steps.ClientData">
 				Wstecz
@@ -122,9 +142,9 @@ export default {
 			let toStorage = {};
 
 			toStorage["clientData"] = this.userData.client_data.serialize();
-		
+
 			toStorage["companyData"] = this.userData.company_data.serialize();
-			
+
 			toStorage["addressData"] = this.userData.address_data.serialize();
 
 			Storage.save(toStorage, "userData");
@@ -181,11 +201,27 @@ export default {
 	margin: 2rem;
 	display: flex;
 	justify-content: space-between;
+	height: 10vh;
+}
+
+.v-enter-active,
+.v-leave-active {
+	transition: opacity 0.5s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+	opacity: 0;
 }
 .inner-item {
 	display: flex;
 	flex-direction: column;
 	align-content: space-around;
+}
+
+.button {
+	width: 6vw;
+	margin-top: 0.5rem;
 }
 
 .footer {
