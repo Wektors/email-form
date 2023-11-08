@@ -109,6 +109,9 @@ export default class UserData {
 	clearClientData() {
 		this.client_data = new ClientData({});
 	}
+	clearCompanyData() {
+		this.company_data = new CompanyData({});
+	}
 	clearAddressData() {
 		this.address_data = new AddressData({});
 	}

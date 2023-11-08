@@ -166,6 +166,7 @@ export default {
 		clearInputs: function () {
 			if (this.currentStep === Steps.ClientData) {
 				this.userData.clearClientData();
+				this.userData.clearCompanyData();
 			} else {
 				this.userData.clearAddressData();
 			}
