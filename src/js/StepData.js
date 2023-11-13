@@ -41,21 +41,21 @@ export default class StepData {
 		return serializeMap;
 	}
 
-	deserialize() {
-		let classKey = this.constructor.name;
+	deserialize(dataType) {
+		let classKey = dataType;
 		if (Storage.load("userData") !== null) {
 			let fullObject = JSON.parse(Storage.load("userData"));
 			let storageMap;
 			if (fullObject[classKey] !== undefined) {
 				storageMap = fullObject[classKey];
+				let fields = this.getFields();
+				console.log(fields)
+				fields.forEach((field) => {
+					if (storageMap[field] !== undefined) {
+						this[field].setValue(storageMap[field]);
+					}
+				});
 			}
-			let fields = this.getFields();
-			console.log(fields)
-			fields.forEach((field) => {
-				if (storageMap[field] !== undefined) {
-					this[field].setValue(storageMap[field]);
-				}
-			});
 		}
 	}
 }

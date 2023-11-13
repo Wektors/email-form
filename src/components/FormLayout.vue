@@ -162,11 +162,11 @@ export default {
 		},
 
 		loadUserData: function () {
-			this.userData.personal_data.deserialize();
+			this.userData.personal_data.deserialize("PersonalData");
 
-			this.userData.company_data.deserialize();
+			this.userData.company_data.deserialize("CompanyData");
 
-			this.userData.address_data.deserialize();
+			this.userData.address_data.deserialize("AddressData");
 		},
 		loadCurrentStep: function () {
 			const stepLoaded = JSON.parse(Storage.load("currentStep"));
