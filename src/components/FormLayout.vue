@@ -190,7 +190,7 @@ export default {
 			if (this.currentStep === Steps.ClientData) {
 				this.userData.clearPersonalData();
 				this.userData.clearCompanyData();
-			} else {
+			} else if (this.currentStep === Steps.AddressData) {
 				this.userData.clearAddressData();
 			}
 		},
