@@ -31,28 +31,28 @@
 		<div v-show="currentStep === Steps.ClientData">
 			<input
 				type="radio"
-				id="personalData"
-				value="personalData"
+				id="PersonalData"
+				value="PersonalData"
 				v-model="firstStepType"
 			/>
-			<label for="personalData">Osoba prywatna</label>
+			<label for="PersonalData">Osoba prywatna</label>
 			<br />
 			<input
 				type="radio"
-				id="companyData"
-				value="companyData"
+				id="CompanyData"
+				value="CompanyData"
 				v-model="firstStepType"
 			/>
-			<label for="companyData">Firma</label>
+			<label for="CompanyData">Firma</label>
 		</div>
 
 		<div v-show="currentStep === Steps.ClientData">
 			<FormStep
-				v-show="firstStepType === 'personalData'"
+				v-show="firstStepType === 'PersonalData'"
 				v-model="userData.personal_data"
 			/>
 			<FormStep
-				v-show="firstStepType === 'companyData'"
+				v-show="firstStepType === 'CompanyData'"
 				v-model="userData.company_data"
 			/>
 		</div>
@@ -92,7 +92,7 @@ export default {
 	},
 	data() {
 		return {
-			firstStepType: "personalData",
+			firstStepType: "PersonalData",
 			Steps: Steps,
 			currentStep: Steps.ClientData,
 			userData: new UserData(),
@@ -141,9 +141,11 @@ export default {
 		handleSave: function () {
 			let toStorage = {};
 
-			toStorage["PersonalData"] = this.userData.personal_data.serialize();
+			if (this.firstStepType === "PersonalData") 
+				toStorage["PersonalData"] = this.userData.personal_data.serialize();
 
-			toStorage["CompanyData"] = this.userData.company_data.serialize();
+				toStorage["CompanyData"] = this.userData.company_data.serialize();
+			
 
 			toStorage["AddressData"] = this.userData.address_data.serialize();
 

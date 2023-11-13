@@ -27,7 +27,7 @@ export default class UserData {
 	 *
 	 * @returns {boolean}
 	 */
-	hasValidClientData() {
+	hasValidPersonalData() {
 		return this.personal_data.isValid();
 	}
 
@@ -60,30 +60,25 @@ export default class UserData {
 	 *
 	 * @returns {string}
 	 */
-	printSummaryWithClient() {
-		return `<h1>Podsumowanie</h1>
+	printSummary(firstStepType) {
+		if (firstStepType == "PersonalData") {
+			return `<h1>Podsumowanie</h1>
         <p>${this.personal_data.printSummary()}</p>
         <p>${this.address_data.printSummary()}</p>
         `;
-	}
-
-	/**
-	 *
-	 * @returns {string}
-	 */
-	printSummaryWithCompany() {
-		return `<h1>Podsumowanie</h1>
+		} else {
+			return `<h1>Podsumowanie</h1>
         <p>${this.company_data.printSummary()}</p>
         <p>${this.address_data.printSummary()}</p>
         `;
+		}
 	}
-
 	/**
 	 *
 	 * @returns {string}
 	 */
 	printForMail(firstStepType) {
-		if (firstStepType === "clientData") {
+		if (firstStepType === "PersonalData") {
 			return `
             ${this.personal_data.printForMail()}\n
             ${this.address_data.printForMail()}\n

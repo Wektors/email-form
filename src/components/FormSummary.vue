@@ -1,11 +1,7 @@
 <template>
     <div>
-        <div v-show="showClient === true">
-            <div v-html="userData.printSummaryWithClient()"></div>
-        </div>
-        <div v-show="showClient === false">
-            <div v-html="userData.printSummaryWithCompany()"></div>
-        </div>
+            <div v-html="userData.printSummary(modelValue)"></div>
+        
     </div>
 </template>
 <script>
@@ -18,15 +14,6 @@ export default {
         modelValue: String,
         userData: UserData,
     },
-    computed: {
-        showClient: function () {
-            if (this.modelValue == "clientData") {
-                return true;
-            } else {
-                return false;
-            }
-        }
-    }
 };
 </script>
 
