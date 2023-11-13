@@ -1,8 +1,8 @@
 import { FormField } from "@/js/FormField";
 import Validators from "@/js/Validators";
-import Storage from "./Storage";
+import StepData from "./StepData";
 
-export default class ClientData {
+export default class ClientData extends StepData {
 	/**
 	 *
 	 * @param {object}options
@@ -11,6 +11,8 @@ export default class ClientData {
 	 * @param {string|undefined}options.surName,
 	 */
 	constructor(options) {
+		super();
+
 		this.firstName = new FormField(
 			"Imię",
 			Validators.NOT_EMPTY_STRING,
@@ -28,32 +30,6 @@ export default class ClientData {
 		);
 	}
 
-	/**
-	 *
-	 * @returns {string[]}
-	 */
-	getFields() {
-		return Object.keys(this);
-	}
-
-	/**
-	 *
-	 * @returns {boolean}
-	 */
-	isValid() {
-		let valid = true;
-		this.getFields().forEach((field) => {
-			if (this[field].isValid() === false) {
-				valid = false;
-			}
-		});
-		return valid;
-	}
-
-	/**
-	 *
-	 * @returns {string}
-	 */
 	printSummary() {
 		let summary = `<h3>Dane klienta:</h3><br/>`;
 		this.getFields().forEach((field) => {
@@ -72,33 +48,5 @@ export default class ClientData {
 			summary += `${this[field].printForSummary()}\n`;
 		});
 		return summary;
-	}
-
-	serialize() {
-		let serializeMap = {};
-		this.getFields().forEach((field) => {
-			if (this[field].isValid()) {
-				serializeMap[field] = this[field].value;
-			}
-		});
-		return serializeMap;
-	}
-
-	deserialize() {
-		let classKey = "clientData"
-		if (Storage.load("userData") !== null) {
-			let fullObject = JSON.parse(Storage.load("userData"));
-			let storageMap;
-			if (fullObject[classKey] !== null) {
-				storageMap = fullObject[classKey];
-			}
-
-			let fields = this.getFields();
-			fields.forEach((field) => {
-				if (storageMap[field] !== undefined) {
-					this[field].setValue(storageMap[field]);
-				}
-			});
-		}
 	}
 }

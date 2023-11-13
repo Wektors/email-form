@@ -141,11 +141,11 @@ export default {
 		handleSave: function () {
 			let toStorage = {};
 
-			toStorage["clientData"] = this.userData.client_data.serialize();
+			toStorage["ClientData"] = this.userData.client_data.serialize();
 
-			toStorage["companyData"] = this.userData.company_data.serialize();
+			toStorage["CompanyData"] = this.userData.company_data.serialize();
 
-			toStorage["addressData"] = this.userData.address_data.serialize();
+			toStorage["AddressData"] = this.userData.address_data.serialize();
 
 			Storage.save(toStorage, "userData");
 			Storage.save(this.currentStep, "currentStep");
