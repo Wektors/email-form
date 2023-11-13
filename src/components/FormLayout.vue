@@ -31,11 +31,11 @@
 		<div v-show="currentStep === Steps.ClientData">
 			<input
 				type="radio"
-				id="clientData"
-				value="clientData"
+				id="personalData"
+				value="personalData"
 				v-model="firstStepType"
 			/>
-			<label for="clientData">Osoba prywatna</label>
+			<label for="personalData">Osoba prywatna</label>
 			<br />
 			<input
 				type="radio"
@@ -48,8 +48,8 @@
 
 		<div v-show="currentStep === Steps.ClientData">
 			<FormStep
-				v-show="firstStepType === 'clientData'"
-				v-model="userData.client_data"
+				v-show="firstStepType === 'personalData'"
+				v-model="userData.personal_data"
 			/>
 			<FormStep
 				v-show="firstStepType === 'companyData'"
@@ -92,7 +92,7 @@ export default {
 	},
 	data() {
 		return {
-			firstStepType: "clientData",
+			firstStepType: "personalData",
 			Steps: Steps,
 			currentStep: Steps.ClientData,
 			userData: new UserData(),
@@ -125,8 +125,8 @@ export default {
 		},
 		isValidStep: function () {
 			if (this.currentStep === Steps.ClientData) {
-				if (this.firstStepType === "clientData") {
-					return this.userData.hasValidClientData();
+				if (this.firstStepType === "PersonalData") {
+					return this.userData.hasValidPersonalData();
 				} else {
 					return this.userData.hasValidCompanyData();
 				}
@@ -141,7 +141,7 @@ export default {
 		handleSave: function () {
 			let toStorage = {};
 
-			toStorage["ClientData"] = this.userData.client_data.serialize();
+			toStorage["PersonalData"] = this.userData.personal_data.serialize();
 
 			toStorage["CompanyData"] = this.userData.company_data.serialize();
 
@@ -160,7 +160,7 @@ export default {
 		},
 
 		loadUserData: function () {
-			this.userData.client_data.deserialize();
+			this.userData.personal_data.deserialize();
 
 			this.userData.company_data.deserialize();
 
@@ -186,7 +186,7 @@ export default {
 		},
 		clearInputs: function () {
 			if (this.currentStep === Steps.ClientData) {
-				this.userData.clearClientData();
+				this.userData.clearPersonalData();
 				this.userData.clearCompanyData();
 			} else {
 				this.userData.clearAddressData();

@@ -1,4 +1,4 @@
-import ClientData from "@/js/ClientData";
+import PersonalData from "@/js/PersonalData";
 import AddressData from "@/js/AddressData";
 import CompanyData from "@/js/CompanyData";
 
@@ -18,7 +18,7 @@ export default class UserData {
 	 * @param {string|undefined}options.city,
 	 */
 	constructor(options = {}) {
-		this.client_data = new ClientData(options);
+		this.personal_data = new PersonalData(options);
 		this.address_data = new AddressData(options);
 		this.company_data = new CompanyData(options);
 	}
@@ -28,7 +28,7 @@ export default class UserData {
 	 * @returns {boolean}
 	 */
 	hasValidClientData() {
-		return this.client_data.isValid();
+		return this.personal_data.isValid();
 	}
 
 	/**
@@ -62,7 +62,7 @@ export default class UserData {
 	 */
 	printSummaryWithClient() {
 		return `<h1>Podsumowanie</h1>
-        <p>${this.client_data.printSummary()}</p>
+        <p>${this.personal_data.printSummary()}</p>
         <p>${this.address_data.printSummary()}</p>
         `;
 	}
@@ -85,7 +85,7 @@ export default class UserData {
 	printForMail(firstStepType) {
 		if (firstStepType === "clientData") {
 			return `
-            ${this.client_data.printForMail()}\n
+            ${this.personal_data.printForMail()}\n
             ${this.address_data.printForMail()}\n
 			`;
 		} else {
@@ -106,8 +106,8 @@ export default class UserData {
 		)}&body=${this.getSendData(firstStepType)}&`;
 	}
 
-	clearClientData() {
-		this.client_data = new ClientData({});
+	clearPersonalData() {
+		this.personal_data = new PersonalData({});
 	}
 	clearCompanyData() {
 		this.company_data = new CompanyData({});

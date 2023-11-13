@@ -2,7 +2,7 @@ import { FormField } from "@/js/FormField";
 import Validators from "@/js/Validators";
 import StepData from "./StepData";
 
-export default class ClientData extends StepData {
+export default class PersonalData extends StepData {
 	/**
 	 *
 	 * @param {object}options
