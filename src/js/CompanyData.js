@@ -31,23 +31,8 @@ export default class ClientData extends StepData {
 		);
 	}
 
-	printSummary() {
-		let summary = `<h3>Dane firmy:</h3><br/>`;
-		this.getFields().forEach((field) => {
-			summary += `${this[field].printForSummary()}<br/>`;
-		});
-		return summary;
+	getLabel() {
+		return "Dane firmy"
 	}
-
-	/**
-	 *
-	 * @returns {string}
-	 */
-	printForMail() {
-		let summary = `Dane firmy:\n\n`;
-		this.getFields().forEach((field) => {
-			summary += `${this[field].printForSummary()}\n`;
-		});
-		return summary;
-	}
+	
 }

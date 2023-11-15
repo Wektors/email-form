@@ -1,9 +1,7 @@
 import Storage from "./Storage";
 
 export default class StepData {
-	constructor() {
-
-	}
+	constructor() {}
 	/**
 	 *
 	 * @returns {string[]}
@@ -49,7 +47,7 @@ export default class StepData {
 			if (fullObject[classKey] !== undefined) {
 				storageMap = fullObject[classKey];
 				let fields = this.getFields();
-				console.log(fields)
+				console.log(fields);
 				fields.forEach((field) => {
 					if (storageMap[field] !== undefined) {
 						this[field].setValue(storageMap[field]);
@@ -57,5 +55,29 @@ export default class StepData {
 				});
 			}
 		}
+	}
+
+	getLabel() {
+		throw new Error("not implemented");
+	}
+
+	printSummary() {
+		let summary = `<h3>${this.getLabel()}:</h3><br/>`;
+		this.getFields().forEach((field) => {
+			summary += `${this[field].printForSummary()}<br/>`;
+		});
+		return summary;
+	}
+
+	/**
+	 *
+	 * @returns {string}
+	 */
+	printForMail() {
+		let summary = `${this.getLabel()}:\n\n`;
+		this.getFields().forEach((field) => {
+			summary += `${this[field].printForSummary()}\n`;
+		});
+		return summary;
 	}
 }

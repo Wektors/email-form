@@ -30,23 +30,7 @@ export default class PersonalData extends StepData {
 		);
 	}
 
-	printSummary() {
-		let summary = `<h3>Dane klienta:</h3><br/>`;
-		this.getFields().forEach((field) => {
-			summary += `${this[field].printForSummary()}<br/>`;
-		});
-		return summary;
-	}
-
-	/**
-	 *
-	 * @returns {string}
-	 */
-	printForMail() {
-		let summary = `Dane klienta:\n\n`;
-		this.getFields().forEach((field) => {
-			summary += `${this[field].printForSummary()}\n`;
-		});
-		return summary;
+	getLabel() {
+		return "Dane klienta";
 	}
 }

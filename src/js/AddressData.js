@@ -49,23 +49,8 @@ export default class AddressData extends StepData {
 			options.city
 		);
 	}
-	printSummary() {
-		let summary = `<h3> Dane kontaktowe oraz adresowe:</h3><br/>`;
-		this.getFields().forEach((field) => {
-			summary += `${this[field].printForSummary()}<br/>`;
-		});
-		return summary;
-	}
 
-	/**
-	 *
-	 * @returns {string}
-	 */
-	printForMail() {
-		let summary = `Dane kontaktowe oraz adresowe:\n\n`;
-		this.getFields().forEach((field) => {
-			summary += `${this[field].printForSummary()}\n`;
-		});
-		return summary;
+	getLabel() {
+		return "Dane kontaktowe oraz adresowe";
 	}
 }
