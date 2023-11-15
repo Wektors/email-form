@@ -2,7 +2,11 @@
 
 ### What it does
 
-It's a simple form that validates input and upon submiting creates a ready email message with mailto
+It's a simple form that: 
+-validates inputs
+-has multiple steps
+-creates a ready email message with mailto upon submiting
+-there is option to load and save data to local storage
 
 
 # form
