@@ -1,3 +1,10 @@
+# email-form
+
+### What it does
+
+It's a simple form that validates input and upon submiting creates a ready email message with mailto
+
+
 # form
 
 ## Project setup
@@ -24,8 +31,3 @@ npm run test:unit
 npm run build
 ```
 
-### What it does
-
-It's a simple form that validates input and upon submiting creates a ready email message with mailto
-
-# email-form
