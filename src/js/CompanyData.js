@@ -17,17 +17,19 @@ export default class ClientData extends StepData {
 		this.companyName = new FormField(
 			"Nazwa firmy",
 			Validators.NOT_EMPTY_STRING,
-			options.companyName
+			options.companyName,
+			"organization"
 		);
 		this.nipNumber = new FormField(
 			"NIP",
 			Validators.NIP_NUMBER,
-			options.nipNumber
+			options.nipNumber,
 		);
 		this.representative = new FormField(
 			"Przedstawiciel firmy",
 			Validators.DOUBLE_STRING,
-			options.representative
+			options.representative,
+			"name"
 		);
 	}
 

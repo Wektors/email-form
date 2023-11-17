@@ -5,10 +5,11 @@ export class FormField {
      * @param {Validator}validator
      * @param {string|undefined}value
      */
-    constructor(label, validator, value = ''){
+    constructor(label, validator, value = '', autocomplete){
         this.label = label;
         this.value = value;
         this.validator = validator;
+        this.autocomplete = autocomplete || undefined;
         this._touched = false;
     }
 

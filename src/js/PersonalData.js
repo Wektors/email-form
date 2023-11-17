@@ -16,17 +16,20 @@ export default class PersonalData extends StepData {
 		this.firstName = new FormField(
 			"Imię",
 			Validators.NOT_EMPTY_STRING,
-			options.firstName
+			options.firstName,
+			"given-name"
 		);
 		this.secondName = new FormField(
 			"Drugie Imię",
 			Validators.NOT_EMPTY_STRING_NOT_REQUIRED,
-			options.secondName
+			options.secondName,
+			"additional-name"
 		);
 		this.surName = new FormField(
 			"Nazwisko",
 			Validators.NOT_EMPTY_STRING,
-			options.surName
+			options.surName,
+			"family-name"
 		);
 	}
 

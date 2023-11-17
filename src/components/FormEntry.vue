@@ -5,6 +5,8 @@
 	<input
 		:class="validityClass"
 		type="text"
+		:id="formField.label"
+		:autocomplete="formField.autocomplete"
 		:placeholder="`Wpisz ${formField.label}`"
 		v-model="inputValue"
 		@input="inputValue.set"
