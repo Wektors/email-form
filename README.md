@@ -2,6 +2,8 @@
 
 ### What it does
 
+project idea and code review: https://github.com/pduda-dev
+
 It's a simple form that: 
 -validates inputs
 -has multiple steps
