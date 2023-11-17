@@ -2,11 +2,11 @@
     <div class="first-step">
 
         <div
-            v-for="(field, id) in modelValue.getFields()"
+            v-for="(field, id) in stepData.getFields()"
             :key="id"
         >
             <FormEntry
-                :form-field="modelValue[field]"
+                :form-field="stepData[field]"
             />
         </div>
     </div>
@@ -18,7 +18,7 @@ import FormEntry from './FormEntry.vue';
 export default {
     name: 'FormStep',
     props: {
-        modelValue: Object,
+        stepData: Object,
     },
     components: {
         FormEntry,

@@ -30,42 +30,42 @@
 		</div>
 		<div v-show="currentStep === Steps.ClientData">
 			<input
+				name="PersonalData"
 				type="radio"
 				id="PersonalData"
-				value="PersonalData"
-				v-model="firstStepType"
-			/>
+				:value="FirstStepType.PersonalData"
+				@change="handleChangeFirstStep"
+				v-model="this.userData.firstStepType" 
+				/>
+				<!-- zamiast checked musi byc v-model aby dobrze zaznaczone bylo -->
 			<label for="PersonalData">Osoba prywatna</label>
 			<br />
 			<input
+				name="CompanyData"
 				type="radio"
 				id="CompanyData"
-				value="CompanyData"
-				v-model="firstStepType"
+				:value="FirstStepType.CompanyData"
+				@change="handleChangeFirstStep"
+				v-model="this.userData.firstStepType"
 			/>
 			<label for="CompanyData">Firma</label>
 		</div>
 
 		<div v-show="currentStep === Steps.ClientData">
 			<FormStep
-				v-show="firstStepType === 'PersonalData'"
-				v-model="userData.personal_data"
+				:stepData="userData.clientData"
 			/>
-			<FormStep
-				v-show="firstStepType === 'CompanyData'"
-				v-model="userData.company_data"
-			/>
+			
 		</div>
 
 		<FormStep
 			v-show="currentStep === Steps.AddressData"
-			v-model="userData.address_data"
+			:stepData="userData.address_data"
 		/>
 
 		<FormSummary
 			v-show="currentStep === Steps.Summary"
 			:userData="userData"
-			v-model="firstStepType"
 		/>
 
 		<div class="footer">
@@ -83,6 +83,7 @@ import FormStep from "./FormStep.vue";
 import Steps from "@/js/Steps.js";
 import FormSummary from "@/components/FormSummary";
 import Storage from "@/js/Storage.js";
+import FirstStepType from "@/js/FirstStepType";
 
 export default {
 	name: "FormLayout",
@@ -92,7 +93,7 @@ export default {
 	},
 	data() {
 		return {
-			firstStepType: "PersonalData",
+			FirstStepType: FirstStepType,
 			Steps: Steps,
 			currentStep: Steps.ClientData,
 			userData: new UserData(),
@@ -109,6 +110,7 @@ export default {
 			}
 			return "Dalej";
 		},
+		
 	},
 	methods: {
 		handleBack: function () {
@@ -123,9 +125,12 @@ export default {
 				this.currentStep++;
 			}
 		},
+		handleChangeFirstStep: function (value) {
+			this.userData.firstStepType = value.target.value;
+		},
 		isValidStep: function () {
 			if (this.currentStep === Steps.ClientData) {
-				if (this.firstStepType === "PersonalData") {
+				if (this.userData.firstStepType === FirstStepType.PersonalData) {
 					return this.userData.hasValidPersonalData();
 				} else {
 					return this.userData.hasValidCompanyData();
@@ -136,22 +141,23 @@ export default {
 			return true;
 		},
 		sendMail: function () {
-			window.location = this.userData.getMailtoData(this.firstStepType);
+			window.location = this.userData.getMailtoData();
 		},
 		handleSave: function () {
 			let toStorage = {};
 
-			if (this.firstStepType === "PersonalData") 
+			if (this.userData.firstStepType === FirstStepType.PersonalData) {
 				toStorage["PersonalData"] = this.userData.personal_data.serialize();
-
+			}
+			else {
 				toStorage["CompanyData"] = this.userData.company_data.serialize();
-			
+			}
 
 			toStorage["AddressData"] = this.userData.address_data.serialize();
 
 			Storage.save(toStorage, "userData");
 			Storage.save(this.currentStep, "currentStep");
-			Storage.save(this.firstStepType, "firstStepType");
+			Storage.save(Number(this.userData.firstStepType), "firstStepType");
 
 			this.storageEmpty = false;
 		},
@@ -176,9 +182,7 @@ export default {
 		},
 		loadFirstStepType: function () {
 			const typeLoaded = JSON.parse(Storage.load("firstStepType"));
-			if (typeLoaded != this.firstStepType) {
-				this.firstStepType = typeLoaded;
-			}
+				this.userData.firstStepType = typeLoaded;
 		},
 		handleDelete: function () {
 			Storage.delete("userData");

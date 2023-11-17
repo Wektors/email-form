@@ -1,6 +1,7 @@
 import PersonalData from "@/js/PersonalData";
 import AddressData from "@/js/AddressData";
 import CompanyData from "@/js/CompanyData";
+import FirstStepType from "./FirstStepType";
 
 export default class UserData {
 	/**
@@ -21,6 +22,15 @@ export default class UserData {
 		this.personal_data = new PersonalData(options);
 		this.address_data = new AddressData(options);
 		this.company_data = new CompanyData(options);
+		this.firstStepType = FirstStepType.PersonalData;
+	}
+
+	get clientData() {
+		if (this.firstStepType == FirstStepType.PersonalData) {
+			return this.personal_data
+		} 
+		
+		return this.company_data
 	}
 
 	/**
@@ -52,16 +62,16 @@ export default class UserData {
 	 *
 	 * @returns {string}
 	 */
-	getSendData(firstStepType) {
-		return window.encodeURIComponent(this.printForMail(firstStepType));
+	getSendData() {
+		return window.encodeURIComponent(this.printForMail(this.firstStepType));
 	}
 
 	/**
 	 *
 	 * @returns {string}
 	 */
-	printSummary(firstStepType) {
-		if (firstStepType == "PersonalData") {
+	printSummary() {
+		if (this.firstStepType === FirstStepType.PersonalData) {
 			return `<h1>Podsumowanie</h1>
         <p>${this.personal_data.printSummary()}</p>
         <p>${this.address_data.printSummary()}</p>
@@ -77,8 +87,8 @@ export default class UserData {
 	 *
 	 * @returns {string}
 	 */
-	printForMail(firstStepType) {
-		if (firstStepType === "PersonalData") {
+	printForMail() {
+		if (this.firstStepType === FirstStepType.PersonalData) {
 			return `
             ${this.personal_data.printForMail()}\n
             ${this.address_data.printForMail()}\n
@@ -95,10 +105,10 @@ export default class UserData {
 	 *
 	 * @returns {string}
 	 */
-	getMailtoData(firstStepType) {
+	getMailtoData() {
 		return `mailto:email@example.com?subject=${encodeURIComponent(
 			"Dane z formularza"
-		)}&body=${this.getSendData(firstStepType)}&`;
+		)}&body=${this.getSendData()}&`;
 	}
 
 	clearPersonalData() {

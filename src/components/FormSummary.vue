@@ -1,6 +1,6 @@
 <template>
     <div>
-            <div v-html="userData.printSummary(modelValue)"></div>
+            <div v-html="userData.printSummary()"></div>
         
     </div>
 </template>
@@ -11,7 +11,6 @@ import UserData from '@/js/UserData';
 export default {
     name: 'FormSummary',
     props: {
-        modelValue: String,
         userData: UserData,
     },
 };
