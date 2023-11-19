@@ -25,10 +25,13 @@ export default {
 	},
 	computed: {
 		validityClass: function () {
-			if (this.formField.showNotValidError()) {
+			if (this.formField.showNotValidError() && this.formField._touched) {
 				return "validated";
+			} else if (this.formField.showNotValidError() == false  && this.formField._touched) {
+				return "unvalidated";
+			} else {
+				return "not-touched"
 			}
-			return "unvalidated";
 		},
 		inputValue: {
 			get() {
@@ -50,19 +53,29 @@ export default {
 </script>
 
 <style scoped>
+input {
+	height: 1rem;
+	margin-top: 0.5rem;
+}
 .label {
-	font-size: 18px;
+	font-size: 1rem;
 	color: rgb(79, 75, 75);
-	padding: 20px;
+	margin-top: 1rem;
+}
+.not-touched {
+	color: black;
+	border: 1px solid rgb(0, 0, 0), 0, 0;
 }
 .validated {
-	color: black;
-	border: 1px solid black;
+	color: #00883F;
+	border: 1px solid #00883F;
+	background: url(@/assets/success.svg) no-repeat right;
 }
 .unvalidated {
 	color: red;
 	border: 1px solid red;
 	animation: shake 0.25s; 
+	background: url(@/assets/error.svg) no-repeat right;
 }
 @keyframes shake {
    0% { transform: translateX(0) }

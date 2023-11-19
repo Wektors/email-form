@@ -72,12 +72,12 @@ export default class UserData {
 	 */
 	printSummary() {
 		if (this.firstStepType === FirstStepType.PersonalData) {
-			return `<h1>Podsumowanie</h1>
+			return `
         <p>${this.personal_data.printSummary()}</p>
         <p>${this.address_data.printSummary()}</p>
         `;
 		} else {
-			return `<h1>Podsumowanie</h1>
+			return `
         <p>${this.company_data.printSummary()}</p>
         <p>${this.address_data.printSummary()}</p>
         `;

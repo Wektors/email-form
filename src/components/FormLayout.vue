@@ -1,61 +1,59 @@
 <template>
 	<div>
 		<div class="top-container">
-			<div class="inner-item">
-				<button class="button" @click="clearInputs">Wyczyść krok</button>
+			<div class="header-container">
+				<h1 v-show="currentStep === Steps.ClientData">Dane nabywcy</h1>
+				<h1 v-show="currentStep === Steps.AddressData">Dane adresowe</h1>
+				<h1 v-show="currentStep === Steps.Summary">Podsumowanie</h1>
 			</div>
-			<div class="inner-item">
-				<button class="button" @click="handleSave">Zapisz</button>
 
+			<div class="icon-container">
 				<Transition>
 					<button
-						class="button"
+						class="icon"
 						v-if="storageEmpty === false"
 						@click="handleLoad()"
 					>
-						Odczytaj
+						<img src="@/assets/load.svg">
 					</button>
 				</Transition>
-
 				<Transition>
 					<button
-						class="button"
+						class="icon"
 						v-if="storageEmpty === false"
 						@click="handleDelete"
 					>
-						Usuń dane
+						<img src="@/assets/delete.svg">
 					</button>
 				</Transition>
+				<button class="icon" @click="clearInputs"><img src="@/assets/refresh.svg"></button>
+				<button class="icon" @click="handleSave"><img src="@/assets/save.svg"></button>
 			</div>
-		</div>
-		<div v-show="currentStep === Steps.ClientData">
-			<input
-				name="PersonalData"
-				type="radio"
-				id="PersonalData"
-				:value="FirstStepType.PersonalData"
-				@change="handleChangeFirstStep"
-				v-model="this.userData.firstStepType" 
-				/>
-				<!-- zamiast checked musi byc v-model aby dobrze zaznaczone bylo -->
-			<label for="PersonalData">Osoba prywatna</label>
-			<br />
-			<input
-				name="CompanyData"
-				type="radio"
-				id="CompanyData"
-				:value="FirstStepType.CompanyData"
-				@change="handleChangeFirstStep"
-				v-model="this.userData.firstStepType"
-			/>
-			<label for="CompanyData">Firma</label>
 		</div>
 
 		<div v-show="currentStep === Steps.ClientData">
-			<FormStep
-				:stepData="userData.clientData"
-			/>
-			
+			<div v-show="currentStep === Steps.ClientData">
+				<input
+					name="PersonalData"
+					type="radio"
+					id="PersonalData"
+					:value="FirstStepType.PersonalData"
+					@change="handleChangeFirstStep"
+					v-model="this.userData.firstStepType"
+				/>
+				<!-- zamiast checked musi byc v-model aby dobrze zaznaczone bylo -->
+				<label for="PersonalData">Osoba prywatna</label>
+				<input
+					name="CompanyData"
+					type="radio"
+					id="CompanyData"
+					:value="FirstStepType.CompanyData"
+					@change="handleChangeFirstStep"
+					v-model="this.userData.firstStepType"
+				/>
+				<label for="CompanyData">Firma</label>
+			</div>
+			<FormStep :stepData="userData.clientData" />
 		</div>
 
 		<FormStep
@@ -63,16 +61,17 @@
 			:stepData="userData.address_data"
 		/>
 
-		<FormSummary
-			v-show="currentStep === Steps.Summary"
-			:userData="userData"
-		/>
+		<FormSummary v-show="currentStep === Steps.Summary" :userData="userData" />
 
 		<div class="footer">
-			<button @click="handleBack" v-show="currentStep !== Steps.ClientData">
+			<button
+				class="button"
+				@click="handleBack"
+				v-show="currentStep !== Steps.ClientData"
+			>
 				Wstecz
 			</button>
-			<button @click="handleNext">{{ nextStepButton }}</button>
+			<button class="button" @click="handleNext">{{ nextStepButton }}</button>
 		</div>
 	</div>
 </template>
@@ -110,7 +109,6 @@ export default {
 			}
 			return "Dalej";
 		},
-		
 	},
 	methods: {
 		handleBack: function () {
@@ -148,8 +146,7 @@ export default {
 
 			if (this.userData.firstStepType === FirstStepType.PersonalData) {
 				toStorage["PersonalData"] = this.userData.personal_data.serialize();
-			}
-			else {
+			} else {
 				toStorage["CompanyData"] = this.userData.company_data.serialize();
 			}
 
@@ -182,7 +179,7 @@ export default {
 		},
 		loadFirstStepType: function () {
 			const typeLoaded = JSON.parse(Storage.load("firstStepType"));
-				this.userData.firstStepType = typeLoaded;
+			this.userData.firstStepType = typeLoaded;
 		},
 		handleDelete: function () {
 			Storage.delete("userData");
@@ -203,34 +200,46 @@ export default {
 </script>
 
 <style scoped>
+label {
+	font-size: 1rem;
+}
 .top-container {
 	margin: 2rem;
 	display: flex;
+	flex-direction: row;
 	justify-content: space-between;
-	height: 10vh;
+}
+.header-container {
+	display: flex;
+	align-items: center;
+}
+.icon-container {
+	display: flex;
+	align-items: center;
+}
+.button {
+	font-size: 1rem;
+	padding: 0.25rem;
+	margin: 0.5rem;
+}
+.icon {
+	height: 2rem;
+	width: 2rem;
+	border: none;
+	background-color: #ffffff00;
+}
+.footer {
+	margin-top: 2rem;
+	display: flex;
+	justify-content: space-between;
 }
 
 .v-enter-active,
 .v-leave-active {
 	transition: opacity 0.5s ease;
 }
-
 .v-enter-from,
 .v-leave-to {
 	opacity: 0;
-}
-.inner-item {
-	display: flex;
-	flex-direction: column;
-	align-content: space-around;
-}
-
-.button {
-	width: 6vw;
-	margin-top: 0.5rem;
-}
-
-.footer {
-	margin-top: 2rem;
 }
 </style>

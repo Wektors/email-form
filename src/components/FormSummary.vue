@@ -18,7 +18,7 @@ export default {
 
 <style scoped>
 .label {
-    font-size: 18px;
+    font-size: 1rem;
     color: rgb(79, 75, 75);
     padding: 20px;
 }
