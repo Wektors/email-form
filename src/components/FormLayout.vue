@@ -71,23 +71,28 @@
 			</div>
 			<FormStep :stepData="userData.clientData" />
 		</div>
-			<FormStep
-				v-show="currentStep === Steps.AddressData"
-				:stepData="userData.address_data"
-			/>
+		<FormStep
+			v-show="currentStep === Steps.AddressData"
+			:stepData="userData.address_data"
+		/>
 
 		<FormSummary v-show="currentStep === Steps.Summary" :userData="userData" />
 
 		<div class="footer">
-			<button
-				class="button"
-				@click="handleBack"
-				v-show="currentStep !== Steps.ClientData"
-			>
-				Wstecz
-			</button>
-			<div v-show="currentStep == Steps.ClientData"></div>
-			<button class="button" @click="handleNext">{{ nextStepButton }}</button>
+			<div>
+				<button
+					class="button"
+					@click="handleBack"
+					v-show="currentStep !== Steps.ClientData"
+				>
+					Wstecz
+				</button>
+			</div>
+			<div>
+				<button class="button" @click="handleNext">
+					{{ nextStepButton }}
+				</button>
+			</div>
 		</div>
 	</div>
 </template>
@@ -225,6 +230,23 @@ label {
 	flex-direction: row;
 	justify-content: space-between;
 }
+@media (max-width: 480px) {
+	.top-container {
+		flex-direction: column;
+		
+		
+	}
+	.header-container {
+		align-self: center;
+	}
+	.icon-container {
+		align-self: flex-end;
+	}
+	.footer {
+		flex-direction: column-reverse;
+		justify-content: center;
+	}
+}
 .header-container {
 	display: flex;
 	align-items: center;
@@ -255,6 +277,7 @@ img {
 	display: flex;
 	justify-content: space-between;
 }
+
 .tooltip:hover {
 	background-color: rgb(234, 232, 232);
 	height: 2rem;

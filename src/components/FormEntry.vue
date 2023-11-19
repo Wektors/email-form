@@ -54,6 +54,7 @@ export default {
 
 <style scoped>
 .label {
+	justify-self: left;
 	font-size: 1rem;
 	color: rgb(79, 75, 75);
 }
@@ -61,6 +62,8 @@ input {
 	height: 1rem;
 	margin-top: 0.5rem;
 }
+
+
 .not-touched {
 	color: black;
 	border: 1px solid rgb(0, 0, 0), 0, 0;
