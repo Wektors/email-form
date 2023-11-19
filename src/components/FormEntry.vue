@@ -53,14 +53,13 @@ export default {
 </script>
 
 <style scoped>
-input {
-	height: 1rem;
-	margin-top: 0.5rem;
-}
 .label {
 	font-size: 1rem;
 	color: rgb(79, 75, 75);
-	margin-top: 1rem;
+}
+input {
+	height: 1rem;
+	margin-top: 0.5rem;
 }
 .not-touched {
 	color: black;

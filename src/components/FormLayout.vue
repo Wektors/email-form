@@ -71,11 +71,10 @@
 			</div>
 			<FormStep :stepData="userData.clientData" />
 		</div>
-
-		<FormStep
-			v-show="currentStep === Steps.AddressData"
-			:stepData="userData.address_data"
-		/>
+			<FormStep
+				v-show="currentStep === Steps.AddressData"
+				:stepData="userData.address_data"
+			/>
 
 		<FormSummary v-show="currentStep === Steps.Summary" :userData="userData" />
 
@@ -87,6 +86,7 @@
 			>
 				Wstecz
 			</button>
+			<div v-show="currentStep == Steps.ClientData"></div>
 			<button class="button" @click="handleNext">{{ nextStepButton }}</button>
 		</div>
 	</div>
