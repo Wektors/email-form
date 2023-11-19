@@ -14,7 +14,10 @@
 						v-if="storageEmpty === false"
 						@click="handleLoad()"
 					>
-						<img src="@/assets/load.svg">
+						<div class="tooltip">
+							<span class="tooltiptext">Wczytaj</span>
+							<img src="@/assets/load.svg" />
+						</div>
 					</button>
 				</Transition>
 				<Transition>
@@ -23,11 +26,24 @@
 						v-if="storageEmpty === false"
 						@click="handleDelete"
 					>
-						<img src="@/assets/delete.svg">
+						<div class="tooltip">
+							<img src="@/assets/delete.svg" />
+							<span class="tooltiptext">Usuń dane</span>
+						</div>
 					</button>
 				</Transition>
-				<button class="icon" @click="clearInputs"><img src="@/assets/refresh.svg"></button>
-				<button class="icon" @click="handleSave"><img src="@/assets/save.svg"></button>
+				<button class="icon" @click="clearInputs">
+					<div class="tooltip">
+						<img src="@/assets/refresh.svg" alt="clear inputs" />
+						<span class="tooltiptext">Wyczyść krok</span>
+					</div>
+				</button>
+				<button class="icon" @click="handleSave" alt="save">
+					<div class="tooltip">
+						<span class="tooltiptext">Zapisz</span>
+						<img src="@/assets/save.svg" />
+					</div>
+				</button>
 			</div>
 		</div>
 
@@ -226,12 +242,40 @@ label {
 	height: 2rem;
 	width: 2rem;
 	border: none;
-	background-color: #ffffff00;
+	background-color: rgba(0, 0, 0, 0);
+	margin: 0.5rem;
 }
+img {
+	height: 2rem;
+	width: 2rem;
+}
+
 .footer {
 	margin-top: 2rem;
 	display: flex;
 	justify-content: space-between;
+}
+.tooltip:hover {
+	background-color: rgb(234, 232, 232);
+	height: 2rem;
+	width: 2rem;
+}
+
+.tooltip .tooltiptext {
+	visibility: hidden;
+	width: 5rem;
+	background-color: black;
+	color: #fff;
+	text-align: center;
+	padding: 0.5rem 0;
+	border-radius: 0.5rem;
+	margin-top: 2.5rem;
+	margin-left: -3rem;
+	position: absolute;
+	z-index: 1;
+}
+.tooltip:hover .tooltiptext {
+	visibility: visible;
 }
 
 .v-enter-active,
