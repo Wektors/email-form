@@ -27,10 +27,9 @@ export default class UserData {
 
 	get clientData() {
 		if (this.firstStepType == FirstStepType.PersonalData) {
-			return this.personal_data
-		} 
-		
-		return this.company_data
+			return this.personal_data;
+		}
+		return this.company_data;
 	}
 
 	/**
@@ -71,34 +70,20 @@ export default class UserData {
 	 * @returns {string}
 	 */
 	printSummary() {
-		if (this.firstStepType === FirstStepType.PersonalData) {
-			return `
-        <p>${this.personal_data.printSummary()}</p>
+		return `
+        <p>${this.clientData.printSummary()}</p>
         <p>${this.address_data.printSummary()}</p>
         `;
-		} else {
-			return `
-        <p>${this.company_data.printSummary()}</p>
-        <p>${this.address_data.printSummary()}</p>
-        `;
-		}
 	}
 	/**
 	 *
 	 * @returns {string}
 	 */
 	printForMail() {
-		if (this.firstStepType === FirstStepType.PersonalData) {
-			return `
-            ${this.personal_data.printForMail()}\n
+		return `
+            ${this.clientData.printForMail()}\n
             ${this.address_data.printForMail()}\n
 			`;
-		} else {
-			return `
-            ${this.company_data.printForMail()}\n
-            ${this.address_data.printForMail()}\n
-			`;
-		}
 	}
 
 	/**

@@ -233,8 +233,6 @@ label {
 @media (max-width: 480px) {
 	.top-container {
 		flex-direction: column;
-		
-		
 	}
 	.header-container {
 		align-self: center;
