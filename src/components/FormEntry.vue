@@ -20,17 +20,18 @@ export default {
 	props: {
 		formField: FormField,
 	},
-	methods: {
-		
-	},
+	methods: {},
 	computed: {
 		validityClass: function () {
 			if (this.formField.showNotValidError() && this.formField._touched) {
 				return "validated";
-			} else if (this.formField.showNotValidError() == false  && this.formField._touched) {
+			} else if (
+				this.formField.showNotValidError() == false &&
+				this.formField._touched
+			) {
 				return "unvalidated";
 			} else {
-				return "not-touched"
+				return "not-touched";
 			}
 		},
 		inputValue: {
@@ -63,27 +64,45 @@ input {
 	margin-top: 0.5rem;
 }
 
-
 .not-touched {
 	color: black;
 	border: 1px solid rgb(0, 0, 0), 0, 0;
 }
 .validated {
-	color: #00883F;
-	border: 1px solid #00883F;
-	background: url(@/assets/success.svg) no-repeat right;
+	color: #00883f;
+	border: 1px solid #00883f;
+	background-color: white;
+	background-image: url(@/assets/success.svg);
+	background-repeat: no-repeat;
+	background-position-y: calc(0.25rem + 1px);
+	background-size: 0.5rem;
+	background-position-x: calc(100% - 0.25rem);
 }
 .unvalidated {
 	color: red;
 	border: 1px solid red;
-	animation: shake 0.25s; 
-	background: url(@/assets/error.svg) no-repeat right;
+	animation: shake 0.25s;
+	background-image: url(@/assets/error.svg);
+	background-repeat: no-repeat;
+	background-position-y: calc(0.25rem + 1px);
+	background-size: 0.5rem;
+	background-position-x: calc(100% - 0.25rem);
 }
 @keyframes shake {
-   0% { transform: translateX(0) }
- 25% { transform: translateX(5px) }
- 50% { transform: translateX(-5px) }
- 75% { transform: translateX(5px) }
- 100% { transform: translateX(0) }
+	0% {
+		transform: translateX(0);
+	}
+	25% {
+		transform: translateX(5px);
+	}
+	50% {
+		transform: translateX(-5px);
+	}
+	75% {
+		transform: translateX(5px);
+	}
+	100% {
+		transform: translateX(0);
+	}
 }
 </style>
