@@ -7,13 +7,19 @@
 <script>
 
 import UserData from '@/js/UserData';
+import Vue from "vue";
+import { Prop, Component } from "vue-property-decorator";
 
-export default {
-    name: 'FormSummary',
-    props: {
-        userData: UserData,
-    },
-};
+@Component({
+	components: {
+		
+	},
+})
+
+export default class FormSummary extends Vue {
+	@Prop({ type: UserData, required: true, default: () => [] }) userData;
+
+}
 </script>
 
 <style scoped>
