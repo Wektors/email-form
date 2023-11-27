@@ -2,26 +2,38 @@
 	<div class="step-container">
 		<div
 			v-for="(field, id) in stepData.getFields()"
-			:key="id"
+			v-bind:key="id"
 			class="step-entry"
 		>
-			<FormEntry :form-field="stepData[field]" />
+			<FormEntry v-bind:form-field="stepData[field]" />
 		</div>
 	</div>
 </template>
 
 <script>
-import FormEntry from "./FormEntry.vue";
+// import FormEntry from "./FormEntry.vue";
+// export default {
+// 	name: "FormStep",
+// 	props: {
+// 		stepData: Object,
+// 	},
+// 	components: {
+// 		FormEntry,
+// 	},
+// };
 
-export default {
-	name: "FormStep",
-	props: {
-		stepData: Object,
-	},
+import FormEntry from "./FormEntry.vue";
+import Vue from "vue";
+import { Component, Prop } from "vue-property-decorator";
+
+@Component({
 	components: {
 		FormEntry,
 	},
-};
+})
+export default class FormStep extends Vue {
+	@Prop({type: Object, required: false, default: () => []}) stepData;
+}
 </script>
 
 <style>

@@ -1,16 +1,18 @@
 <template>
-	<div class="label">
-		{{ formField.label }}
+	<div>
+		<div class="label">
+			{{ formField.label }}
+		</div>
+		<input
+			:class="validityClass"
+			type="text"
+			:id="formField.label"
+			:autocomplete="formField.autocomplete"
+			:placeholder="`Wpisz ${formField.label}`"
+			v-model="inputValue"
+			@input="inputValue"
+		/>
 	</div>
-	<input
-		:class="validityClass"
-		type="text"
-		:id="formField.label"
-		:autocomplete="formField.autocomplete"
-		:placeholder="`Wpisz ${formField.label}`"
-		v-model="inputValue"
-		@input="inputValue.set"
-	/>
 </template>
 <script>
 import { FormField } from "@/js/FormField";
@@ -20,7 +22,6 @@ export default {
 	props: {
 		formField: FormField,
 	},
-	methods: {},
 	computed: {
 		validityClass: function () {
 			if (this.formField.showNotValidError() && this.formField._touched) {
