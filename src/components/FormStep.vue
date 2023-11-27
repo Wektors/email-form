@@ -11,20 +11,10 @@
 </template>
 
 <script>
-// import FormEntry from "./FormEntry.vue";
-// export default {
-// 	name: "FormStep",
-// 	props: {
-// 		stepData: Object,
-// 	},
-// 	components: {
-// 		FormEntry,
-// 	},
-// };
-
 import FormEntry from "./FormEntry.vue";
 import Vue from "vue";
 import { Component, Prop } from "vue-property-decorator";
+import StepData from "@/js/StepData";
 
 @Component({
 	components: {
@@ -32,7 +22,7 @@ import { Component, Prop } from "vue-property-decorator";
 	},
 })
 export default class FormStep extends Vue {
-	@Prop({type: Object, required: false, default: () => []}) stepData;
+	@Prop({type: StepData, required: false, default: () => []}) stepData;
 }
 </script>
 

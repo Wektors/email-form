@@ -16,42 +16,45 @@
 </template>
 <script>
 import { FormField } from "@/js/FormField";
+import Vue from "vue";
+import { Prop, Component } from "vue-property-decorator";
 
-export default {
-	name: "FormEntry",
-	props: {
-		formField: FormField,
+@Component({
+	components: {
+		
 	},
-	computed: {
-		validityClass: function () {
-			if (this.formField.showNotValidError() && this.formField._touched) {
-				return "validated";
-			} else if (
-				this.formField.showNotValidError() == false &&
-				this.formField._touched
-			) {
-				return "unvalidated";
-			} else {
-				return "not-touched";
-			}
-		},
-		inputValue: {
-			get() {
-				return this.formField.value;
-			},
-			set(val) {
-				this.formField.setValue(val);
-			},
-		},
-	},
+})
+
+export default class FormEntry extends Vue {
+	@Prop({ type: FormField, required: true, default: () => [] }) formField;
+
+	get validityClass() {
+		if (this.formField.showNotValidError() && this.formField._touched) {
+			return "validated";
+		} else if (
+			this.formField.showNotValidError() == false &&
+			this.formField._touched
+		) {
+			return "unvalidated";
+		} else {
+			return "not-touched";
+		}
+	}
+	get inputValue() {
+		return this.formField.value;
+	}
+	set inputValue(val) {
+		this.formField.setValue(val);
+	}
+
 	data() {
 		return {
 			touched: false,
 			currentValue: this.formField.value,
 			validated: true,
 		};
-	},
-};
+	}
+}
 </script>
 
 <style scoped>
