@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div class="step-entry">
 		<div class="label">
 			{{ formField.label }}
 		</div>
