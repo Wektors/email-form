@@ -1,27 +1,29 @@
 <template>
-  <div id="app">
-    <FormLayout/>
-  </div>
+	<div id="app">
+		<FormLayout />
+	</div>
 </template>
 
 <script>
-import FormLayout from './components/FormLayout.vue';
+import FormLayout from "./components/FormLayout.vue";
+import { Component } from "vue-property-decorator";
+import Vue from "vue";
 
-export default {
-  name: 'App',
-  components: {
-    FormLayout,
-  }
-}
+@Component({
+	components: {
+		FormLayout,
+	},
+})
+export default class App extends Vue {}
 </script>
 
 <style>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+	font-family: Avenir, Helvetica, Arial, sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	text-align: center;
+	color: #2c3e50;
+	margin-top: 60px;
 }
 </style>

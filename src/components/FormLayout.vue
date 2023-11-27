@@ -99,7 +99,7 @@
 
 <script>
 import Vue from "vue";
-import Component from "vue-class-component";
+import { Component } from "vue-property-decorator";
 import UserData from "@/js/UserData.js";
 import FormStep from "./FormStep.vue";
 import Steps from "@/js/Steps.js";
