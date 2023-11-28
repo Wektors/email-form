@@ -12,7 +12,7 @@ import { Prop, Component } from "vue-property-decorator";
 
 @Component({
 	components: {
-		
+        
 	},
 })
 

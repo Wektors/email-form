@@ -55,7 +55,7 @@
 					id="PersonalData"
 					:value="FirstStepType.PersonalData"
 					@change="handleChangeFirstStep"
-					v-model="this.userData.firstStepType"
+					v-model="userData.firstStepType"
 				/>
 				<!-- zamiast checked musi byc v-model aby dobrze zaznaczone bylo -->
 				<label for="PersonalData">Osoba prywatna</label>
@@ -65,7 +65,7 @@
 					id="CompanyData"
 					:value="FirstStepType.CompanyData"
 					@change="handleChangeFirstStep"
-					v-model="this.userData.firstStepType"
+					v-model="userData.firstStepType"
 				/>
 				<label for="CompanyData">Firma</label>
 			</div>

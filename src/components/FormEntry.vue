@@ -10,7 +10,6 @@
 			:autocomplete="formField.autocomplete"
 			:placeholder="`Wpisz ${formField.label}`"
 			v-model="inputValue"
-			@input="inputValue"
 		/>
 	</div>
 </template>
@@ -45,6 +44,9 @@ export default class FormEntry extends Vue {
 	}
 	set inputValue(val) {
 		this.formField.setValue(val);
+	}
+	handleInput(val) {
+		this.formField.setValue(val.target.value);
 	}
 
 	data() {
