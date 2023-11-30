@@ -46,7 +46,8 @@
 				</button>
 			</div>
 		</div>
-
+		<SwitchButton value="0"/>Inne dane do wysyłki
+		<br/>
 		<div v-show="currentStep === Steps.ClientData">
 			<div v-show="currentStep === Steps.ClientData">
 				<input
@@ -106,11 +107,13 @@ import Steps from "@/js/Steps.js";
 import FormSummary from "@/components/FormSummary";
 import Storage from "@/js/Storage.js";
 import FirstStepType from "@/js/FirstStepType";
+import SwitchButton from "@/components/SwitchButton";
 
 @Component({
 	components: {
 		FormSummary,
 		FormStep,
+		SwitchButton,
 	},
 })
 export default class FormLayout extends Vue {
