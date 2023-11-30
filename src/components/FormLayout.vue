@@ -111,7 +111,7 @@ import FirstStepType from "@/js/FirstStepType";
 	components: {
 		FormSummary,
 		FormStep,
-	}
+	},
 })
 export default class FormLayout extends Vue {
 	data() {
@@ -148,13 +148,15 @@ export default class FormLayout extends Vue {
 		this.userData.firstStepType = value.target.value;
 	}
 	isValidStep() {
-		if (this.currentStep === Steps.ClientData) {
-			if (this.userData.firstStepType === FirstStepType.PersonalData) {
+		if (this.currentStep == Steps.ClientData) {
+			if (this.userData.firstStepType == FirstStepType.PersonalData) {
 				return this.userData.hasValidPersonalData();
-			} else {
+			}
+			if (this.userData.firstStepType == FirstStepType.CompanyData) {
 				return this.userData.hasValidCompanyData();
 			}
-		} else if (this.currentStep === Steps.AddressData) {
+		}
+		if (this.currentStep == Steps.AddressData) {
 			return this.userData.hasValidAddressData();
 		}
 		return true;
