@@ -2,6 +2,7 @@ import PersonalData from "@/js/PersonalData";
 import AddressData from "@/js/AddressData";
 import CompanyData from "@/js/CompanyData";
 import FirstStepType from "./FirstStepType";
+import InvoiceData from "@/js/InvoiceData";
 
 export default class UserData {
 	/**
@@ -22,6 +23,7 @@ export default class UserData {
 		this.personal_data = new PersonalData(options);
 		this.address_data = new AddressData(options);
 		this.company_data = new CompanyData(options);
+		this.invoice_data = new InvoiceData(options);
 		this.firstStepType = FirstStepType.PersonalData;
 	}
 
@@ -55,6 +57,10 @@ export default class UserData {
 
 	hasValidAddressData() {
 		return this.address_data.isValid();
+	}
+
+	hasValidInvoiceData() {
+		return this.invoice_data.isValid();
 	}
 
 	/**

@@ -2,7 +2,7 @@ import { FormField } from "@/js/FormField";
 import Validators from "@/js/Validators";
 import StepData from "./StepData";
 
-export default class AddressData extends StepData {
+export default class InvoiceData extends StepData {
 	/**
 	 *
 	 * @param {object}options
@@ -52,11 +52,45 @@ export default class AddressData extends StepData {
 			options.city,
 			"address-level2"
 		);
+		this.street = new FormField(
+			"Ulica",
+			Validators.NOT_EMPTY_STRING,
+			options.street,
+			"street-address"
+		);
+		this.houseNumber = new FormField(
+			"Numer domu",
+			Validators.NUMBER_REQUIRED,
+			options.houseNumber,
+		);
+		this.apartmentNumber = new FormField(
+			"Numer mieszkania",
+			Validators.NUMBER_NOT_REQUIRED,
+			options.apartmentNumber,
+		);
+		this.postalCode = new FormField(
+			"Kod pocztowy",
+			Validators.POSTAL_CODE,
+			options.postalCode,
+			"postal-code"
+		);
+		this.city = new FormField(
+			"Miasto",
+			Validators.NOT_EMPTY_STRING,
+			options.city,
+			"address-level2"
+		);
 		this.region = new FormField(
 			"Województwo",
 			Validators.NOT_EMPTY_STRING,
 			options.region,
 			""
+		);
+		this.headquarters = new FormField(
+			"Siedziba firmy",
+			Validators.NOT_EMPTY_STRING,
+			options.headquarters,
+			"address"
 		);
 	}
 

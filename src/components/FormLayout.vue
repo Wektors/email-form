@@ -46,9 +46,16 @@
 				</button>
 			</div>
 		</div>
-		<SwitchButton value="0"/>Inne dane do wysyłki
-		<br/>
+		<br />
 		<div v-show="currentStep === Steps.ClientData">
+			<FormStep v-bind:stepData="userData.clientData" />
+		</div>
+		<FormStep
+			v-show="currentStep === Steps.AddressData"
+			v-bind:stepData="userData.address_data"
+		/>
+		<InvoiceData v-bind:value="this.differentInvoiceData">
+			
 			<div v-show="currentStep === Steps.ClientData">
 				<input
 					name="PersonalData"
@@ -70,12 +77,11 @@
 				/>
 				<label for="CompanyData">Firma</label>
 			</div>
-			<FormStep v-bind:stepData="userData.clientData" />
-		</div>
-		<FormStep
-			v-show="currentStep === Steps.AddressData"
-			v-bind:stepData="userData.address_data"
-		/>
+			<FormStep
+				v-show="currentStep === Steps.AddressData"
+				v-bind:stepData="userData.invoice_data"
+			/>
+		</InvoiceData>
 
 		<FormSummary v-show="currentStep === Steps.Summary" :userData="userData" />
 
@@ -107,13 +113,13 @@ import Steps from "@/js/Steps.js";
 import FormSummary from "@/components/FormSummary";
 import Storage from "@/js/Storage.js";
 import FirstStepType from "@/js/FirstStepType";
-import SwitchButton from "@/components/SwitchButton";
+import InvoiceData from "@/components/InvoiceData";
 
 @Component({
 	components: {
 		FormSummary,
 		FormStep,
-		SwitchButton,
+		InvoiceData,
 	},
 })
 export default class FormLayout extends Vue {
@@ -122,6 +128,7 @@ export default class FormLayout extends Vue {
 			FirstStepType: FirstStepType,
 			Steps: Steps,
 			currentStep: Steps.ClientData,
+			differentInvoiceData: false,
 			userData: new UserData(),
 			Storage: Storage,
 			storageEmpty: Storage.isEmpty("userData"),
@@ -159,6 +166,7 @@ export default class FormLayout extends Vue {
 				return this.userData.hasValidCompanyData();
 			}
 		}
+		if (this.userData)
 		if (this.currentStep == Steps.AddressData) {
 			return this.userData.hasValidAddressData();
 		}

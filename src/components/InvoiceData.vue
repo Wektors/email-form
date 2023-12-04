@@ -1,22 +1,37 @@
 <template>
 	<div>
-		<label class="switch">
-			<input type="checkbox" value="this.value"/>
-			<span class="slider round"></span>
-		</label>
+		<div class="container">
+			<label class="switch">
+				<input type="checkbox" :value="this.value" @click="triggerSlider" />
+				<span class="slider round"></span>
+			</label>
+			Inne dane do faktury
+		</div>
+		<slot v-if="this.value == true"> </slot>
 	</div>
 </template>
 <script>
 import Vue from "vue";
 import { Prop, Component } from "vue-property-decorator";
+import FormStep from "./FormStep.vue";
 
 @Component({
-	components: {},
+	components: {
+		FormStep,
+	},
 })
-export default class SwitchButton extends Vue {
-	@Prop({ type: String, required: false, default: () => [] }) value;
+export default class InvoiceData extends Vue {
+	@Prop({ type: Boolean, required: false, default: () => [] }) value;
 	data() {
 		return {};
+	}
+
+	triggerSlider() {
+		if (this.value != true) {
+			this.value = true;
+		} else {
+			this.value = false;
+		}
 	}
 }
 </script>
