@@ -54,9 +54,8 @@
 			v-show="currentStep === Steps.AddressData"
 			v-bind:stepData="userData.address_data"
 		/>
-		<InvoiceData v-bind:value="this.differentInvoiceData">
-			
-			<div v-show="currentStep === Steps.ClientData">
+		<SliderSection v-show="currentStep === Steps.ClientData">
+			<div >
 				<input
 					name="PersonalData"
 					type="radio"
@@ -77,11 +76,13 @@
 				/>
 				<label for="CompanyData">Firma</label>
 			</div>
+		</SliderSection>
+		<SliderSection v-show="currentStep === Steps.AddressData">
 			<FormStep
 				v-show="currentStep === Steps.AddressData"
 				v-bind:stepData="userData.invoice_data"
 			/>
-		</InvoiceData>
+		</SliderSection>
 
 		<FormSummary v-show="currentStep === Steps.Summary" :userData="userData" />
 
@@ -113,13 +114,13 @@ import Steps from "@/js/Steps.js";
 import FormSummary from "@/components/FormSummary";
 import Storage from "@/js/Storage.js";
 import FirstStepType from "@/js/FirstStepType";
-import InvoiceData from "@/components/InvoiceData";
+import SliderSection from "@/components/SliderSection";
 
 @Component({
 	components: {
 		FormSummary,
 		FormStep,
-		InvoiceData,
+		SliderSection,
 	},
 })
 export default class FormLayout extends Vue {
@@ -128,7 +129,7 @@ export default class FormLayout extends Vue {
 			FirstStepType: FirstStepType,
 			Steps: Steps,
 			currentStep: Steps.ClientData,
-			differentInvoiceData: false,
+			differentSliderSection: false,
 			userData: new UserData(),
 			Storage: Storage,
 			storageEmpty: Storage.isEmpty("userData"),
@@ -167,9 +168,9 @@ export default class FormLayout extends Vue {
 			}
 		}
 		if (this.userData)
-		if (this.currentStep == Steps.AddressData) {
-			return this.userData.hasValidAddressData();
-		}
+			if (this.currentStep == Steps.AddressData) {
+				return this.userData.hasValidAddressData();
+			}
 		return true;
 	}
 	sendMail() {

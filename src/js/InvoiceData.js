@@ -16,7 +16,7 @@ export default class InvoiceData extends StepData {
 	 */
 	constructor(options) {
 		super();
-
+		// this.enabled = false;
 		this.email = new FormField("Email", Validators.EMAIL, options.email, "email");
 		this.phone = new FormField(
 			"Numer telefonu",

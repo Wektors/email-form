@@ -12,7 +12,7 @@
 </template>
 <script>
 import Vue from "vue";
-import { Prop, Component } from "vue-property-decorator";
+import { Component } from "vue-property-decorator";
 import FormStep from "./FormStep.vue";
 
 @Component({
@@ -20,10 +20,11 @@ import FormStep from "./FormStep.vue";
 		FormStep,
 	},
 })
-export default class InvoiceData extends Vue {
-	@Prop({ type: Boolean, required: false, default: () => [] }) value;
+export default class SliderSection extends Vue {
 	data() {
-		return {};
+		return {
+			value: Boolean,
+		};
 	}
 
 	triggerSlider() {
