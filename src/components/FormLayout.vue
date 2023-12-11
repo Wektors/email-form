@@ -77,10 +77,10 @@
 				<label for="CompanyData">Firma</label>
 			</div>
 		</SliderSection>
-		<SliderSection v-show="currentStep === Steps.AddressData">
+		<SliderSection v-show="currentStep === Steps.AddressData" v-on:changeState="handleChangeSecondStep()">
 			<FormStep
 				v-show="currentStep === Steps.AddressData"
-				v-bind:stepData="userData.invoice_data"
+				v-bind:stepData="this.userData.invoice_data"
 			/>
 		</SliderSection>
 
@@ -159,6 +159,7 @@ export default class FormLayout extends Vue {
 		this.userData.firstStepType = value.target.value;
 	}
 	isValidStep() {
+		console.log(this.userData.useInvoiceData);
 		if (this.currentStep == Steps.ClientData) {
 			if (this.userData.firstStepType == FirstStepType.PersonalData) {
 				return this.userData.hasValidPersonalData();
@@ -166,9 +167,9 @@ export default class FormLayout extends Vue {
 			if (this.userData.firstStepType == FirstStepType.CompanyData) {
 				return this.userData.hasValidCompanyData();
 			}
-		}
-		if (this.userData)
-			if (this.currentStep == Steps.AddressData) {
+		} if (this.userData.useInvoiceData == true) {
+			return this.userData.hasValidInvoiceData()
+		} if (this.currentStep == Steps.AddressData) {
 				return this.userData.hasValidAddressData();
 			}
 		return true;
@@ -193,6 +194,11 @@ export default class FormLayout extends Vue {
 
 		this.storageEmpty = false;
 	}
+
+	handleChangeSecondStep() {
+		this.userData.useInvoiceData = !this.userData.useInvoiceData;
+	}
+
 	handleLoad() {
 		this.loadUserData();
 		this.loadCurrentStep();

@@ -25,6 +25,7 @@ export default class UserData {
 		this.company_data = new CompanyData(options);
 		this.invoice_data = new InvoiceData(options);
 		this.firstStepType = FirstStepType.PersonalData;
+		this.useInvoiceData = false;
 	}
 
 	get clientData() {
@@ -61,6 +62,7 @@ export default class UserData {
 
 	hasValidInvoiceData() {
 		return this.invoice_data.isValid();
+		
 	}
 
 	/**

@@ -2,12 +2,17 @@
 	<div>
 		<div class="container">
 			<label class="switch">
-				<input type="checkbox" :value="this.value" @click="triggerSlider" />
+				<input
+					type="checkbox"
+					@click="triggerSlider()"
+					v-bind:value="value"
+					v-on:input="$emit('input', $event.target.value)"
+				/>
 				<span class="slider round"></span>
 			</label>
 			Inne dane do faktury
 		</div>
-		<slot v-if="this.value == true"> </slot>
+		<slot v-if="value == true"> </slot>
 	</div>
 </template>
 <script>
@@ -20,19 +25,19 @@ import FormStep from "./FormStep.vue";
 		FormStep,
 	},
 })
+
 export default class SliderSection extends Vue {
+
 	data() {
 		return {
-			value: Boolean,
+			value: Boolean(false),
 		};
 	}
 
 	triggerSlider() {
-		if (this.value != true) {
-			this.value = true;
-		} else {
-			this.value = false;
-		}
+		this.value = !this.value;
+		console.log(this.value);
+		this.$emit("changeState", this.value);
 	}
 }
 </script>
