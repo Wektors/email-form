@@ -47,7 +47,6 @@ export default class StepData {
 			if (fullObject[classKey] !== undefined) {
 				storageMap = fullObject[classKey];
 				let fields = this.getFields();
-				console.log(fields);
 				fields.forEach((field) => {
 					if (storageMap[field] !== undefined) {
 						this[field].setValue(storageMap[field]);

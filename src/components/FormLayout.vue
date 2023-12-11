@@ -54,7 +54,7 @@
 			v-show="currentStep === Steps.AddressData"
 			v-bind:stepData="userData.address_data"
 		/>
-		<SliderSection v-show="currentStep === Steps.ClientData">
+		<SwitchSection v-show="currentStep === Steps.ClientData">
 			<div >
 				<input
 					name="PersonalData"
@@ -76,13 +76,13 @@
 				/>
 				<label for="CompanyData">Firma</label>
 			</div>
-		</SliderSection>
-		<SliderSection v-show="currentStep === Steps.AddressData" v-on:changeState="handleChangeSecondStep()">
+		</SwitchSection>
+		<SwitchSection v-show="currentStep === Steps.AddressData" v-on:changeState="handleChangeSecondStep()">
 			<FormStep
 				v-show="currentStep === Steps.AddressData"
 				v-bind:stepData="this.userData.invoice_data"
 			/>
-		</SliderSection>
+		</SwitchSection>
 
 		<FormSummary v-show="currentStep === Steps.Summary" :userData="userData" />
 
@@ -114,13 +114,13 @@ import Steps from "@/js/Steps.js";
 import FormSummary from "@/components/FormSummary";
 import Storage from "@/js/Storage.js";
 import FirstStepType from "@/js/FirstStepType";
-import SliderSection from "@/components/SliderSection";
+import SwitchSection from "@/components/SwitchSection";
 
 @Component({
 	components: {
 		FormSummary,
 		FormStep,
-		SliderSection,
+		SwitchSection,
 	},
 })
 export default class FormLayout extends Vue {
@@ -129,7 +129,7 @@ export default class FormLayout extends Vue {
 			FirstStepType: FirstStepType,
 			Steps: Steps,
 			currentStep: Steps.ClientData,
-			differentSliderSection: false,
+			differentSwitchSection: false,
 			userData: new UserData(),
 			Storage: Storage,
 			storageEmpty: Storage.isEmpty("userData"),
@@ -159,7 +159,6 @@ export default class FormLayout extends Vue {
 		this.userData.firstStepType = value.target.value;
 	}
 	isValidStep() {
-		console.log(this.userData.useInvoiceData);
 		if (this.currentStep == Steps.ClientData) {
 			if (this.userData.firstStepType == FirstStepType.PersonalData) {
 				return this.userData.hasValidPersonalData();

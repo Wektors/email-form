@@ -26,7 +26,7 @@ import FormStep from "./FormStep.vue";
 	},
 })
 
-export default class SliderSection extends Vue {
+export default class SwitchSection extends Vue {
 
 	data() {
 		return {
@@ -36,7 +36,6 @@ export default class SliderSection extends Vue {
 
 	triggerSlider() {
 		this.value = !this.value;
-		console.log(this.value);
 		this.$emit("changeState", this.value);
 	}
 }
