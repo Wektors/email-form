@@ -1,8 +1,8 @@
 import { FormField } from "@/js/FormField";
 import Validators from "@/js/Validators";
-import StepData from "./StepData";
+import SecondStepData from "./SecondStepData";
 
-export default class InvoiceData extends StepData {
+export default class InvoiceData extends SecondStepData {
 	/**
 	 *
 	 * @param {object}options
@@ -15,77 +15,8 @@ export default class InvoiceData extends StepData {
 	 * @param {string|undefined}options.city,
 	 */
 	constructor(options) {
-		super();
+		super(options);
 		// this.enabled = false;
-		this.email = new FormField("Email", Validators.EMAIL, options.email, "email");
-		this.phone = new FormField(
-			"Numer telefonu",
-			Validators.PHONE_NUMBER,
-			options.phone,
-			"tel"
-		);
-		this.street = new FormField(
-			"Ulica",
-			Validators.NOT_EMPTY_STRING,
-			options.street,
-			"street-address"
-		);
-		this.houseNumber = new FormField(
-			"Numer domu",
-			Validators.NUMBER_REQUIRED,
-			options.houseNumber,
-		);
-		this.apartmentNumber = new FormField(
-			"Numer mieszkania",
-			Validators.NUMBER_NOT_REQUIRED,
-			options.apartmentNumber,
-		);
-		this.postalCode = new FormField(
-			"Kod pocztowy",
-			Validators.POSTAL_CODE,
-			options.postalCode,
-			"postal-code"
-		);
-		this.city = new FormField(
-			"Miasto",
-			Validators.NOT_EMPTY_STRING,
-			options.city,
-			"address-level2"
-		);
-		this.street = new FormField(
-			"Ulica",
-			Validators.NOT_EMPTY_STRING,
-			options.street,
-			"street-address"
-		);
-		this.houseNumber = new FormField(
-			"Numer domu",
-			Validators.NUMBER_REQUIRED,
-			options.houseNumber,
-		);
-		this.apartmentNumber = new FormField(
-			"Numer mieszkania",
-			Validators.NUMBER_NOT_REQUIRED,
-			options.apartmentNumber,
-		);
-		this.postalCode = new FormField(
-			"Kod pocztowy",
-			Validators.POSTAL_CODE,
-			options.postalCode,
-			"postal-code"
-		);
-		this.city = new FormField(
-			"Miasto",
-			Validators.NOT_EMPTY_STRING,
-			options.city,
-			"address-level2"
-		);
-		this.region = new FormField(
-			"Województwo",
-			Validators.NOT_EMPTY_STRING,
-			options.region,
-			""
-		);
 		this.headquarters = new FormField(
 			"Siedziba firmy",
 			Validators.NOT_EMPTY_STRING,

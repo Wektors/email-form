@@ -159,6 +159,7 @@ export default class FormLayout extends Vue {
 		this.userData.firstStepType = value.target.value;
 	}
 	isValidStep() {
+		// tu
 		if (this.currentStep == Steps.ClientData) {
 			if (this.userData.firstStepType == FirstStepType.PersonalData) {
 				return this.userData.hasValidPersonalData();
