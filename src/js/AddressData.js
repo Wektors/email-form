@@ -1,8 +1,6 @@
-import { FormField } from "@/js/FormField";
-import Validators from "@/js/Validators";
-import StepData from "./StepData";
+import SecondStepData from "./SecondStepData";
 
-export default class AddressData extends StepData {
+export default class AddressData extends SecondStepData {
 	/**
 	 *
 	 * @param {object}options
