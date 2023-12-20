@@ -175,9 +175,14 @@ export default class FormLayout extends Vue {
 
 		toStorage["AddressData"] = this.userData.address_data.serialize();
 
+		if (this.userData.useInvoiceData === true) {
+			toStorage["InvoiceData"] = this.userData.invoice_data.serialize();
+		}
+
 		Storage.save(toStorage, "userData");
 		Storage.save(this.currentStep, "currentStep");
 		Storage.save(Number(this.userData.firstStepType), "firstStepType");
+		Storage.save(this.userData.useInvoiceData, "useInvoiceData");
 
 		this.storageEmpty = false;
 	}
@@ -190,6 +195,7 @@ export default class FormLayout extends Vue {
 		this.loadUserData();
 		this.loadCurrentStep();
 		this.loadFirstStepType();
+		this.loadUseInvoiceData();
 	}
 
 	loadUserData() {
@@ -209,10 +215,17 @@ export default class FormLayout extends Vue {
 		const typeLoaded = JSON.parse(Storage.load("firstStepType"));
 		this.userData.firstStepType = typeLoaded;
 	}
+	loadUseInvoiceData() {
+		const typeLoaded = JSON.parse(Storage.load("useInvoiceData"));
+			this.userData.useInvoiceData = typeLoaded
+			console.log(this.userData.useInvoiceData)
+	}
+
 	handleDelete() {
 		Storage.delete("userData");
 		Storage.delete("currentStep");
 		Storage.delete("firstStepType");
+		Storage.delete("useInvoiceData");
 		this.storageEmpty = true;
 	}
 	clearInputs() {
