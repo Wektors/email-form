@@ -27,6 +27,7 @@ export default class UserData {
 		this.invoice_data = new InvoiceData(options);
 		this.firstStepType = FirstStepType.PersonalData;
 		this.useInvoiceData = false;
+		this.showRadioButtons = false;
 	}
 
 	get clientData() {

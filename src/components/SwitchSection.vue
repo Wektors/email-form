@@ -31,7 +31,6 @@ export default class SwitchSection extends Vue {
 	@Prop({ type: Boolean, required: true, }) value;
 	data() {
 		return {
-			// value: Boolean(false),
 		};
 	}
 

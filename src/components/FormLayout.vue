@@ -54,8 +54,12 @@
 			v-show="currentStep === Steps.AddressData"
 			v-bind:stepData="userData.address_data"
 		/>
-		<SwitchSection v-show="currentStep === Steps.ClientData" :value="false">
-			<div >
+		<SwitchSection
+			v-show="currentStep === Steps.ClientData"
+			v-on:changeState="handleShowRadioButtons()"
+			:value="this.userData.showRadioButtons"
+		>
+			<div>
 				<input
 					name="PersonalData"
 					type="radio"
@@ -77,7 +81,11 @@
 				<label for="CompanyData">Firma</label>
 			</div>
 		</SwitchSection>
-		<SwitchSection v-show="currentStep === Steps.AddressData" v-on:changeState="handleChangeSecondStep()" :value="this.userData.useInvoiceData">
+		<SwitchSection
+			v-show="currentStep === Steps.AddressData"
+			v-on:changeState="handleChangeSecondStep()"
+			:value="this.userData.useInvoiceData"
+		>
 			<FormStep
 				v-show="currentStep === Steps.AddressData"
 				v-bind:stepData="this.userData.invoice_data"
@@ -129,7 +137,7 @@ export default class FormLayout extends Vue {
 			FirstStepType: FirstStepType,
 			Steps: Steps,
 			currentStep: Steps.ClientData,
-			differentSwitchSection: false,
+			showRadioButtons: false,
 			userData: new UserData(),
 			Storage: Storage,
 			storageEmpty: Storage.isEmpty("userData"),
@@ -159,7 +167,7 @@ export default class FormLayout extends Vue {
 		this.userData.firstStepType = value.target.value;
 	}
 	isValidStep() {
-		return this.userData.hasValidData(this.currentStep)
+		return this.userData.hasValidData(this.currentStep);
 	}
 	sendMail() {
 		window.location = this.userData.getMailtoData();
@@ -182,6 +190,7 @@ export default class FormLayout extends Vue {
 		Storage.save(toStorage, "userData");
 		Storage.save(this.currentStep, "currentStep");
 		Storage.save(Number(this.userData.firstStepType), "firstStepType");
+		Storage.save(this.userData.showRadioButtons, "showRadioButtons");
 		Storage.save(this.userData.useInvoiceData, "useInvoiceData");
 
 		this.storageEmpty = false;
@@ -191,11 +200,16 @@ export default class FormLayout extends Vue {
 		this.userData.useInvoiceData = !this.userData.useInvoiceData;
 	}
 
+	handleShowRadioButtons() {
+		this.userData.showRadioButtons = !this.userData.showRadioButtons;
+	}
+
 	handleLoad() {
 		this.loadUserData();
 		this.loadCurrentStep();
 		this.loadFirstStepType();
 		this.loadUseInvoiceData();
+		this.loadShowRadioButtons();
 	}
 
 	loadUserData() {
@@ -203,7 +217,6 @@ export default class FormLayout extends Vue {
 		this.userData.company_data.deserialize("CompanyData");
 		this.userData.address_data.deserialize("AddressData");
 		this.userData.invoice_data.deserialize("InvoiceData");
-
 	}
 	loadCurrentStep() {
 		const stepLoaded = JSON.parse(Storage.load("currentStep"));
@@ -217,8 +230,12 @@ export default class FormLayout extends Vue {
 	}
 	loadUseInvoiceData() {
 		const typeLoaded = JSON.parse(Storage.load("useInvoiceData"));
-			this.userData.useInvoiceData = typeLoaded
-			console.log(this.userData.useInvoiceData)
+		this.userData.useInvoiceData = typeLoaded;
+		console.log(this.userData.useInvoiceData);
+	}
+	loadShowRadioButtons() {
+		const typeLoaded = JSON.parse(Storage.load("showRadioButtons"));
+		this.userData.showRadioButtons = typeLoaded;
 	}
 
 	handleDelete() {
@@ -226,6 +243,7 @@ export default class FormLayout extends Vue {
 		Storage.delete("currentStep");
 		Storage.delete("firstStepType");
 		Storage.delete("useInvoiceData");
+		Storage.delete("showRadioButtons");
 		this.storageEmpty = true;
 	}
 	clearInputs() {
