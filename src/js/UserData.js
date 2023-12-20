@@ -115,5 +115,6 @@ export default class UserData {
 	}
 	clearAddressData() {
 		this.address_data = new AddressData({});
+		this.invoice_data = new InvoiceData({});
 	}
 }
