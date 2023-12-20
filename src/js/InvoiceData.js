@@ -16,7 +16,6 @@ export default class InvoiceData extends SecondStepData {
 	 */
 	constructor(options) {
 		super(options);
-		// this.enabled = false;
 		this.headquarters = new FormField(
 			"Siedziba firmy",
 			Validators.NOT_EMPTY_STRING,
@@ -26,6 +25,6 @@ export default class InvoiceData extends SecondStepData {
 	}
 
 	getLabel() {
-		return "Dane kontaktowe oraz adresowe";
+		return "Dane do faktury";
 	}
 }

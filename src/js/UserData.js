@@ -43,16 +43,13 @@ export default class UserData {
 			}
 			if (this.firstStepType == FirstStepType.CompanyData) {
 				return this.company_data.isValid();
-
 			}
 		}
 		if (this.useInvoiceData == true) {
 			return this.invoice_data.isValid();
-
 		}
 		if (currentStep == Steps.AddressData) {
 			return this.address_data.isValid();
-
 		}
 		return true;
 	}
@@ -70,10 +67,17 @@ export default class UserData {
 	 * @returns {string}
 	 */
 	printSummary() {
-		return `
+		if (this.useInvoiceData == true) {
+			return `
         <p>${this.clientData.printSummary()}</p>
         <p>${this.address_data.printSummary()}</p>
+        <p>${this.invoice_data.printSummary()}</p>
         `;
+		}
+		return `
+			<p>${this.clientData.printSummary()}</p>
+			<p>${this.address_data.printSummary()}</p>
+			`;
 	}
 	/**
 	 *
