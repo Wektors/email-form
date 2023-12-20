@@ -7,6 +7,7 @@
 					@click="triggerSlider()"
 					v-bind:value="value"
 					v-on:input="$emit('input', $event.target.value)"
+					:checked="value"
 				/>
 				<span class="slider round"></span>
 			</label>
@@ -17,7 +18,7 @@
 </template>
 <script>
 import Vue from "vue";
-import { Component } from "vue-property-decorator";
+import { Prop, Component } from "vue-property-decorator";
 import FormStep from "./FormStep.vue";
 
 @Component({
@@ -27,15 +28,14 @@ import FormStep from "./FormStep.vue";
 })
 
 export default class SwitchSection extends Vue {
-
+	@Prop({ type: Boolean, required: true, }) value;
 	data() {
 		return {
-			value: Boolean(false),
+			// value: Boolean(false),
 		};
 	}
 
 	triggerSlider() {
-		this.value = !this.value;
 		this.$emit("changeState", this.value);
 	}
 }

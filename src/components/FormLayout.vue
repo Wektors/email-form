@@ -54,7 +54,7 @@
 			v-show="currentStep === Steps.AddressData"
 			v-bind:stepData="userData.address_data"
 		/>
-		<SwitchSection v-show="currentStep === Steps.ClientData">
+		<SwitchSection v-show="currentStep === Steps.ClientData" :value="false">
 			<div >
 				<input
 					name="PersonalData"
@@ -77,7 +77,7 @@
 				<label for="CompanyData">Firma</label>
 			</div>
 		</SwitchSection>
-		<SwitchSection v-show="currentStep === Steps.AddressData" v-on:changeState="handleChangeSecondStep()">
+		<SwitchSection v-show="currentStep === Steps.AddressData" v-on:changeState="handleChangeSecondStep()" :value="this.userData.useInvoiceData">
 			<FormStep
 				v-show="currentStep === Steps.AddressData"
 				v-bind:stepData="this.userData.invoice_data"
@@ -200,10 +200,10 @@ export default class FormLayout extends Vue {
 
 	loadUserData() {
 		this.userData.personal_data.deserialize("PersonalData");
-
 		this.userData.company_data.deserialize("CompanyData");
-
 		this.userData.address_data.deserialize("AddressData");
+		this.userData.invoice_data.deserialize("InvoiceData");
+
 	}
 	loadCurrentStep() {
 		const stepLoaded = JSON.parse(Storage.load("currentStep"));
