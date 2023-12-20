@@ -84,6 +84,13 @@ export default class UserData {
 	 * @returns {string}
 	 */
 	printForMail() {
+		if (this.useInvoiceData == true) {
+			return `
+            ${this.clientData.printForMail()}\n
+            ${this.address_data.printForMail()}\n
+            ${this.invoice_data.printForMail()}\n
+			`;
+		}
 		return `
             ${this.clientData.printForMail()}\n
             ${this.address_data.printForMail()}\n
