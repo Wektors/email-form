@@ -159,20 +159,7 @@ export default class FormLayout extends Vue {
 		this.userData.firstStepType = value.target.value;
 	}
 	isValidStep() {
-		// tu
-		if (this.currentStep == Steps.ClientData) {
-			if (this.userData.firstStepType == FirstStepType.PersonalData) {
-				return this.userData.hasValidPersonalData();
-			}
-			if (this.userData.firstStepType == FirstStepType.CompanyData) {
-				return this.userData.hasValidCompanyData();
-			}
-		} if (this.userData.useInvoiceData == true) {
-			return this.userData.hasValidInvoiceData()
-		} if (this.currentStep == Steps.AddressData) {
-				return this.userData.hasValidAddressData();
-			}
-		return true;
+		return this.userData.hasValidData(this.currentStep)
 	}
 	sendMail() {
 		window.location = this.userData.getMailtoData();

@@ -3,6 +3,7 @@ import AddressData from "@/js/AddressData";
 import CompanyData from "@/js/CompanyData";
 import FirstStepType from "./FirstStepType";
 import InvoiceData from "@/js/InvoiceData";
+import Steps from "@/js/Steps";
 
 export default class UserData {
 	/**
@@ -35,34 +36,25 @@ export default class UserData {
 		return this.company_data;
 	}
 
-	/**
-	 *
-	 * @returns {boolean}
-	 */
-	hasValidPersonalData() {
-		return this.personal_data.isValid();
-	}
+	hasValidData(currentStep) {
+		if (currentStep == Steps.ClientData) {
+			if (this.firstStepType == FirstStepType.PersonalData) {
+				return this.personal_data.isValid();
+			}
+			if (this.firstStepType == FirstStepType.CompanyData) {
+				return this.company_data.isValid();
 
-	/**
-	 *
-	 * @returns {boolean}
-	 */
-	hasValidCompanyData() {
-		return this.company_data.isValid();
-	}
+			}
+		}
+		if (this.useInvoiceData == true) {
+			return this.invoice_data.isValid();
 
-	/**
-	 *
-	 * @returns {*}
-	 */
+		}
+		if (currentStep == Steps.AddressData) {
+			return this.address_data.isValid();
 
-	hasValidAddressData() {
-		return this.address_data.isValid();
-	}
-
-	hasValidInvoiceData() {
-		return this.invoice_data.isValid();
-		
+		}
+		return true;
 	}
 
 	/**
