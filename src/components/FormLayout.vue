@@ -1,5 +1,6 @@
 <template>
 	<div>
+		<ProgressBar></ProgressBar>
 		<div class="top-container">
 			<div class="header-container">
 				<h1 v-show="currentStep === Steps.ClientData">Dane nabywcy</h1>
@@ -93,7 +94,6 @@
 		</SwitchSection>
 
 		<FormSummary v-show="currentStep === Steps.Summary" :userData="userData" />
-
 		<div class="footer">
 			<div>
 				<button
@@ -123,12 +123,14 @@ import FormSummary from "@/components/FormSummary";
 import Storage from "@/js/Storage.js";
 import FirstStepType from "@/js/FirstStepType";
 import SwitchSection from "@/components/SwitchSection";
+import ProgressBar from "@/components/ProgressBar";
 
 @Component({
 	components: {
 		FormSummary,
 		FormStep,
 		SwitchSection,
+		ProgressBar,
 	},
 })
 export default class FormLayout extends Vue {
