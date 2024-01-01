@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<ProgressBar></ProgressBar>
+		<ProgressBar v-bind:currentStep="this.currentStep"></ProgressBar>
 		<div class="top-container">
 			<div class="header-container">
 				<h1 v-show="currentStep === Steps.ClientData">Dane nabywcy</h1>
