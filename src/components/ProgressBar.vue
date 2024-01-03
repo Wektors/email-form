@@ -1,18 +1,15 @@
 <template>
-	<div class="container" v-show="this.currentStep == Steps.ClientData">
-		<hr class="line" />
-		<hr class="line" />
-		<img src="@/assets/firstStep.svg" />
-		<hr class="line" />
-
-		<hr class="line" />
-		<img src="@/assets/secondStep.svg" />
-		<hr class="line" />
-
-		<hr class="line" />
-		<img src="@/assets/summary.svg" />
-		<hr class="line" />
-
+	<div class="container">
+			<hr class="line" />
+	<div
+		v-show="currentStep == Steps.ClientData"
+		v-for="(field, id) in Steps"
+		v-bind:key="id"
+		class="container">
+			<hr class="line" />
+			<img :src="ProgressIcons[field]"/>
+			<hr class="line" />
+		</div>
 		<hr class="line" />
 	</div>
 </template>
@@ -21,15 +18,17 @@
 import Vue from "vue";
 import { Component, Prop } from "vue-property-decorator";
 import Steps from "@/js/Steps.js";
+import ProgressIcons from "@/js/ProgressIcons.js";
 
 @Component({
 	components: {},
 })
 export default class ProgressBar extends Vue {
-	@Prop({ type: Steps, required: false, default: () => [] }) currentStep;
+	@Prop() currentStep;
 	data() {
 		return {
 			Steps: Steps,
+			ProgressIcons: ProgressIcons,
 		};
 	}
 }
