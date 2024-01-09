@@ -1,15 +1,16 @@
 <template>
 	<div class="container">
-			<hr class="line" />
-	<div
-		v-for="(field, id) in Steps"
-		v-bind:key="id"
-		class="container">
-			<hr class="line" />
-			<img class="icon" :src="getIcon(field)"/>
-			<hr class="line" />
+		<hr class="line" :class="{ hide: hideOnMobile(field) }" />
+		<div v-for="(field, id) in Steps" v-bind:key="id" class="container">
+			<hr class="line" :class="{ hide: hideOnMobile(field) }" />
+			<img
+				class="icon"
+				:class="{ hide: hideOnMobile(field) }"
+				:src="getIcon(field)"
+			/>
+			<hr class="line" :class="{ hide: hideOnMobile(field) }" />
 		</div>
-		<hr class="line" />
+		<hr class="line" :class="{ hide: hideOnMobile(field) }" />
 	</div>
 </template>
 
@@ -33,7 +34,7 @@ export default class ProgressBar extends Vue {
 		};
 	}
 	getIcon(field) {
-		if (field + 1 == this.currentStep) {
+		if (field !== this.currentStep && field < this.currentStep) {
 			return ProgressIcons.complete;
 		} else if (this.mailSend == true) {
 			return ProgressIcons.complete;
@@ -41,18 +42,24 @@ export default class ProgressBar extends Vue {
 			return ProgressIcons[field];
 		}
 	}
-
+	hideOnMobile(field) {
+		if (field == this.currentStep) {
+			return false;
+		}
+		return true;
+	}
 }
 </script>
 
 <style>
-.complete {
-	height: auto;
-	margin: 0.5rem;
+@media (max-width: 480px) {
+	.hide {
+		display: none;
+	}
 }
+
 .container {
 	display: flex;
-	flex-direction: row;
 	align-items: center;
 	justify-content: center;
 }
