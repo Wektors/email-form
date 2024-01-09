@@ -24,6 +24,8 @@ import ProgressIcons from "@/js/ProgressIcons.js";
 })
 export default class ProgressBar extends Vue {
 	@Prop() currentStep;
+	@Prop() mailSend;
+
 	data() {
 		return {
 			Steps: Steps,
@@ -32,6 +34,8 @@ export default class ProgressBar extends Vue {
 	}
 	getIcon(field) {
 		if (field + 1 == this.currentStep) {
+			return ProgressIcons.complete;
+		} else if (this.mailSend == true) {
 			return ProgressIcons.complete;
 		} else {
 			return ProgressIcons[field];

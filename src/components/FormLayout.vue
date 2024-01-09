@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<ProgressBar v-bind:currentStep="this.currentStep"></ProgressBar>
+		<ProgressBar v-bind:currentStep="this.currentStep" v-bind:mailSend="this.mailSend"></ProgressBar>
 		<div class="top-container">
 			<div class="header-container">
 				<h1 v-show="currentStep === Steps.ClientData">Dane nabywcy</h1>
@@ -143,6 +143,7 @@ export default class FormLayout extends Vue {
 			userData: new UserData(),
 			Storage: Storage,
 			storageEmpty: Storage.isEmpty("userData"),
+			mailSend: false,
 		};
 	}
 	get nextStepButton() {
@@ -161,6 +162,7 @@ export default class FormLayout extends Vue {
 	handleNext() {
 		if (this.currentStep === Steps.Summary) {
 			this.sendMail();
+			this.mailSend = true;
 		} else if (this.isValidStep()) {
 			this.currentStep++;
 		}
@@ -207,6 +209,7 @@ export default class FormLayout extends Vue {
 	}
 
 	handleLoad() {
+		this.mailSend = false;
 		this.loadUserData();
 		this.loadCurrentStep();
 		this.loadFirstStepType();
