@@ -1,16 +1,16 @@
 <template>
 	<div class="container">
-		<hr class="line" :class="{ hide: hideOnMobile(field) }" />
+		<hr class="line mobileHidden"/>
 		<div v-for="(field, id) in Steps" v-bind:key="id" class="container">
-			<hr class="line" :class="{ hide: hideOnMobile(field) }" />
+			<hr class="line" :class="{ mobileHidden: isActive(field) }" />
 			<img
 				class="icon"
-				:class="{ hide: hideOnMobile(field) }"
+				:class="{ mobileHidden: isActive(field) }"
 				:src="getIcon(field)"
 			/>
-			<hr class="line" :class="{ hide: hideOnMobile(field) }" />
+			<hr class="line" :class="{ mobileHidden: isActive(field) }" />
 		</div>
-		<hr class="line" :class="{ hide: hideOnMobile(field) }" />
+		<hr class="line mobileHidden" />
 	</div>
 </template>
 
@@ -42,7 +42,7 @@ export default class ProgressBar extends Vue {
 			return ProgressIcons[field];
 		}
 	}
-	hideOnMobile(field) {
+	isActive(field) {
 		if (field == this.currentStep) {
 			return false;
 		}
@@ -53,7 +53,7 @@ export default class ProgressBar extends Vue {
 
 <style>
 @media (max-width: 480px) {
-	.hide {
+	.mobileHidden {
 		display: none;
 	}
 }
