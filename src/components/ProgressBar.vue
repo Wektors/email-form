@@ -2,12 +2,12 @@
 	<div class="container">
 			<hr class="line" />
 	<div
-		v-show="currentStep == Steps.ClientData"
 		v-for="(field, id) in Steps"
 		v-bind:key="id"
 		class="container">
 			<hr class="line" />
-			<img :src="ProgressIcons[field]"/>
+			<img class="icon complete" v-show="field + 1 == currentStep" :src="ProgressIcons.complete"/>
+			<img class="icon" v-show="field + 1 !== currentStep" :src="ProgressIcons[field]"/>
 			<hr class="line" />
 		</div>
 		<hr class="line" />
@@ -31,10 +31,23 @@ export default class ProgressBar extends Vue {
 			ProgressIcons: ProgressIcons,
 		};
 	}
+	get getIcon() {
+		if (this.currentStep === Steps.AddressData) {
+			return "Przejdź do podsumowania";
+		} else if (this.currentStep === Steps.Summary) {
+			return "Wyślij";
+		}
+		return "Dalej";
+	}
+
 }
 </script>
 
 <style>
+.complete {
+	height: auto;
+	margin: 0.5rem;
+}
 .container {
 	display: flex;
 	flex-direction: row;
@@ -45,7 +58,7 @@ export default class ProgressBar extends Vue {
 	width: 1rem;
 	margin: 0;
 }
-img {
+.icon {
 	width: 1rem;
 	height: auto;
 	margin: 0.5rem;
