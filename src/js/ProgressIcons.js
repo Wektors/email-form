@@ -1,6 +1,6 @@
 export default {
-	0: require("@/assets/firstStep.svg"),
-	1: require("@/assets/secondStep.svg"),
-	2: require("@/assets/summary.svg"),
+	ClientData: require("@/assets/firstStep.svg"),
+	AddressData: require("@/assets/secondStep.svg"),
+	Summary: require("@/assets/summary.svg"),
 	complete: require("@/assets/tick.svg"),
 };

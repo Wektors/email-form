@@ -1,7 +1,7 @@
 <template>
 	<div class="container">
 		<hr class="line mobileHidden"/>
-		<div v-for="(field, id) in Steps" v-bind:key="id" class="container">
+		<div v-for="(field, id) in Object.keys(Steps)" v-bind:key="id" class="container">
 			<hr class="line" :class="{ mobileHidden: isActive(field) }" />
 			<img
 				class="icon"
@@ -34,7 +34,7 @@ export default class ProgressBar extends Vue {
 		};
 	}
 	getIcon(field) {
-		if (field !== this.currentStep && field < this.currentStep) {
+		if (this.Steps[field] !== this.currentStep && this.Steps[field] < this.currentStep) {
 			return ProgressIcons.complete;
 		} else if (this.mailSend == true) {
 			return ProgressIcons.complete;
@@ -43,7 +43,7 @@ export default class ProgressBar extends Vue {
 		}
 	}
 	isActive(field) {
-		if (field == this.currentStep) {
+		if (this.Steps[field] == this.currentStep) {
 			return false;
 		}
 		return true;
