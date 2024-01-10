@@ -17,8 +17,6 @@
 <script>
 import Vue from "vue";
 import { Component, Prop } from "vue-property-decorator";
-import Steps from "@/js/Steps.js";
-import ProgressIcons from "@/js/ProgressIcons.js";
 
 @Component({
 	components: {},
@@ -26,20 +24,20 @@ import ProgressIcons from "@/js/ProgressIcons.js";
 export default class ProgressBar extends Vue {
 	@Prop() currentStep;
 	@Prop() mailSend;
+	@Prop() Steps;
+	@Prop() ProgressIcons;
 
 	data() {
 		return {
-			Steps: Steps,
-			ProgressIcons: ProgressIcons,
 		};
 	}
 	getIcon(field) {
 		if (this.Steps[field] !== this.currentStep && this.Steps[field] < this.currentStep) {
-			return ProgressIcons.complete;
-		} else if (this.mailSend == true) {
-			return ProgressIcons.complete;
+			return this.ProgressIcons.complete;
+		} else if (this.mailSend === true) {
+			return this.ProgressIcons.complete;
 		} else {
-			return ProgressIcons[field];
+			return this.ProgressIcons[field];
 		}
 	}
 	isActive(field) {

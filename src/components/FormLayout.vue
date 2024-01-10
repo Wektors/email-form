@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<ProgressBar v-bind:currentStep="this.currentStep" v-bind:mailSend="this.mailSend"></ProgressBar>
+		<ProgressBar :currentStep="this.currentStep" :mailSend="this.mailSend" :Steps="this.Steps" :ProgressIcons="this.ProgressIcons"></ProgressBar>
 		<div class="top-container">
 			<div class="header-container">
 				<h1 v-show="currentStep === Steps.ClientData">Dane nabywcy</h1>
@@ -124,6 +124,7 @@ import Storage from "@/js/Storage.js";
 import FirstStepType from "@/js/FirstStepType";
 import SwitchSection from "@/components/SwitchSection";
 import ProgressBar from "@/components/ProgressBar";
+import ProgressIcons from "@/js/ProgressIcons.js";
 
 @Component({
 	components: {
@@ -144,6 +145,7 @@ export default class FormLayout extends Vue {
 			Storage: Storage,
 			storageEmpty: Storage.isEmpty("userData"),
 			mailSend: false,
+			ProgressIcons: ProgressIcons,
 		};
 	}
 	get nextStepButton() {
@@ -157,6 +159,7 @@ export default class FormLayout extends Vue {
 	handleBack() {
 		if (this.currentStep !== Steps.ClientData) {
 			this.currentStep--;
+			this.mailSend = false;
 		}
 	}
 	handleNext() {
@@ -165,6 +168,7 @@ export default class FormLayout extends Vue {
 			this.mailSend = true;
 		} else if (this.isValidStep()) {
 			this.currentStep++;
+			this.mailSend = false;
 		}
 	}
 	handleChangeFirstStep(value) {
